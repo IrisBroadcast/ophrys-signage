@@ -11,7 +11,7 @@ external server. We are using it with Debian Buster on
 Raspberry Pi 3 and 4. This should work fine on other hardwares
 as well. Let us know if you run into any problems or have any questions.
 
-We use it to display system monitoring and as door signage for out studios.
+We use it to display system monitoring and door-signage for our studios.
 
 #### Components
 - Whiptail install script (Guides the installation of dependencies)
