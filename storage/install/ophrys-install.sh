@@ -56,8 +56,24 @@ function menuMain()
             # Download and install Ophrys Signage (full install or reinstall)
             if (whiptail --title "Download and install Ophrys Signage" --yesno "Before installation, do you want to upgrade the operating system?
             \nAn upgrade may take several minutes but is highly recommended " 14 75 4); then
-                apt-get update
-                apt-get upgrade -y
+                # Check if ntp is running = if not try to set time
+                if (! pgrep ntp);then
+                    apt get install ntpdate
+                    if [ $? == 0 ];then
+                        ntpdate 0.pool.ntp.org 1.pool.ntp.org
+                    fi
+                else
+                    apt-get update
+                    apt-get upgrade -y
+                fi
+            else
+                # Check if ntp is running = if not try to set time
+                if (! pgrep ntp);then
+                    apt get install ntpdate
+                    if [ $? == 0 ];then
+                        ntpdate 0.pool.ntp.org 1.pool.ntp.org
+                    fi
+                fi
             fi
         ;;
         3)
