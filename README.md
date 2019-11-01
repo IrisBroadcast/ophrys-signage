@@ -66,6 +66,16 @@ Now it's time to download the installation tool from us to the unit, decide betw
 
 The script will fetch an installation tool and start it up. To continue setup follow the on-screen instructions.
 
+### Advanced
+If you want to follow along with the installation, in more detail than the whiptail interface. Check the following file:
+```sh
+tail -f /var/log/ophrys-full-install.log
+```
+
+When the applications and scripts are running they log to the following file:
+```sh
+tail -f /var/log/aloe/main.log
+```
 
 ## Responsible Maintainers
 - Jim Eld
