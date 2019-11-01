@@ -11,14 +11,14 @@ external server. We are using it with Debian Buster on
 Raspberry Pi 3 and 4. This should work fine on other hardwares
 as well. Let us know if you run in to any problems or have any questions.
 
-Components
+#### Components
 - Whiptail install script (Guides the installation of dependencies)
 - Debian + OpenBox + LightDm + Feh
 - Chromium Browser + OMXPlayer
 - NodeJs server for configuration
 - Bash scripts for setting URLs and screen rotation
 
-Features
+#### Features
 - Fullscreen browser without window decorations
 - Loading image on boot (Ophrys graphics)
 - Rotate screen on both Raspberry Pi 3 and 4 without reboot
