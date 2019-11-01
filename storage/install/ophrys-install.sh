@@ -86,6 +86,10 @@ function menuMain()
             whiptail --title "Advanced Settings" --infobox "" 14 75 4
             menuAdvancedSettings
         ;;
+        *)
+            # exit application
+            exit 0
+        ;;
     esac
 }
 
