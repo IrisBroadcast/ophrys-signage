@@ -25,6 +25,8 @@ Features
 - Load a configuration JSON from an external site with settings
 - REST API for page refresh and */health* endpoint for status information
 
+![Signage Screen](static/gfx-screen-2.png)
+![Raspberry Pi](static/gfx-pi.png)
 
 License
 =======
@@ -49,12 +51,12 @@ Depending on your way of installing and later setup, decide between:
 Now it's time to download the installation tool from us to the unit, decide between:
 - Use a terminal command to get the tool/script. If you want to get the tool/script using the terminal, boot up the device and open a terminal window (through SSH or with a keyboard and display). Then run:
    ```sh
-   wget -O /tmp/install.tar.gz http://irisbroadcast.com/ophrys/install.tar.gz && tar -xvzf -C /tmp/install.tar.gz && sudo /tmp/install.sh
+   wget -O /tmp/install.tar.gz https://irisbroadcast.com/ophrys/install.tar.gz && tar -C /tmp -xvzf /tmp/install.tar.gz && sudo bash /tmp/ophrys-install.sh
 
    ```
    Or if you're behind a corporate proxy, use the following command instead:
    ```sh
-   wget -O /tmp/install.tar.gz http://irisbroadcast.com/ophrys/install.tar.gz --proxy=user:password@proxy.com && tar -xvzf -C /tmp/install.tar.gz && sudo /tmp/install.sh
+   wget -O /tmp/install.tar.gz https://irisbroadcast.com/ophrys/install.tar.gz -e use_proxy=yes -e https_proxy=user:password@proxy.com && tar -C /tmp -xvzf /tmp/install.tar.gz && sudo bash /tmp/ophrys-install.sh
    ```
 
 - Or download the tool/script to the **/boot/** folder when setting up the SD-card. The **/boot/** is a partition that's visible from your computer when burning the image on to the SD-card. [Script Download](http://irisbroadcast.com/ophrys/install.tar.gz). Once put in the folder, boot up the device and open a terminal. Then type the following:
