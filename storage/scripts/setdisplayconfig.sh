@@ -46,7 +46,7 @@ function readFromStatusFileNode
         elif [ "$ARG1" == "url" ] || [ "$ARG1" == "refresh" ];then
             STATE_URL=$(cat $STATEFILENODE | jq -r '.url')
             STATE_BROWSERPARAMETER=$(cat $STATEFILENODE | jq -r '.browserparameter')
-            echo "STATE_ULR: $STATE_URL"
+            echo "STATE_URL: $STATE_URL"
             echo "STATE_BROWSERPARAMETER: $STATE_BROWSERPARAMETER"
             setCorrespondingBackgroundImage
         fi

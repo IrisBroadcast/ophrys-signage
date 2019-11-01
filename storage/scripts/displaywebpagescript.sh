@@ -4,26 +4,11 @@ COMMONFILE=/usr/local/aloe/scripts/common.sh
 . $COMMONFILE
 
 STATEFILENODE="/usr/local/aloe/scripts/ophrys_state_node.json"
-FALLBACKFILE="/tmp/ophrys_state_node.json"
-
-function checkFile
-{
-    ## Check if screenstatus.json exists, if not create a temporary file default url
-    if [ ! -e $STATEFILENODE ];then
-        cat <<EOT > $FALLBACKFILE
-{
-  "url": "http://localhost:82"
-}
-EOT
-	STATEFILENODE=$FALLBACKFILE
-    fi
-}
 
 function openUrl
 {
 	DYNAMIC_URL=$(cat $STATEFILENODE | jq -r '.url')
 	BROWSERPARAMETER=$(cat $STATEFILENODE | jq -r '.browserparameter')
-	CHROMEURL=$DYNAMIC_URL
 
 	# check if this is boot or not - Show IP-adress if this is boot
 	TMPSPLASH="/tmp/splash.png"
@@ -40,8 +25,19 @@ function openUrl
 			sudo cp $TMPSPLASH $GRAPHICSFOLDER/splash.png
 		fi
 	fi
+
+	# Make sure state file exists
+	if [ -e $STATEFILENODE ];then
+    	DYNAMIC_URL=$(cat $STATEFILENODE | jq -r '.url')
+		BROWSERPARAMETER=$(cat $STATEFILENODE | jq -r '.browserparameter')
+	else
+		DYNAMIC_URL="http://localhost:82"
+		BROWSERPARAMETER=""
+    fi
+	if [ -z "$DYNAMIC_URL" ];then
+		DYNAMIC_URL="http://localhost:82"
+	fi
 	export DISPLAY=:0.0
-	chromium-browser $BROWSERPARAMETER --noerrdialogs --incognito --kiosk --disable-pinch --overscroll-history-navigation=0 --proxy-auto-detect $CHROMEURL
+	chromium-browser $BROWSERPARAMETER --noerrdialogs --incognito --kiosk --disable-pinch --overscroll-history-navigation=0 --proxy-auto-detect $DYNAMIC_URL
 }
-checkFile
 openUrl

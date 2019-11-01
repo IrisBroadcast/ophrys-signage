@@ -11,14 +11,14 @@ external server. We are using it with Debian Buster on
 Raspberry Pi 3 and 4. This should work fine on other hardwares
 as well. Let us know if you run in to any problems or have any questions.
 
-Components
+#### Components
 - Whiptail install script (Guides the installation of dependencies)
 - Debian + OpenBox + LightDm + Feh
 - Chromium Browser + OMXPlayer
 - NodeJs server for configuration
 - Bash scripts for setting URLs and screen rotation
 
-Features
+#### Features
 - Fullscreen browser without window decorations
 - Loading image on boot (Ophrys graphics)
 - Rotate screen on both Raspberry Pi 3 and 4 without reboot
@@ -66,6 +66,16 @@ Now it's time to download the installation tool from us to the unit, decide betw
 
 The script will fetch an installation tool and start it up. To continue setup follow the on-screen instructions.
 
+### Advanced
+If you want to follow along with the installation, in more detail than the whiptail interface. Check the following file:
+```sh
+tail -f /var/log/ophrys-full-install.log
+```
+
+When the applications and scripts are running they log to the following file:
+```sh
+tail -f /var/log/aloe/main.log
+```
 
 ## Responsible Maintainers
 - Jim Eld
