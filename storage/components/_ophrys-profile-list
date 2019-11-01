@@ -1,0 +1,46 @@
+{
+    "profilename": "ophrys-signage",
+    "version": 10,
+    "components": [
+        {
+            "name": "get-local-scriptfiles",
+            "version": 8
+        },
+        {
+            "name": "configure-bootsequence",
+            "version": 1
+        },
+        {
+            "name": "get-local-services",
+            "version": 1
+        },
+        {
+            "name": "install-configure-nodejs",
+            "version": 1
+        },
+        {
+            "name": "install-configure-firewall",
+            "version": 1
+        },
+        {
+            "name": "install-dependencies-graphics",
+            "version": 5
+        },
+        {
+            "name": "install-nodeapp-signage",
+            "version": 2
+        },
+        {
+            "name": "debian-os-optimisation",
+            "version": 1
+        },
+        {
+            "name": "setup-housekeeping",
+            "version": 1
+        },
+        {
+            "name": "wearedone-finalize-install-script",
+            "version": 1
+        }
+    ]
+}

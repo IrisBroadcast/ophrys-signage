@@ -1,0 +1,127 @@
+#!/bin/bash
+
+COMMONFILE=/usr/local/aloe/scripts/common.sh
+. $COMMONFILE
+
+COMP_NAME="get-install-animated-bootsequence"
+COMP_MESSAGE=""
+
+MSG="Installing animated boot sequence (run by OMX player)"
+INSTALLPROGRESS=55
+
+function installOmxPlayer
+{
+    echo "Installing OMX player"
+    if apt-get install omxplayer -y &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get install omxplayer -y &>> $INSTALL_LOG
+        then
+           echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_NAME="installOmxPlayer"
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function removeTextDuringBoot
+{
+    FILE=/boot/cmdline.txt
+
+    grep -q "splash quiet plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0" $FILE
+    if [ $? -eq 0 ];then
+        echo "Already in $FILE -  Nothing added"
+    else
+        sed -i '$s/$/ splash quiet plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0/' $FILE
+    fi
+}
+
+function getBootSequence
+{
+    COMPONENT=bootsequence.mp4
+    DEST="$GRAPHICSFOLDER/bootsequence.mp4"
+    if [ $MQTT_ENABLE == true ];then
+        URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+        SRC="$HOSTURL$URLEND"
+
+        curling ${SRC} ${TMPFILE}
+        verifyDownloadedFile ${TMPFILE}
+        if [ $? -eq 0 ];then
+		    mv ${TMPFILE} ${DEST}
+        else
+		    FUNC_NAME="getUpdateService"
+		    FUNC_SUCCESS=false
+		    FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+		    functionInfo
+            return 1
+        fi
+    else
+        cp $STORAGEFOLDER/graphics/$COMPONENT $DEST
+	fi
+}
+
+function getServicesAnimatedBoot
+{
+    COMPONENT=ophrys_animatedboot.service
+    DEST="/etc/systemd/system/ophrys_animatedboot.service"
+    if [ $MQTT_ENABLE == true ];then
+        URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+        SRC="$HOSTURL$URLEND"
+
+        curling ${SRC} ${TMPFILE}
+        verifyDownloadedFile ${TMPFILE}
+        if [ $? -eq 0 ];then
+            mv ${TMPFILE} ${DEST}
+            systemctl daemon-reload &>> $INSTALL_LOG
+            systemctl enable /etc/systemd/system/$COMPONENT
+        else
+            FUNC_NAME="getServicesAnimatedBootService"
+            FUNC_SUCCESS=false
+            FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+            functionInfo
+            return 1
+        fi
+    else
+        cp $STORAGEFOLDER/services/$COMPONENT $DEST
+        systemctl daemon-reload &>> $INSTALL_LOG
+        systemctl enable /etc/systemd/system/$COMPONENT &>> $INSTALL_LOG
+    fi
+}
+
+function removeRainbowSplash
+{
+    FILE=/boot/config.txt
+
+    grep -q "disable_splash=1" $FILE
+    if [ $? -ne 0 ];then
+        echo "disable_splash=1" >> $FILE
+    fi
+}
+
+updateApt
+###############
+COMP_MESSAGE="Optimising the system - Omxplayer install"
+componentInfo
+installOmxPlayer || COMP_SUCCESS=false
+###############
+COMP_MESSAGE="Optimising the system - removing text during boot"
+componentInfo
+removeTextDuringBoot || COMP_SUCCESS=false
+###############
+COMP_MESSAGE="Optimising the system - Downloading video - bootsequence.mp4"
+componentInfo
+getBootSequence || COMP_SUCCESS=false
+###############
+COMP_MESSAGE="Optimising the system - Getting boot sequence services"
+componentInfo
+getServicesAnimatedBoot || COMP_SUCCESS=false
+###############
+COMP_MESSAGE="Removing default rainbow splash"
+componentInfo
+removeRainbowSplash || COMP_SUCCESS=false
+reportResult

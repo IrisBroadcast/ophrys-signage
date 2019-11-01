@@ -1,0 +1,710 @@
+<!doctype html>
+<html>
+<head>
+	<title>Ophrys Signage - Configuration</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		body, html {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			font-family: 'Roboto', Helvetica, Arial, sans-serif;
+			-webkit-font-smoothing: subpixel-antialiased;
+			-ms-text-size-adjust: 100%;
+			-webkit-text-size-adjust: 100%;
+			line-height: 1.3;
+			color: #000000;
+		}
+		body {
+			font: 16px/1.3 'Roboto', Helvetica, Arial, sans-serif;
+			-webkit-text-size-adjust: 100%;
+			background: #ffffff;
+		}
+		h1, h2, h3 {
+			font-weight: 400;
+		}
+		pre {
+			white-space: nowrap;
+		}
+		.code {
+			font-family: 'Courier New', Courier, monospace;
+		}
+		form {
+			padding: 1vh 1vw;
+			width: 100%;
+		}
+		form label {
+			padding: 6px 0;
+			margin: 0;
+			display: block;
+			width: 100%;
+			line-height: 2;
+			font-weight: bold;
+		}
+		form label i {
+			font-weight: normal;
+		}
+		form input {
+			margin: 0;
+			padding: 10px;
+			font-size: 16px;
+			border: 0;
+			width: 100%;
+			border-radius: 0.3vh;
+			box-shadow: 5px 5px 20px 0px #d6d6d6;
+			outline: none;
+			border: 2px solid #636363;
+		}
+		form input:hover, form input:focus {
+			background: #f1f1f1;
+			color:#000000;
+		}
+		form input:disabled {
+			color: #a0a0a0;
+			cursor: default;
+			background-color: #cecece;
+			border-color: #ccccc4;
+		}
+		form button {
+			margin: 0;
+			padding: 10px;
+			font-size: 16px;
+			width: 100%;
+			background: #009688;
+			color: #ffffff;
+			border: none;
+			border-radius: 8px;
+			box-shadow: 5px 5px 20px 0px #d6d6d6;
+			outline: none;
+		}
+		.button {
+			position: relative;
+			background: #3369ff;
+			border: 0;
+			font-size: 16px;
+			text-decoration: none;
+			font-weight: 400;
+			color: lighten(#3369ff, 50%);
+			margin: 4px 0 6px 0;
+			padding: 11px 18px;
+			cursor: pointer;
+			transition: background-color 1s ease, color 1s ease, box-shadow 1s ease;
+			overflow: hidden;
+			box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+			border-radius: 5px;
+			box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+		}
+		.button--action {
+			background: #ff6b33;
+		}
+		.button span {
+			color: #fff;
+			position: relative;
+			z-index: 1;
+		}
+		.button::before {
+			content: '';
+			position: absolute;
+			background: darken(#3369ff, 40%);
+			border: 50vh solid darken(#3369ff, 20%);
+			width: 30vh;
+			height: 30vh;
+			border-radius: 50%;
+			display: block;
+			top: 50%;
+			left: 50%;
+			z-index: 0;
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(0);
+		}
+		.button:hover {
+			background-color: #2450cc;
+			box-shadow: inset 0 -0.6em 0 -0.35em rgba(255, 255, 255, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+		}
+		.button--action:hover {
+			background-color: #e66230;
+			box-shadow: inset 0 -0.6em 0 -0.35em rgba(255, 255, 255, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+		}
+		.button:active,
+		.button:focus .button::before {
+
+		}
+		.button:focus {
+			outline: none;
+		}
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+		ul li {
+			padding: 1vh 2vw;
+			word-wrap: break-word;
+		}
+		ul li:nth-child(odd) {
+			background: #eee;
+		}
+		.logo-text {
+			display: inline-block;
+			font-size: 5vmin;
+			color: #4a4a4a;
+			font-weight: 300;
+			padding-left: 0.1em;
+		}
+		svg.logo-icon {
+			width: 20vw;
+			height: 20vw;
+			max-width: 170px;
+			max-height: 170px;
+        }
+		.container, .header {
+			margin: 0 auto;
+			padding: 1vh 1vw;
+			width: 80vw;
+			max-width:900px;
+		}
+		.header {
+			padding: 3vh 1.5vw 0 1.5vw;
+        }
+        .content {
+			padding: 1vh 0 2vh 0;
+		}
+		.content--no-padding {
+			padding: 0;
+		}
+		@media (max-width: 520px) {
+			.container, .header {
+                margin: 5vw auto;
+                padding: 0;
+                width: 90vw;
+            }
+			.content {
+                padding: 0.5vh 0.2vw;
+            }
+		}
+
+		.status--current-url, .status--identification, .status--hardware, .status--window, .status--clock, .status--link {
+            font-family: 'Roboto', Arial, Helvetica, sans-serif;
+            font-size: 3vmin;
+            font-weight: 400;
+            border-top: unset;
+            color: #3e3e3e;
+			display: block;
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+			overflow: hidden;
+			padding: 0.2vh 1vw;
+		}
+
+		.status--current-url:after, .status--identification:after {
+			content: '';
+			word-wrap:break-word;
+		}
+
+		#logo-image {
+            width: 75vw;
+            max-width: 500px;
+        }
+		#logo-image path {
+            fill: #000000;
+        }
+        #flare path {
+            fill: rgba(255,255,255,0);
+        }
+		.status-socket-connected .status-socket {
+			animation: socket-connected-2 1s ease infinite;
+		}
+		.status-socket-disconnected .status-socket {
+			animation: socket-disconnected-2 1s ease infinite;
+		}
+		.status-socket-connected .status-socket:nth-child(2), .status-socket-disconnected .status-socket:nth-child(2) {
+			animation-delay: 0.3s;
+		}
+
+		@keyframes socket-connected {
+			0% {
+				transform: scale(1.0);
+				stroke: #69d069;
+			}
+			100% {
+				transform: scale(1.1);
+				stroke: rgba(255,255,255,0);
+			}
+		}
+
+		@keyframes socket-disconnected {
+			0% {
+				transform: scale(1.0);
+				stroke: #CB2402;
+			}
+			100% {
+				transform: scale(1.1);
+				stroke: rgba(255,255,255,0);
+			}
+		}
+
+		@keyframes socket-connected-2 {
+			0% {
+				fill: #69d069;
+			}
+			100% {
+				fill: rgba(255,255,255,0);
+			}
+		}
+
+		@keyframes socket-disconnected-2 {
+			0% {
+				fill: #CB2402;
+			}
+			100% {
+				fill: rgba(255,255,255,0);
+			}
+		}
+
+		/* The switch - the box around the slider */
+		.switch {
+			position: relative;
+			display: block;
+			width: 64px;
+			height: 38px;
+			-webkit-tap-highlight-color: transparent;
+		}
+
+		.switch input {
+			display: none;
+		}
+
+		/* The slider */
+		.slider {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: #ffffff;
+			-webkit-transition: .4s;
+			transition: .4s;
+			border: 2px solid #636363;
+			border-radius: 34px;
+			box-shadow: 5px 5px 20px 0px #d6d6d6;
+		}
+
+		.slider:active, .slider:hover, .slider:focus {
+			background-color: #eaeaea;
+		}
+
+		.slider:before {
+			position: absolute;
+			content: "";
+			height: 26px;
+			width: 26px;
+			left: 4px;
+			bottom: 4px;
+			box-sizing: border-box;
+			background-color: #636363;
+			border: 0;
+			-webkit-transition: .4s;
+			transition: .4s;
+			border-radius: 50%;
+		}
+
+		input:checked + .slider {
+			background-color: #3369ff;
+			border-color: #2a57d5;
+		}
+
+		input:checked + .slider:before {
+			background-color: #ffffff;
+			border-color: #ffffff;
+		}
+
+		input:focus + .slider {
+			box-shadow: 0 0 1px #3369ff;
+		}
+
+		input:checked + .slider:before {
+			-webkit-transform: translateX(26px);
+			-ms-transform: translateX(26px);
+			transform: translateX(26px);
+		}
+
+		.slider-active.slider {
+			background-color: #3369ff;
+			box-shadow: 0 0 1px #3369ff;
+		}
+
+		.slider-active.slider:before {
+			-webkit-transform: translateX(26px);
+			-ms-transform: translateX(26px);
+			transform: translateX(26px);
+		}
+
+		/* Radiobutton - box around it */
+		.radiobtn-box {
+			position: relative;
+			margin: 0;
+			padding: 0;
+			line-height: 0;
+			display: inline-block;
+			width: unset;
+		}
+
+		.ui-form--label label {
+			display: inline-block;
+			width: unset;
+			margin: 0;
+			padding: 0;
+			line-height: 1;
+			vertical-align: middle;
+			outline: none;
+		}
+
+		.radio-label {
+			padding-left: 10px !important;
+			font-weight: normal;
+		}
+
+		.radiobtn-box input {
+			position: absolute;
+			opacity: 0;
+			cursor: pointer;
+		}
+
+		.radiobtn-check {
+			position: relative;
+			display: inline-block;
+			width: 38px;
+			height: 38px;
+			-webkit-tap-highlight-color: transparent;
+			cursor: pointer;
+			background-color: #ffffff;
+			-webkit-transition: .4s;
+			transition: .4s;
+			border: 2px solid #636363;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			border-radius: 50%;
+			box-shadow: 5px 5px 20px 0px #d6d6d6;
+		}
+
+		.radiobtn-check:before {
+			border-radius: 50%;
+		}
+
+		/* On mouse-over, add a grey background color */
+		.radiobtn-box:hover input ~ .radiobtn-check {
+			background-color: #eaeaea;
+		}
+		.radiobtn-box:focus input ~ .radiobtn-check {
+			background-color: #eaeaea;
+		}
+
+		/* Checked confirmation */
+		.radiobtn-box--confirmed input ~ .radiobtn-check {
+			background-color: #3c99fd;
+			animation: selected-rotation-animation 1s ease-in infinite;
+		}
+
+		@keyframes selected-rotation-animation {
+			0% {
+				background-color: #3c99fd;
+			}
+			50% {
+				background-color: #cbe4ff;
+			}
+			100% {
+				background-color: #3c99fd;
+			}
+		}
+
+		/* Create the indicator (the dot/circle - hidden when not checked) */
+		.radiobtn-check:after {
+			content: "";
+			position: absolute;
+			-webkit-transform: scale(0);
+			-ms-transform: scale(0);
+			transform: scale(0);
+			-webkit-transition: .4s;
+			transition: .4s;
+			border-radius: 50%;
+		}
+
+		/* Show the indicator (dot/circle) when checked */
+		.radiobtn-box input:checked ~ .radiobtn-check:after {
+			display: block;
+			-webkit-transform: scale(0.8);
+			-ms-transform: scale(0.8);
+			transform: scale(0.8);
+		}
+		.radiobtn-box input:checked ~ .radiobtn-check {
+			background-color: #3369ff;
+			border-color: #2a57d5;
+			animation: unset;
+		}
+
+		/* Disabled */
+		.radiobtn-box input:checked:disabled ~ .radiobtn-check {
+			color: rgb(84, 84, 84);
+			cursor: default;
+			background-color: #efefef;
+			border-color: #ccccc4;
+		}
+		.radiobtn-box input:disabled ~ .radiobtn-check {
+			color: rgb(84, 84, 84);
+			cursor: default;
+			background-color: #efefef;
+			border-color: #ccccc4;
+		}
+
+		/* Style the indicator (dot/circle) */
+		.radiobtn-box .radiobtn-check:after {
+			position: absolute;
+			content: "";
+			height: 26px;
+			width: 26px;
+			left: 4px;
+			bottom: 4px;
+			background-color: #ffffff;
+			box-sizing: border-box;
+			border: 0;
+		}
+
+		/* Conditional styles */
+		.feature--remote-config {
+			/* opacity: 0;
+			transition: all 2s ease;
+			display: none; */
+		}
+
+		.feature--remote-config--show {
+			/* opacity: 1;
+			display: block; */
+		}
+
+		.feature--local-config {
+			/* opacity: 0;
+			transition: all 2s ease;
+			display: none; */
+		}
+
+		.feature--local-config--show {
+			/* opacity: 1;
+			display: block; */
+		}
+
+
+		.feature--field-info {
+			color: #909090;
+		}
+
+		.feature--remote-config-info {
+			display: none;
+		}
+
+		.feature--remote-config-info--show {
+			display: block;
+		}
+
+		.feature--local-config-info {
+			display: none;
+		}
+
+		.feature--local-config-info--show {
+			display: block;
+		}
+
+		/* TV test bar */
+		.tv-bar {
+			display:flex;
+			flex-direction: row;
+			height: 2vh;
+			max-height: 26px;
+			width: 100%;
+		}
+		.tv-bar-item {
+			flex: 1 1 auto;
+		}
+		.tv-bar-color-1 {
+			background-color: #f8f800;
+		}
+		.tv-bar-color-2 {
+			background-color: #00f8f8;
+		}
+		.tv-bar-color-3 {
+			background-color: #00f800;
+		}
+		.tv-bar-color-4 {
+			background-color: #f800f8;
+		}
+		.tv-bar-color-5 {
+			background-color: #f80000;
+		}
+		.tv-bar-color-6 {
+			background-color: #0000f8;
+		}
+		.tv-bar-color-7 {
+			background-color: #bababa;
+		}
+		.tv-bar-color-8 {
+			background-color: #000000;
+		}
+	</style>
+</head>
+<body>
+
+	<header class="header">
+		<svg version="1.1" id="logo-image" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500px" height="90px" viewBox="0 0 500 90" style="enable-background:new 0 0 500 90;" xml:space="preserve">
+			<path id="Logo_x5F_O" d="M74,45c0,7.8-1.6,15.1-4.8,21.8c-3.2,6.7-7.5,11.9-13.1,15.6C50.6,86.1,44.7,88,38.3,88c-9.5,0-17.8-4-25-12.1S2.5,57.6,2.5,45c0-12.6,3.6-22.9,10.8-31c7.2-8,15.5-12,25-12c6.4,0,12.3,1.9,17.9,5.6c5.5,3.7,9.9,8.9,13.1,15.6C72.4,29.9,74,37.1,74,45z M68.1,45c0-9.5-2.8-18.1-8.3-25.7C54.2,11.7,47.1,7.9,38.3,7.9C30,7.9,23,11.5,17.1,18.8C11.3,26,8.4,34.8,8.4,45c0,10.9,3.1,19.8,9.2,26.7s13,10.4,20.7,10.4c8.8,0,16-3.8,21.5-11.4C65.3,63.2,68.1,54.6,68.1,45z"/>
+			<path id="Logo_x5F_P" d="M111.3,52.1v27.7h20.1c1.4,0,2.4,0.3,3,0.8c0.6,0.5,0.9,1.2,0.9,2.1c0,0.8-0.3,1.5-0.9,2.1s-1.6,0.8-3,0.8H97.5c-1.4,0-2.4-0.3-3-0.8c-0.6-0.6-0.9-1.3-0.9-2.1c0-0.9,0.3-1.6,0.9-2.1c0.6-0.5,1.6-0.8,3-0.8h7.9v-70h-7.9c-1.4,0-2.4-0.3-3-0.8c-0.6-0.5-0.9-1.2-0.9-2.1c0-0.9,0.3-1.6,0.9-2.1c0.6-0.5,1.6-0.8,3-0.8h34.1c8.1,0,14.6,2.4,19.7,7.1c5.1,4.8,7.7,10.3,7.7,16.7c0,3.8-0.8,7.2-2.5,10.2c-1.7,3-3.6,5.4-6,7.1c-3.5,2.6-7.1,4.5-10.8,5.7c-2.7,0.9-6.1,1.3-10.1,1.3H111.3z M111.3,46.3H130c4.3,0,8.4-1,12.2-2.9c3.8-1.9,6.6-4.3,8.3-7.1s2.6-5.6,2.6-8.5c0-4.6-2-8.8-5.9-12.4c-4-3.7-9-5.5-15-5.5h-20.9V46.3z"/>
+			<path id="Logo_x5F_H" d="M245.4,80.6c-0.6-0.5-1.6-0.8-3-0.8h-6.6v-70h3.6c1.4,0,2.5-0.3,3.1-0.8c0.6-0.5,0.9-1.2,0.9-2.1c0-0.9-0.3-1.6-0.9-2.1c-0.6-0.5-1.6-0.8-3.1-0.8h-17.4c-1.4,0-2.5,0.3-3,0.8C218.3,5.3,218,6,218,6.9c0,0.9,0.3,1.6,0.9,2.1c0.6,0.5,1.6,0.8,3,0.8h7.8v6.6h-38.9V9.8h7.9c1.4,0,2.4-0.3,3-0.8c0.6-0.5,0.9-1.2,0.9-2.1c0-0.9-0.3-1.6-0.9-2.1c-0.6-0.5-1.6-0.8-3-0.8h-17.4c-1.4,0-2.5,0.3-3.1,0.8c-0.6,0.5-0.9,1.2-0.9,2.1c0,0.9,0.3,1.6,0.9,2.1c0.6,0.5,1.6,0.8,3.1,0.8h3.6v70h-6.6c-1.4,0-2.4,0.3-3,0.8c-0.6,0.5-0.9,1.2-0.9,2.1c0,0.8,0.3,1.5,0.9,2.1c0.6,0.6,1.6,0.8,3,0.8h20.4c1.4,0,2.4-0.3,3-0.8c0.6-0.6,0.9-1.3,0.9-2.1c0-0.9-0.3-1.6-0.9-2.1c-0.6-0.5-1.6-0.8-3-0.8h-7.9v-6.3h38.9v6.3h-7.8c-1.4,0-2.5,0.3-3,0.8c-0.6,0.5-0.9,1.2-0.9,2.1c0,0.8,0.3,1.5,0.9,2.1c0.6,0.6,1.6,0.8,3,0.8h20.4c1.4,0,2.4-0.3,3-0.8c0.6-0.6,0.9-1.3,0.9-2.1C246.3,81.8,246,81.1,245.4,80.6z M229.8,67.7h-38.9V22.3h38.9V67.7z"/>
+			<path id="Logo_x5F_R" d="M276.7,49.2v30.6h10.8c1.4,0,2.5,0.3,3.1,0.8c0.6,0.5,0.9,1.2,0.9,2.1c0,0.8-0.3,1.5-0.9,2.1c-0.6,0.6-1.6,0.8-3.1,0.8h-24.6c-1.4,0-2.4-0.3-3-0.8c-0.6-0.6-0.9-1.3-0.9-2.1c0-0.9,0.3-1.6,0.9-2.1c0.6-0.5,1.6-0.8,3-0.8h7.9v-70h-7.9c-1.4,0-2.4-0.3-3-0.8c-0.6-0.5-0.9-1.2-0.9-2.1c0-0.9,0.3-1.6,0.9-2.1c0.6-0.5,1.6-0.8,3-0.8h35.5c7.3,0,13.5,2.3,18.5,7c5,4.6,7.5,9.9,7.5,15.7c0,4.2-1.5,8.1-4.6,11.8c-3.1,3.7-8.3,6.8-15.5,9.3c4.2,2.9,7.8,6.1,10.8,9.8c3,3.6,7.8,11.1,14.3,22.4h4.5c1.4,0,2.4,0.3,3,0.8c0.6,0.5,0.9,1.2,0.9,2.1c0,0.8-0.3,1.5-0.9,2.1c-0.6,0.6-1.6,0.8-3,0.8h-7.8C318.6,72.7,313,64,309,59.5c-4-4.4-8.6-7.9-13.7-10.3H276.7z M276.7,43.3h16c5.1,0,9.8-0.9,13.9-2.8c4.2-1.9,7.2-4.1,9.1-6.6s2.8-5.1,2.8-7.7c0-3.9-2-7.6-5.9-11.2c-3.9-3.5-8.7-5.3-14.4-5.3h-21.6V43.3z"/>
+			<path id="Logo_x5F_Y" d="M384.7,48.8v31H400c1.4,0,2.4,0.3,3,0.8c0.6,0.5,0.9,1.2,0.9,2.1c0,0.8-0.3,1.5-0.9,2.1c-0.6,0.6-1.6,0.8-3,0.8h-36.4c-1.4,0-2.4-0.3-3-0.8c-0.6-0.6-0.9-1.3-0.9-2.1c0-0.9,0.3-1.6,0.9-2.1c0.6-0.5,1.6-0.8,3-0.8h15.2v-31L353,9.8h-3.5c-1.4,0-2.4-0.3-3-0.8c-0.6-0.5-0.9-1.2-0.9-2.1c0-0.9,0.3-1.6,0.9-2.1c0.6-0.5,1.6-0.8,3-0.8h16.1c1.4,0,2.4,0.3,3,0.8c0.6,0.5,0.9,1.2,0.9,2.1c0,0.9-0.3,1.6-0.9,2.1c-0.6,0.5-1.6,0.8-3,0.8h-5.8l21.9,33l21.4-33h-5.7c-1.4,0-2.5-0.3-3.1-0.8c-0.6-0.5-0.9-1.2-0.9-2.1c0-0.9,0.3-1.6,0.9-2.1c0.6-0.5,1.6-0.8,3.1-0.8h16.1c1.4,0,2.4,0.3,3,0.8c0.6,0.5,0.9,1.2,0.9,2.1c0,0.9-0.3,1.6-0.9,2.1c-0.6,0.5-1.6,0.8-3,0.8h-3.5L384.7,48.8z"/>
+			<path id="Logo_x5F_S" d="M488.5,9.8v-2c0-1.4,0.3-2.4,0.8-3c0.5-0.6,1.2-0.9,2.1-0.9c0.9,0,1.6,0.3,2.1,0.9c0.5,0.6,0.8,1.6,0.8,3v15c0,1.4-0.3,2.4-0.8,3c-0.5,0.6-1.2,0.9-2.1,0.9c-0.8,0-1.5-0.3-2.1-0.8c-0.5-0.6-0.8-1.5-0.9-2.7c-0.2-3.9-2.2-7.4-6-10.5c-3.8-3.1-8.8-4.7-14.9-4.7c-6.5,0-11.6,1.7-15.4,5c-3.8,3.3-5.7,7.3-5.7,11.8c0,2.3,0.5,4.4,1.6,6.4c1.1,1.9,2.5,3.5,4.3,4.6c1.8,1.2,3.8,2.1,6,2.9c2.2,0.7,5.7,1.5,10.5,2.3c8,1.3,13.5,2.6,16.5,4c4.1,1.8,7.1,4.3,9.2,7.5c2.1,3.2,3.1,7,3.1,11.4c0,6.7-2.7,12.4-8,17.2c-5.4,4.7-12.6,7.1-21.7,7.1c-10.2,0-18.4-3.2-24.5-9.6v3.4c0,1.4-0.3,2.4-0.8,3c-0.5,0.6-1.2,0.9-2.1,0.9c-0.8,0-1.5-0.3-2.1-0.9c-0.6-0.6-0.8-1.6-0.8-3V65.5c0-1.4,0.3-2.5,0.8-3.1c0.5-0.6,1.2-0.9,2.1-0.9c0.8,0,1.5,0.3,2.1,0.8c0.5,0.6,0.8,1.5,0.9,2.7c0.2,4.3,2.5,8.2,6.9,11.7c4.4,3.5,10.2,5.3,17.6,5.3c7.4,0,13.2-1.8,17.4-5.5c4.3-3.7,6.4-8,6.4-13.1c0-3.1-0.8-5.8-2.4-8.2c-1.6-2.4-4.1-4.3-7.3-5.7c-2.2-1-6.9-2.1-14-3.3c-9.7-1.6-16.7-4.1-21-7.5c-4.3-3.4-6.4-8.1-6.4-14.3c0-6.1,2.5-11.4,7.4-15.9c4.9-4.4,11.4-6.6,19.5-6.6C475.5,2,482.6,4.6,488.5,9.8z"/>
+			<g id="flare">
+				<path class="status-socket" d="M196.9,33.2c-0.6,0-1.2-0.2-1.7-0.7c-0.9-0.9-0.9-2.4,0-3.4l2.3-2.3c0.9-0.9,2.4-0.9,3.4,0c0.9,0.9,0.9,2.4,0,3.4l-2.3,2.3C198.1,33,197.5,33.2,196.9,33.2z"/>
+				<path class="status-socket" d="M199.2,40.2c-0.6,0-1.2-0.2-1.7-0.7c-0.9-0.9-0.9-2.4,0-3.4l7-7c0.9-0.9,2.4-0.9,3.4,0c0.9,0.9,0.9,2.4,0,3.4l-7,7C200.5,40,199.8,40.2,199.2,40.2z"/>
+			</g>
+		</svg>
+		<br/>
+		<h1 class="logo-text" id="infoPageTitle">
+			Ophrys Signage
+		</h1>
+	</header>
+
+	<div class="container">
+		<div class="content">
+			<div class="status--current-url">
+				<span id="infoCurrentUrl">&nbsp;</span>
+			</div>
+			<div class="status--identification">
+				<span id="infoIpAddress">&nbsp;</span>
+			</div>
+			<div class="status--identification">
+				<span id="infoHostName">&nbsp;</span>
+			</div>
+			<div class="status--hardware">
+				<span id="infoHardware">&nbsp;</span>
+			</div>
+		</div>
+
+		<div class="content--no-padding">
+			<div class="tv-bar">
+				<div class="tv-bar-item tv-bar-color-1"></div>
+				<div class="tv-bar-item tv-bar-color-2"></div>
+				<div class="tv-bar-item tv-bar-color-3"></div>
+				<div class="tv-bar-item tv-bar-color-4"></div>
+				<div class="tv-bar-item tv-bar-color-5"></div>
+				<div class="tv-bar-item tv-bar-color-6"></div>
+				<div class="tv-bar-item tv-bar-color-7"></div>
+				<div class="tv-bar-item tv-bar-color-8"></div>
+			</div>
+		</div>
+
+		<div class="content">
+			<form action="">
+				<label for="input-title">
+					Title
+					<input id="input-title" autocomplete="off" />
+				</label>
+
+				<label for="input-description">
+					Description
+					<input id="input-description" autocomplete="off" />
+				</label>
+
+				<label for="input-fetch_config_from_url">
+					Fetch configuration from URL<br/>
+					<label class="switch">
+						<input type="checkbox" id="input-fetch_config_from_url" />
+						<span class="slider" id="settingSwitchEngineerView"></span>
+					</label>
+				</label>
+
+				<label for="input-remote_config_url" class="feature--remote-config-info">
+					Remote configuration from URL
+					<input id="input-remote_config_url" autocomplete="off" class="feature--remote-config" />
+				</label>
+				<label class="feature--remote-config-info feature--field-info">
+					<i>The remote configuration should provide <span class="code">{ 'url': 'URL to be loaded', 'rotation': 'normal|left|right|inverted' }</span></i> 
+					<i><span id="infoRemoteConfigTimer"></span> <span id="infoRemoteConfigError"></span></i>
+				</label>
+
+				<label for="input-current_url" class="feature--local-config-info">
+					URL to display
+					<input id="input-current_url" autocomplete="off" class="feature--local-config" />
+				</label>
+
+				<label for="input-screen_rotation" class="feature--local-config-info">
+					Rotate screen
+				</label>
+
+				<label class="ui-form--label feature--local-config-info">
+					<label class="radiobtn-box" id="input-screen_rotation--normal-rlbl">
+						<input type="radio" name="selection-screen-rotation" value="normal" id="input-screen_rotation--normal" class="feature--local-config">
+						<span class="radiobtn-check"></span>
+					</label>
+					<label for="input-screen_rotation--normal" id="input-screen_rotation--normal-label" class="radio-label">Normal</label>
+				</label>
+
+				<label class="ui-form--label feature--local-config-info">
+					<label class="radiobtn-box" id="input-screen_rotation--left-rlbl">
+						<input type="radio" name="selection-screen-rotation" value="left" id="input-screen_rotation--left" class="feature--local-config">
+						<span class="radiobtn-check"></span>
+					</label>
+					<label for="input-screen_rotation--left" id="input-screen_rotation--left-label" class="radio-label">Left</label>
+				</label>
+
+				<label class="ui-form--label feature--local-config-info">
+					<label class="radiobtn-box" id="input-screen_rotation--right-rlbl">
+						<input type="radio" name="selection-screen-rotation" value="right" id="input-screen_rotation--right" class="feature--local-config">
+						<span class="radiobtn-check"></span>
+					</label>
+					<label for="input-screen_rotation--right" id="input-screen_rotation--right-label" class="radio-label">Right</label>
+				</label>
+
+				<label class="ui-form--label feature--local-config-info">
+					<label class="radiobtn-box" id="input-screen_rotation--inverted-rlbl">
+						<input type="radio" name="selection-screen-rotation" value="inverted" id="input-screen_rotation--inverted" class="feature--local-config">
+						<span class="radiobtn-check"></span>
+					</label>
+					<label for="input-screen_rotation--inverted" id="input-screen_rotation--inverted-label" class="radio-label">Inverted</label>
+				</label>
+
+				<label for="input-browser_parameter">
+					Advanced browser start-up parameters
+					<input id="input-browser_parameter" autocomplete="off" class="feature--advanced-config" />
+				</label>
+				<label class="feature--field-info">
+					<i>Used as arguments when starting up browser (Chromium). Use single-quotes if needed. Leave empty for standard parameters</i>
+				</label>
+
+				<label>
+					<button id="save-config-btn" class="button">Save</button>
+				</label>
+			</form>
+		</div>
+
+		<div class="content">
+			<h2>
+				Control
+			</h2>
+			<form>
+				<label>
+					<button id="reload-url-btn" class="button button--action">Reload webpage</button>
+				</label>
+			</form>
+		</div>
+	</div>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/main.js"></script>
+</body>
+</html>

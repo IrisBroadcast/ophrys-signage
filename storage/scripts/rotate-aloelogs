@@ -1,0 +1,12 @@
+/var/log/aloe/*.log
+{
+        rotate 4
+        weekly
+        maxage 90
+        missingok
+        notifempty
+        sharedscripts
+        postrotate
+        systemctl restart rsyslog.service
+        endscript
+}

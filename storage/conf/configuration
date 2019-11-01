@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Ophrys main configuration file
+
+# MQTT settings
+MQTT_ENABLE=false # Possible values: true, false
+VERSION="" #used and needed in MQTT messages - currently same version is used always
+HOSTURL=""
+MQTT_BROKER=""
+MQTT_PORT=""
+KLIENT=""
+CERT=""
+
+# Active folders
+BASEDIR="/usr/local/aloe"
+SCRIPTFOLDER="/usr/local/aloe/scripts"
+GRAPHICSFOLDER="/usr/local/aloe/graphics"
+CONFIGURATIONFOLDER="/usr/local/aloe/conf"
+
+# Remote Git repository
+GITREPO_REMOTE="https://github.com/IrisBroadcast/OphrysSignage.git"
+
+# Local Git repository
+STORAGEFOLDER="/usr/local/aloe/nodewebb/OphrysSignage/storage"
+GITREPO_LOCAL="/usr/local/aloe/nodewebb/OphrysSignage"
+REPO_NAME="OphrysSignage"
+
+NODEMODULESFOLDER="/usr/local/aloe/nodewebb/OphrysSignage/node_modules"
+TARMODULES="/usr/local/aloe/nodewebb/OphrysSignage/storage/modules-tar/node_modules.tar.gz"
+
+# NTP servers
+NTPSERVER1="0.pool.ntp.org"
+NTPSERVER2="1.pool.ntp.org"
+NTPSERVER3="2.pool.ntp.org"
+
+PROXYBYPASSLIST="" # TODO move to unique user input file
+
+# Firewall settings
+# example: ALLOW_FROM=192.168.0.0/16
+ALLOW_FROM=""
+
+# NPM settings
+NPM_HTTP_PROXY=""
+NPM_HTTPS_PROXY=""
+NPM_REGISTRY="http://registry.npmjs.org/"
+

@@ -1,0 +1,14 @@
+[Unit]
+Description=Ophrys-animated-boot-Start
+DefaultDependencies=no
+After=local-fs.target
+
+[Service]
+User=pi
+ExecStart=/usr/bin/omxplayer -b --aspect-mode stretch /usr/local/aloe/graphics/bootsequence.mp4
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=Ophrys_animated-boot-Start
+
+[Install]
+WantedBy=sysinit.target

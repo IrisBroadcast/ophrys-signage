@@ -1,0 +1,17 @@
+[Unit]
+Description=Ophrys Signage Service
+PartOf=aloe_checkip.service
+After=aloe_checkip.service
+
+[Service]
+ExecStart=/usr/bin/node /usr/local/aloe/nodewebb/OphrysSignage/app.js
+WorkingDirectory=/usr/local/aloe/nodewebb/OphrysSignage
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=Ophrys_Signage
+TimeoutStartSec=infinity
+
+[Install]
+WantedBy=aloe_checkip.service

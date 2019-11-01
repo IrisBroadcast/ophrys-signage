@@ -1,0 +1,163 @@
+#!/bin/bash
+
+COMMONFILE=/usr/local/aloe/scripts/common.sh
+. $COMMONFILE
+
+COMP_NAME="get-local-scriptfiles"
+COMP_MESSAGE="Getting local scriptfiles"
+
+MSG=$COMP_MESSAGE
+INSTALLPROGRESS=45
+
+function getConfigurationFile
+{
+	# This file must not be downloaded if it exists, as it userconfigurable and we don't want to wipe that file....
+	if [ -e $DEST ];then
+		## Here only the necessary changes need to be injected, not possible to replace this file as it is user configurable
+		return 0
+	fi
+
+	COMPONENT=configuration
+	DEST="$CONFIGURATIONFOLDER/configuration"
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getConfigurationFile"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/conf/$COMPONENT $DEST
+	fi
+}
+
+function getCommonFile
+{
+	COMPONENT=commonfile
+	DEST="$SCRIPTFOLDER/common.sh"
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getCommonfile"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/scripts/$COMPONENT $DEST
+	fi
+}
+
+function getDpkgHelpScript
+{
+	COMPONENT=dpkg-helpscript.sh
+	DEST="$SCRIPTFOLDER/dpkg-helpscript.sh"
+	if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getDpkgHelpScript"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/scripts/$COMPONENT $DEST
+	fi
+}
+
+function getCheckIpScript
+{
+	COMPONENT=checkip
+	DEST="$SCRIPTFOLDER/checkIP.sh"
+	if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getCheckIpScript"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/scripts/$COMPONENT $DEST
+	fi
+}
+
+function getOphrysDisplayConfigScript
+{
+    COMPONENT=setdisplayconfig.sh
+    DEST=$SCRIPTFOLDER/setdisplayconfig.sh
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getOphrysDisplayConfigScript"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/scripts/$COMPONENT $DEST
+	fi
+}
+
+function getWebclientScript
+{
+	COMPONENT=displaywebpagescript.sh
+	DEST="$SCRIPTFOLDER/displaywebpagescript.sh"
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getWebclientScript"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/scripts/$COMPONENT $DEST
+	fi
+}
+
+componentInfo
+getConfigurationFile || COMP_SUCCESS=false
+getCommonFile || COMP_SUCCESS=false
+getDpkgHelpScript || COMP_SUCCESS=false
+getCheckIpScript || COMP_SUCCESS=false
+getOphrysDisplayConfigScript || COMP_SUCCESS=false
+getWebclientScript || COMP_SUCCESS=false
+reportResult

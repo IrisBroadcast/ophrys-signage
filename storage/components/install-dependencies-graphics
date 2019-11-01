@@ -1,0 +1,528 @@
+#!/bin/bash
+
+COMMONFILE=/usr/local/aloe/scripts/common.sh
+. $COMMONFILE
+
+COMP_NAME="install-dependencies-graphics"
+COMP_MESSAGE=""
+
+MSG="Installing dependencies graphics"
+INSTALLPROGRESS=75
+
+function xserverInstall
+{
+    FUNC_NAME="xserverInstall"
+
+    if apt-get -y install --no-install-recommends xserver-xorg &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get -y install --no-install-recommends xserver-xorg &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function openboxInstall
+{
+    FUNC_NAME="openboxInstall"
+
+    if apt-get -y install openbox &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get -y install openbox &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function lightdmInstall
+{
+    FUNC_NAME="lightdmInstall"
+
+    if apt-get -y install lightdm &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get -y install lightdm &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function chromiumInstall
+{
+    FUNC_NAME="chromiumInstall"
+
+    if apt-get -y install chromium-browser &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get -y install chromium-browser &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function fehInstall
+{
+    # Feh is used for for splash screen/background image
+    FUNC_NAME="fehInstall"
+
+    if apt-get -y install feh &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get -y install feh &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function jqInstall
+{
+    # JQ is a json parser for bash
+    FUNC_NAME="fqInstall"
+
+    if apt-get -y install jq &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get -y install jq &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function imagemagickInstall
+{
+    # JQ is a json parser for bash
+    FUNC_NAME="fqInstall"
+
+    if apt-get -y install imagemagick &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get -y install imagemagick &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function getBackgroundImages
+{
+    if [ ! -d "$GRAPHICSFOLDER" ];then
+        mkdir -p $GRAPHICSFOLDER
+    fi
+
+    # First get the splash images, that is, the normal background images
+    # Use normal as default, thereby these two instances
+    COMPONENT=splash_normal_inverted.png
+    DEST1="$GRAPHICSFOLDER/$COMPONENT"
+    DEST2="$GRAPHICSFOLDER/splash.png"
+
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getBackgroundImages"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/graphics/$COMPONENT $DEST1
+        cp $STORAGEFOLDER/graphics/$COMPONENT $DEST2
+	fi
+
+    COMPONENT=splash_left_right.png
+    DEST="$GRAPHICSFOLDER/$COMPONENT"
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getBackgroundImages"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/graphics/$COMPONENT $DEST
+	fi
+
+    COMPONENT=rotate_normal_inverted.png
+	DEST="$GRAPHICSFOLDER/$COMPONENT"
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getBackgroundImages"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/graphics/$COMPONENT $DEST
+	fi
+
+    COMPONENT=rotate_left_right.png
+	DEST="$GRAPHICSFOLDER/$COMPONENT"
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getBackgroundImages"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/graphics/$COMPONENT $DEST
+	fi
+
+    COMPONENT=embedip.png
+	DEST="$GRAPHICSFOLDER/$COMPONENT"
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getBackgroundImages"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/graphics/$COMPONENT $DEST
+	fi
+
+    COMPONENT=url_progress_normal_inverted.png
+	DEST="$GRAPHICSFOLDER/$COMPONENT"
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getBackgroundImages"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/graphics/$COMPONENT $DEST
+	fi
+
+    COMPONENT=url_progress_left_right.png
+	DEST="$GRAPHICSFOLDER/$COMPONENT"
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getBackgroundImages"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/graphics/$COMPONENT $DEST
+	fi
+
+    COMPONENT=splash_init.png
+	DEST="$GRAPHICSFOLDER/$COMPONENT"
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getBackgroundImages"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/graphics/$COMPONENT $DEST
+	fi
+}
+
+function addSplashScreen
+{
+    # Add bootsplash
+    apt-get install plymouth -y &>> $INSTALL_LOG
+    apt-get install plymouth-themes -y &>> $INSTALL_LOG
+    apt-get install pix-plym-splash -y &>> $INSTALL_LOG
+    plymouth-set-default-theme pix &>> $INSTALL_LOG
+
+	BOOTSPLASH="/usr/share/plymouth/themes/pix/splash.png"
+	if [ -f $BOOTSPLASH ];then
+	cp $GRAPHICSFOLDER/splash_init.png $BOOTSPLASH
+	fi
+
+    FILE="/etc/xdg/openbox/autostart"
+    # Remove any possible old splashscreen links used during first install
+    sed -i '/feh --bg-fill/d' $FILE
+    grep -q "feh --bg-fill $GRAPHICSFOLDER/splash.png" $FILE
+    if [ $? -ne 0 ];then
+        echo "feh --bg-fill $GRAPHICSFOLDER/splash.png" >> $FILE
+    fi
+}
+
+function disableCursorBlanking
+{
+    # Will remove cursor and disable screensaver
+    FILE="/etc/lightdm/lightdm.conf"
+    grep -q "xserver-command=X -s 0 -dpms -nocursor" $FILE
+    if [ $? -ne 0 ];then
+        sed -i "s/^\(\[Seat:\*\]\\)$/\1\nxserver-command=X -s 0 -dpms -nocursor/" $FILE
+        echo "Adding text as no match was found"
+    fi
+}
+
+function autoLogin
+{
+    FILE="/etc/lightdm/lightdm.conf"
+    grep -q "autologin-user-timeout=0" $FILE
+    if [ $? -ne 0 ];then
+        sed -i "s/^\(\[Seat:\*\]\\)$/\1\nautologin-user-timeout=0/" $FILE
+    fi
+
+    grep -q "autologin-user=pi" $FILE
+    if [ $? -ne 0 ];then
+        sed -i "s/^\(\[Seat:\*\]\\)$/\1\nautologin-user=pi/" $FILE
+    fi
+}
+
+function installEvdev
+{
+    FUNC_NAME="installEvdev"
+
+    if apt-get install -y xserver-xorg-input-evdev &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get install -y xserver-xorg-input-evdev &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function getEvdevFile
+{
+    EVDEVFILE="/usr/share/X11/xorg.conf.d/45-evdev.conf"
+    echo "Will download the custom evdev file"
+
+    if [ -e $EVDEVFILE ];then
+        # check if file i ophrys custom, if not get new file, else only change needed values
+        grep -q "RpiFB" $EVDEVFILE
+        if [ $? -eq 0 ];then
+            # inject appropriate updates
+            return 0
+        else
+            rm $EVDEVFILE
+
+        fi
+    fi
+
+    COMPONENT=45-evdev.conf
+	DEST="/usr/share/X11/xorg.conf.d/45-evdev.conf"
+    if [ $MQTT_ENABLE == true ];then
+        URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+        SRC="$HOSTURL$URLEND"
+
+        curling ${SRC} ${TMPFILE}
+        if [ $? -eq 0 ];then ## This needs to be checked different than all other files as text inside file will trigger an error otherwise
+            mv ${TMPFILE} ${DEST}
+        else
+            echo "Will need to create the file"
+
+            cat <<EOT >> $EVDEVFILE
+Section "Device"
+        Identifier "RpiFB"
+        Driver "fbdev"
+        Option "rotate" ""
+EndSection
+
+Section "Monitor"
+        Identifier "generic"
+EndSection
+
+Section "InputClass"
+        Identifier "evdev pointer catchall"
+        MatchIsPointer "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "evdev"
+EndSection
+
+Section "InputClass"
+        Identifier "evdev keyboard catchall"
+        MatchIsKeyboard "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "evdev"
+EndSection
+
+Section "InputClass"
+        Identifier "evdev touchpad catchall"
+        MatchIsTouchpad "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "evdev"
+EndSection
+
+Section "InputClass"
+        Identifier "evdev tablet catchall"
+        MatchIsTablet "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "evdev"
+EndSection
+
+Section "InputClass"
+        Identifier "evdev touchscreen catchall"
+        MatchIsTouchscreen "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "evdev"
+	    Option "SwapAxes" "0"
+        Option "InvertX" "0"
+        Option "InvertY" "0"
+EndSection
+EOT
+	    fi
+    else
+        cp $STORAGEFOLDER/graphics/$COMPONENT $DEST
+    fi
+}
+
+updateApt
+#################
+COMP_MESSAGE="Installing Xserver"
+componentInfo
+xserverInstall || COMP_SUCCESS=false
+#################
+COMP_MESSAGE="Installing Openbox"
+componentInfo
+openboxInstall || COMP_SUCCESS=false
+#################
+COMP_MESSAGE="Installing LightDM"
+componentInfo
+lightdmInstall || COMP_SUCCESS=false
+#################
+COMP_MESSAGE="Installing Chromium"
+componentInfo
+chromiumInstall || COMP_SUCCESS=false
+#################
+COMP_MESSAGE="Installing Feh - enables custom splash screen"
+componentInfo
+fehInstall || COMP_SUCCESS=false
+#################
+COMP_MESSAGE="Installing JQ - enables json handling for bash"
+componentInfo
+jqInstall || COMP_SUCCESS=false
+#################
+COMP_MESSAGE="Installing Imagemagick - embed text in images"
+componentInfo
+imagemagickInstall
+#################
+COMP_MESSAGE="Getting background images"
+componentInfo
+getBackgroundImages || COMP_SUCCESS=false
+#################
+COMP_MESSAGE="Activating splash screen"
+componentInfo
+addSplashScreen || COMP_SUCCESS=false
+#################
+COMP_MESSAGE="Disable cursor on touch screen"
+componentInfo
+disableCursorBlanking || COMP_SUCCESS=false
+###############
+COMP_MESSAGE="Autologin user"
+componentInfo
+autoLogin || COMP_SUCCESS=false
+###############
+COMP_MESSAGE="Install EVDEV"
+componentInfo
+installEvdev || COMP_SUCCESS=false
+getEvdevFile || COMP_SUCCESS=false
+reportResult

@@ -1,0 +1,75 @@
+#!/bin/bash
+
+COMMONFILE=/usr/local/aloe/scripts/common.sh
+. $COMMONFILE
+
+COMP_NAME="debian-os-optimisation"
+COMP_MESSAGE="Optimising the system - Disabling unwanted services"
+
+MSG=$COMP_MESSAGE
+INSTALLPROGRESS=90
+
+function disableOverscan
+{
+    FILE=/boot/config.txt
+
+    grep -q "disable_overscan" $FILE
+    if [ $? -eq 0 ];then
+        sed -i '/disable_overscan/d' $FILE
+        sed -i -e "\$adisable_overscan=1" $FILE
+    fi
+}
+
+function disableBluetooth
+{
+    FILE=/boot/config.txt
+
+    grep -q "dtoverlay=pi3-disable-bt" $FILE
+    if [ $? -ne 0 ];then
+        echo "dtoverlay=pi3-disable-bt" >> $FILE
+    fi
+    systemctl disable hciuart.service &>> $INSTALL_LOG
+    systemctl disable bluetooth.service &>> $INSTALL_LOG
+}
+
+function disableAptDaily
+{
+    systemctl stop apt-daily.timer &>> $INSTALL_LOG
+    systemctl disable apt-daily.timer &>> $INSTALL_LOG
+    systemctl disable apt-daily.service &>> $INSTALL_LOG
+    systemctl disable apt-daily-upgrade.timer &>> $INSTALL_LOG
+    systemctl daemon-reload &>> $INSTALL_LOG
+}
+
+#Disble IPv6 (Linux Debian)
+#To re-enable IPv6, remove the below lines from /etc/sysctl.conf and reboot
+function disableIPv6
+{
+	IPV6FILE="/etc/sysctl.conf"
+	TEXT1="net.ipv6.conf.all.disable_ipv6 = 1"
+	TEXT2="net.ipv6.conf.default.disable_ipv6 = 1"
+	TEXT3="net.ipv6.conf.lo.disable_ipv6 = 1"
+
+	grep -q "$TEXT1" $IPV6FILE
+    if [ $? -ne 0 ];then
+		sed -i -e "\$a$TEXT1" $IPV6FILE
+    fi
+
+	grep -q "$TEXT2" $IPV6FILE
+    if [ $? -ne 0 ];then
+		sed -i -e "\$a$TEXT2" $IPV6FILE
+    fi
+
+	grep -q "$TEXT3" $IPV6FILE
+    if [ $? -ne 0 ];then
+		sed -i -e "\$a$TEXT3" $IPV6FILE
+    fi
+	echo "IPv6 - disabled"
+}
+
+componentInfo
+disableOverscan || COMP_SUCCESS=false
+disableBluetooth || COMP_SUCCESS=false
+disableAptDaily || COMP_SUCCESS=false
+disableIPv6 || COMP_SUCCESS=false
+reportResult

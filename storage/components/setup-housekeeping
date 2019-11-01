@@ -1,0 +1,99 @@
+#!/bin/bash
+
+COMMONFILE=/usr/local/aloe/scripts/common.sh
+. $COMMONFILE
+
+COMP_NAME="setup-housekeeping"
+COMP_MESSAGE="Setting up housekeeping (crontab updates, log rotation)"
+
+MSG=$COMP_MESSAGE
+INSTALLPROGRESS=95
+
+HOSTNAME_FULL=$(hostname)
+DAYOFWEEK="$((1 + RANDOM % 7))" #Random day of the week
+
+function getCrontabScript {
+
+	COMPONENT=crontab-update-os.sh
+	DEST="$SCRIPTFOLDER/$COMPONENT"
+	if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		verifyDownloadedFile ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getCrontabScript"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/scripts/$COMPONENT $DEST
+	fi
+}
+
+function setCrontabJob
+{
+	#echo new cron into temp file,install it & remove tempfile
+	echo "$((1 + RANDOM % 10)) 3 * * $DAYOFWEEK /bin/bash /usr/local/aloe/scripts/crontab-update-os.sh" > mycron &>> $INSTALL_LOG
+	crontab mycron &>> $INSTALL_LOG
+	rm mycron
+}
+
+function getAloeLogConf
+{
+	COMPONENT=aloelog.conf
+	DEST="/etc/rsyslog.d/$COMPONENT"
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		verifyDownloadedFile ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="setCrontabJob"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/scripts/$COMPONENT $DEST
+	fi
+}
+
+function getRotateAloeLogs
+{
+	COMPONENT=rotate-aloelogs
+	DEST="/etc/logrotate.d/$COMPONENT"
+    if [ $MQTT_ENABLE == true ];then
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		SRC="$HOSTURL$URLEND"
+
+		curling ${SRC} ${TMPFILE}
+		verifyDownloadedFile ${TMPFILE}
+		if [ $? -eq 0 ];then
+			mv ${TMPFILE} ${DEST}
+		else
+			FUNC_NAME="getRotateAloeLogs"
+			FUNC_SUCCESS=false
+			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
+			functionInfo
+			return 1
+		fi
+	else
+		cp $STORAGEFOLDER/scripts/$COMPONENT $DEST
+	fi
+}
+
+getCrontabScript || COMP_SUCCESS=false
+setCrontabJob || COMP_SUCCESS=false
+getAloeLogConf || COMP_SUCCESS=false
+getRotateAloeLogs || COMP_SUCCESS=false
+reportResult

@@ -1,0 +1,70 @@
+#!/bin/bash
+
+COMMONFILE=/usr/local/aloe/scripts/common.sh
+. $COMMONFILE
+
+COMP_NAME="install-configure-nodejs"
+COMP_MESSAGE="Configuring NodeJS and NPM"
+
+DIR_TEMP="/tmp"
+DIR_VERSION="node-v12.12.0-linux-armv7l"
+NODE=$(which node)
+VERSION="v12.12.0"
+CURRENTVERSION=$(node --version)
+NEEDUPDATE=""
+
+MSG=$COMP_MESSAGE
+INSTALLPROGRESS=65
+
+function checkIfUpdateIsNeeded
+{
+	if [ $VERSION == $CURRENTVERSION ];then
+		echo "Correct version installed, no need to update node"
+		NEEDUPDATE=false
+	else
+		echo "NodeJS will be updated"
+		NEEDUPDATE=true
+	fi
+}
+
+function getNodeJs
+{
+	if [ $NEEDUPDATE == true ];then
+
+   		if [ -z "$USER_HTTP_PROXY" ];then
+        	wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/v12.12.0/node-v12.12.0-linux-armv7l.tar.xz &>> /dev/null
+    	else
+        	wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/v12.12.0/node-v12.12.0-linux-armv7l.tar.xz -e use_proxy=yes -e https_proxy=$USER_HTTPS_PROXY &>> /dev/null
+    	fi
+		cd $DIR_TEMP
+		tar -xvf nodenpm.tar.xz &>> /dev/null
+		cd $DIR_VERSION
+		sudo cp -R * /usr/ &>> /dev/null
+	fi
+}
+
+function npmSettings
+{
+	if [ $NEEDUPDATE == true ];then
+		if [ ! -z "$NPM_HTTP_PROXY" ];then
+			npm config set proxy $NPM_HTTP_PROXY &>> $INSTALL_LOG
+			npm config set no_proxy .localhost &>> $INSTALL_LOG
+		fi
+		if [ ! -z "$NPM_HTTPS_PROXY" ];then
+			npm config set https-proxy $NPM_HTTPS_PROXY &>> $INSTALL_LOG
+			npm config set no_proxy .localhost &>> $INSTALL_LOG
+		fi
+		npm config set registry $NPM_REGISTRY &>> $INSTALL_LOG
+	fi
+}
+
+componentInfo
+checkIfUpdateIsNeeded || COMP_SUCCESS=false
+getNodeJs || COMP_SUCCESS=false
+npmSettings || COMP_SUCCESS=false
+reportResult
+
+##############################
+#Choose what will happend after this component is run
+#Only one of the below lines should be activated
+##############################

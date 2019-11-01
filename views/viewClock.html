@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+	<title>Ophrys Signage - Clock</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
+	<link href="/style.css" rel="stylesheet">
+	<style type="text/css">
+        /* ========================== */
+        body {
+            background: #000000;
+            color: #ffffff;
+        }
+        .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock {
+            font-family: 'Roboto', Arial, Helvetica, sans-serif;
+            font-size: 3vmin;
+            font-weight: 400;
+            border-top: unset;
+            color: #3e3e3e;
+            display: block;
+        }
+        .logo-text {
+            color: #505050;
+        }
+        .vertical-align {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .overlay-feedback--clock {
+            position: absolute;
+            top: 50vh;
+            transform: translateY(-50%);
+            right: 0;
+            left: 0;
+            z-index: 0;
+            white-space: nowrap;
+            text-align: center;
+            color: rgba(130, 130, 130, 0.14);
+            font-weight: 600;
+            height: 50vh;
+            margin: 0 auto;
+        }
+
+        @media (orientation: landscape) {
+            .overlay-feedback--clock {
+                position: absolute;
+                top: 50vh;
+                transform: translateY(-50%);
+                right: 0;
+                left: 0;
+                z-index: 0;
+                white-space: nowrap;
+                text-align: center;
+                color: rgba(130, 130, 130, 0.14);
+                font-weight: 600;
+                height: 80vh;
+                width: unset;
+                margin: 0 auto;
+            }
+        }
+
+        @media (orientation: portrait) {
+            .overlay-feedback--clock {
+                position: absolute;
+                top: 50vh;
+                transform: translateY(-50%);
+                right: 0;
+                left: 0;
+                z-index: 0;
+                white-space: nowrap;
+                text-align: center;
+                color: rgba(130, 130, 130, 0.14);
+                font-weight: 600;
+                height: unset;
+                width: 80vw;
+                margin: 0 auto;
+            }
+        }
+
+        .overlay-feedback--clock svg#clock-box {
+            display: block;
+            margin: 0 auto;
+        }
+        .overlay-feedback--clock #clock-face {
+            fill: rgba(19, 19, 19, 0.5);
+            stroke-width: 2px;
+            stroke: #000;
+        }
+        .overlay-feedback--clock #hand-sec-ball {
+            stroke: #ff0000;
+            stroke-width: 2;
+        }
+        .overlay-feedback--clock .secondMark {
+            will-change: opacity;
+        }
+        .overlay-feedback--clock #marks-five use {
+            stroke: #2b2b2b;
+            stroke-width: 1;
+        }
+        .overlay-feedback--clock #marks-five use:first-child {
+            stroke: #b62121;
+        }
+        .status-call--clock {
+            font-size: 12vmin;
+            color: #a71e1e;
+        }
+
+	</style>
+</head>
+<body>
+
+	<svg id="pagefader"></svg>
+
+    <div class="overlay-feedback--clock" id="overlayFeedbackLocalClock">
+        <!-- Show a big studio clock -->
+        <svg id="clock-box" version="1.1" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="-50 -50 100 100">
+            <circle id="clock-face" cx="0" cy="0" r="49" />
+
+            <g id="mark-minute">
+                <line x1="0" y1="-46" x2="0" y2="-46" stroke-width="1.8" stroke-linecap="round" />
+            </g>
+
+            <g id="mark-five-minute">
+                <line x1="0" y1="-43" x2="0" y2="-43" stroke-width="2" stroke-linecap="round" /> <!-- y1: position from center, y2: position from edge -->
+            </g>
+
+            <g id="marks-five">
+                <use xlink:href="#mark-five-minute" transform="rotate(0)"  />
+                <use xlink:href="#mark-minute" transform="rotate(0)"  />
+                <use xlink:href="#mark-minute" transform="rotate(6)" />
+                <use xlink:href="#mark-minute" transform="rotate(12)" />
+                <use xlink:href="#mark-minute" transform="rotate(18)" />
+                <use xlink:href="#mark-minute" transform="rotate(24)" />
+            </g>
+
+            <use xlink:href="#marks-five" transform="rotate(30)" />
+            <use xlink:href="#marks-five" transform="rotate(60)" />
+            <use xlink:href="#marks-five" transform="rotate(90)" />
+            <use xlink:href="#marks-five" transform="rotate(120)" />
+            <use xlink:href="#marks-five" transform="rotate(150)" />
+            <use xlink:href="#marks-five" transform="rotate(180)" />
+            <use xlink:href="#marks-five" transform="rotate(210)" />
+            <use xlink:href="#marks-five" transform="rotate(240)" />
+            <use xlink:href="#marks-five" transform="rotate(270)" />
+            <use xlink:href="#marks-five" transform="rotate(300)" />
+            <use xlink:href="#marks-five" transform="rotate(330)" />
+
+            <g id="hands">
+                <line id="hand-hour" x1="0" y1="0" x2="0" y2="-15" stroke-linecap="round" />
+                <line id="hand-min" x1="0" y1="0" x2="0" y2="-35" stroke-linecap="round" />
+                <line id="hand-sec" x1="0" y1="0" x2="0" y2="-40" stroke-linecap="round" />
+                <line id="hand-sec-ball" x1="0" y1="-46" x2="0" y2="-46" stroke-width="2" stroke-linecap="round" />
+            </g>
+
+            <g id="marks-seconds">
+
+            </g>
+        </svg>
+        <div id="popupLocalClock" class="status-call--clock vertical-align">
+            <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+        </div>
+    </div>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/main.js"></script>
+    <script src="/views.js"></script>
+</body>
+</html>

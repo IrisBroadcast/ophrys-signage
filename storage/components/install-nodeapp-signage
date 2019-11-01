@@ -1,0 +1,123 @@
+#!/bin/bash
+
+COMMONFILE=/usr/local/aloe/scripts/common.sh
+. $COMMONFILE
+
+COMP_NAME="install-signage-nodeapp"
+COMP_MESSAGE="Getting and installing latest Ophrys Signage"
+
+MSG=$COMP_MESSAGE
+INSTALLPROGRESS=80
+
+HOMEDIR="/usr/local/aloe/nodewebb"
+BACKUPFOLDER="/tmp"
+
+GITVERSION="master" #if rc or master = "rc" // "master", if tag = "tags/v2.2.2"
+
+NPM_INSTALL_NEEDED=true
+
+function checkOut
+{
+    if [ -d $GITREPO_LOCAL ];then
+        echo "Directory exists"
+        cd $GITREPO_LOCAL
+        git ls-remote &>> $INSTALL_LOG
+        if [ $? -eq 0 ];then
+            echo "Repository is reachable, activating checkout"
+        else
+            FUNC_NAME="checkout_OphrysSignage"
+            FUNC_SUCCESS=false
+            FUNC_MESSAGE="Will not continue as repository was unreachable - ${FUNC_NAME}"
+            functionInfo
+            exit 64 ## http://www.tldp.org/LDP/abs/html/exitcodes.html
+        fi
+
+        cp -r $GITREPO_LOCAL $BACKUPFOLDER
+        git clean -df
+        git reset --hard
+        git tag -l | xargs git tag -d &>> $INSTALL_LOG## Will delete all local tags
+        git checkout master &>> $INSTALL_LOG
+        git pull &>> $INSTALL_LOG
+        git checkout $GITVERSION &>> $INSTALL_LOG
+
+        if [ $? -eq 0 ];then
+            echo "Updated repository - version" $GITVERSION
+        else
+            echo "Error on git pull, will re-try in 10sec, will try to Clone if still not working"
+            sleep 10
+            git clean -df
+            git reset --hard
+            git tag -l | xargs git tag -d &>> $INSTALL_LOG## Will delete all local tags
+            git checkout master &>> $INSTALL_LOG
+            git pull &>> $INSTALL_LOG
+            git checkout $GITVERSION
+            if [ $? -eq 0 ];then
+                echo "Updated repository on 2nd try- version" $GITVERSION
+            else
+                cd $HOMEDIR
+                rm -r $GITREPO_LOCAL
+                git clone $GITREPO_REMOTE
+
+                if [ $? -eq 0 ];then
+                    cd $GITREPO_LOCAL
+                    git checkout &>> $INSTALL_LOG
+                    git checkout $GITVERSION &>> $INSTALL_LOG
+                    echo "Cloned repository - version" $GITVERSION
+                else
+                    cp -r $DIR_BACKUP/$REPO_NAME $HOMEDIR
+                    FUNC_NAME="install signage"
+                    FUNC_SUCCESS=false
+                    FUNC_MESSAGE="Made a rollback as update of repository was unsuccessful - ${FUNC_NAME}"
+                    functionInfo
+                    exit 64 ##
+                fi
+            fi
+        fi
+    else
+        echo "Directory didn't exist"
+        mkdir -p $HOMEDIR
+        cd $HOMEDIR
+        git clone $GITREPO_REMOTE &>> $INSTALL_LOG
+
+        if [ $? -eq 0 ];then
+            cd $GITREPO_LOCAL
+            git checkout &>> $INSTALL_LOG
+            git checkout $GITVERSION &>> $INSTALL_LOG
+            echo "Cloned repository - version" $GITVERSION
+            else
+                FUNC_NAME="install signage"
+                FUNC_SUCCESS=false
+                FUNC_MESSAGE="Couldn't clone repository was unreachable - no fallback available- ${FUNC_NAME}"
+                functionInfo
+                exit 64 ##
+            fi
+   fi
+}
+
+function npmInstall
+{
+    if [ -d $NODEMODULESFOLDER ];then
+        rm -r $NODEMODULESFOLDER &>> $INSTALL_LOG
+    fi
+    tar -C $GITREPO_LOCAL -xvf $TARMODULES &>> $INSTALL_LOG
+}
+
+function npmInstall_backup
+{
+    if [ -f $NEWINSTALL ];then
+        cd $GITREPO_LOCAL
+        npm --unsafe-perm install --production &>> $INSTALL_LOG
+    else
+        if ($NPM_INSTALL_NEEDED);then
+            cd $GITREPO_LOCAL
+            npm --unsafe-perm install --production &>> $INSTALL_LOG
+        fi
+    fi
+}
+
+componentInfo
+if [ ! -f $NEWINSTALL ];then
+    checkOut || COMP_SUCCESS=false
+fi
+npmInstall || COMP_SUCCESS=false
+reportResult
