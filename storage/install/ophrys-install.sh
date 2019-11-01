@@ -58,7 +58,7 @@ function menuMain()
             \nAn upgrade may take several minutes but is highly recommended " 14 75 4); then
                 # Check if ntp is running = if not try to set time
                 if (! pgrep ntp);then
-                    apt get install ntpdate
+                    apt-get install ntpdate
                     if [ $? == 0 ];then
                         ntpdate 0.pool.ntp.org 1.pool.ntp.org
                     fi
