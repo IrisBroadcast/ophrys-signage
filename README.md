@@ -25,7 +25,7 @@ Features
 - Load a configuration JSON from an external site with settings
 - REST API for page refresh and */health* endpoint for status information
 
-![Signage Screen](static/gfx-screen.png)
+![Signage Screen](static/gfx-screen-2.png)
 ![Raspberry Pi](static/gfx-pi.png)
 
 License
