@@ -82,5 +82,5 @@ tail -f /var/log/aloe/main.log
 ```
 
 ## Responsible Maintainers
-- Jim Eld
-- Roger Sandholm
+- [Jim Eld](https://github.com/djhenley)
+- [Roger Sandholm](https://github.com/Roog)
