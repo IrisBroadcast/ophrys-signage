@@ -9,11 +9,13 @@ Basic signage solution with configuration page for url selection,
 screen rotation and option to fetch configuration settings from
 external server. We are using it with Debian Buster on
 Raspberry Pi 3 and 4. This should work fine on other hardwares
-as well. Let us know if you run in to any problems or have any questions.
+as well. Let us know if you run into any problems or have any questions.
+
+We use it to display system monitoring and as door signage for out studios.
 
 #### Components
 - Whiptail install script (Guides the installation of dependencies)
-- Debian + OpenBox + LightDm + Feh
+- Debian + OpenBox + LightDM + Feh
 - Chromium Browser + OMXPlayer
 - NodeJs server for configuration
 - Bash scripts for setting URLs and screen rotation
@@ -24,6 +26,8 @@ as well. Let us know if you run in to any problems or have any questions.
 - Rotate screen on both Raspberry Pi 3 and 4 without reboot
 - Load a configuration JSON from an external site with settings
 - REST API for page refresh and */health* endpoint for status information
+- Built in multi webpage iframe view, with transitioning abilities
+- Built in webpage with a studio-clock
 
 ![Signage Screen](static/gfx-screen-2.png)
 ![Raspberry Pi](static/gfx-pi.png)
