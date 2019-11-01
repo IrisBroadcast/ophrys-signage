@@ -43,7 +43,7 @@ The license for Ophrys Signage is in the LICENSE.txt file
 
 ## How to get started (Using a Raspberry Pi)
 
-First go to [Raspbian Buster Download](https://www.raspberrypi.org/downloads/) and download Raspbian Buster with desktop. It is of course possible to just download Debian 10 “Buster” with any desktop, just make sure it comes with LightDM.
+First go to [Raspbian Buster Download](https://www.raspberrypi.org/downloads/) and download Raspbian Buster Light and Buster Desktop. It is of course possible to just download Debian 10 “Buster” with any desktop, just make sure it comes with LightDM.
 
 Burn this image on an SD-card. We use “Balena Etcher” to get the image on to the SD-card.
 
