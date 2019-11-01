@@ -62,10 +62,9 @@ function menuMain()
                     if [ $? == 0 ];then
                         ntpdate 0.pool.ntp.org 1.pool.ntp.org
                     fi
-                else
+                fi
                     apt-get update
                     apt-get upgrade -y
-                fi
             else
                 # Check if ntp is running = if not try to set time
                 if (! pgrep ntp);then
