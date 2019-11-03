@@ -9,6 +9,27 @@ COMP_MESSAGE=""
 MSG="Installing dependencies graphics 2/2"
 INSTALLPROGRESS=77
 
+function fehInstall
+{
+    # Feh is used for for splash screen/background image
+    FUNC_NAME="fehInstall"
+
+    if apt-get -y install feh &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get -y install feh &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
 function jqInstall
 {
     # JQ is a json parser for bash
