@@ -1,0 +1,111 @@
+#!/bin/bash
+
+COMMONFILE=/usr/local/aloe/scripts/common.sh
+. $COMMONFILE
+
+COMP_NAME="install-dependencies-graphics"
+COMP_MESSAGE=""
+
+MSG="Installing dependencies graphics"
+INSTALLPROGRESS=72
+
+function xserverInstall
+{
+    FUNC_NAME="xserverInstall"
+
+    if apt-get -y install --no-install-recommends xserver-xorg &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get -y install --no-install-recommends xserver-xorg &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function openboxInstall
+{
+    FUNC_NAME="openboxInstall"
+
+    if apt-get -y install openbox &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get -y install openbox &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function lightdmInstall
+{
+    FUNC_NAME="lightdmInstall"
+
+    if apt-get -y install lightdm &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get -y install lightdm &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function chromiumInstall
+{
+    FUNC_NAME="chromiumInstall"
+
+    if apt-get -y install chromium-browser &>> $INSTALL_LOG
+    then
+        echo "Successful"
+    else
+        safeApt $FUNC_NAME
+        if apt-get -y install chromium-browser &>> $INSTALL_LOG
+        then
+            echo "Successful - after being assisted by DPKG helpscript"
+        else
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+updateApt
+#################
+COMP_MESSAGE="Installing Xserver"
+componentInfo
+xserverInstall || COMP_SUCCESS=false
+#################
+COMP_MESSAGE="Installing Openbox"
+componentInfo
+openboxInstall || COMP_SUCCESS=false
+#################
+COMP_MESSAGE="Installing LightDM"
+componentInfo
+if [ ! -f $NEWINSTALL ];then
+lightdmInstall || COMP_SUCCESS=false
+fi
+#################
+COMP_MESSAGE="Installing Chromium"
+componentInfo
+chromiumInstall || COMP_SUCCESS=false
+reportResult

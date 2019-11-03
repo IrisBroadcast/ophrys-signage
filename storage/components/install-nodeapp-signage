@@ -7,7 +7,7 @@ COMP_NAME="install-signage-nodeapp"
 COMP_MESSAGE="Getting and installing latest Ophrys Signage"
 
 MSG=$COMP_MESSAGE
-INSTALLPROGRESS=80
+INSTALLPROGRESS=83
 
 HOMEDIR="/usr/local/aloe/nodewebb"
 BACKUPFOLDER="/tmp"

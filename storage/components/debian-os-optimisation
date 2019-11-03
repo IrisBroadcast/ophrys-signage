@@ -7,7 +7,7 @@ COMP_NAME="debian-os-optimisation"
 COMP_MESSAGE="Optimising the system - Disabling unwanted services"
 
 MSG=$COMP_MESSAGE
-INSTALLPROGRESS=90
+INSTALLPROGRESS=92
 
 function disableOverscan
 {

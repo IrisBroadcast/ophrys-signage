@@ -4,7 +4,7 @@
     "components": [
         {
             "name": "get-local-scriptfiles",
-            "version": 8
+            "version": 1
         },
         {
             "name": "configure-bootsequence",
@@ -23,12 +23,16 @@
             "version": 1
         },
         {
-            "name": "install-dependencies-graphics",
-            "version": 5
+            "name": "install-dependencies-graphics-a",
+            "version": 1
+        },
+        {
+            "name": "install-dependencies-graphics-b",
+            "version": 1
         },
         {
             "name": "install-nodeapp-signage",
-            "version": 2
+            "version": 1
         },
         {
             "name": "debian-os-optimisation",

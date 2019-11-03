@@ -7,7 +7,7 @@ COMP_NAME="install-configure-firewall"
 COMP_MESSAGE="Setting up local firewall (ufw)"
 
 MSG=$COMP_MESSAGE
-INSTALLPROGRESS=70
+INSTALLPROGRESS=68
 
 function getUfwFirewall
 {
