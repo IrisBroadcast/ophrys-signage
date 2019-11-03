@@ -6,7 +6,7 @@ COMMONFILE=/usr/local/aloe/scripts/common.sh
 COMP_NAME="install-dependencies-graphics"
 COMP_MESSAGE=""
 
-MSG="Installing dependencies graphics"
+MSG="Installing dependencies graphics 1/2"
 INSTALLPROGRESS=72
 
 function xserverInstall
