@@ -71,7 +71,6 @@ function checkifnewinstall
     if [ ! -f /tmp/newinstall ];then
         echo "This is not a new install - continuing..."
     else
-        #################
         COMP_MESSAGE="This is a new install - no need to run "$COMP_NAME
         componentInfo
         #################
@@ -81,12 +80,11 @@ function checkifnewinstall
 }
 
 if [ $# == 101 ];then
-		echo "Argument $1 supplied (message from common file)"
-		restartservice $1
+	echo "Argument $1 supplied (message from common file)"
+	restartservice $1
 fi
 
 # --MQTT Topics--
-###############################################
 # General - Component - used by every component
 COMP_NAME=""
 COMP_SUCCESS=true
