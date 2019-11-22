@@ -25,20 +25,20 @@ FORCE_REBOOT=255
 
 function publish()
 {
-# Arg 1 - Topic # Arg 2 - Message
-# Broker with TLS
+    # Arg 1 - Topic # Arg 2 - Message
+    # Broker with TLS
     /usr/bin/mosquitto_pub --cafile $CERT -i $KLIENT$HOSTNAME -h $MQTT_BROKER -p $MQTT_PORT -q 1 -t $1 -m "$2" -u $SERIAL
 
-# Broker without TLS
-#   /usr/bin/mosquitto_pub -i $KLIENT -h $MQTT_BROKER -p $MQTT_PORT -q 1 -t $1 -m "$2" -u $SERIAL
+    # Broker without TLS
+    #   /usr/bin/mosquitto_pub -i $KLIENT -h $MQTT_BROKER -p $MQTT_PORT -q 1 -t $1 -m "$2" -u $SERIAL
 
     RET=$?
-        if test $RET -ne 0
-        then
-            echo "MQTT failed. Code $RET - $1"
-            exit 42
-        fi
-            echo Debug Publicera $1 :: "$2"
+    if test $RET -ne 0
+    then
+        echo "MQTT failed. Code $RET - $1"
+        exit 42
+    fi
+        echo Debug Publicera $1 :: "$2"
     return
 }
 
@@ -52,13 +52,13 @@ function restartservice()
 {
     case $1 in
         101 )
-                service="aloe*"
-                rm /tmp/*       #Emtpying temp-folder as it may hold some temp-references
-        ;;
+            service="aloe*"
+            rm /tmp/*       #Emtpying temp-folder as it may hold some temp-references
+    ;;
 
-        * )
-                service="null"
-        ;;
+    * )
+        service="null"
+    ;;
 
     esac
     if [ "$service" != "null" ];then
@@ -73,7 +73,6 @@ function checkifnewinstall
     else
         COMP_MESSAGE="This is a new install - no need to run "$COMP_NAME
         componentInfo
-        #################
         sleep 1
         exit 0
     fi

@@ -66,7 +66,6 @@ upgradeOS
 if [ $? -ne 0 ]; then
     FUNC_SUCCESS=false
     FUNC_MESSAGE="Crontab - upgrade OS - Failed"
-    #################
     functionInfo
     exit 64
 fi

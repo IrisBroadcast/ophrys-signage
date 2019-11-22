@@ -1,23 +1,23 @@
 #!/bin/bash
 
-function checkIp
+function checkIfValidIP
 {
-    x=true
-    while $x
+    X=true
+    while $X
         do
-            _ip=$(hostname -I)
+            IPv4=$(hostname -I)
             oct1=$(echo ${_ip} | tr "." " " | awk '{ print $1 }')
 
             if [[ -z "$oct1" ]];then
                 oct1=127
-                echo $_ip
+                echo $IPv4
             fi
             if [[ $oct1 -ne 127  && $oct1 -ne 169 ]];then
-                echo $_ip
+                echo $IPv4
                 x=false
                 break
             fi
         sleep 2
     done
 }
-checkIp
+checkIfValidIP
