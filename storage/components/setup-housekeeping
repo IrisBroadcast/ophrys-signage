@@ -3,7 +3,7 @@
 COMMONFILE=/usr/local/aloe/scripts/common.sh
 . $COMMONFILE
 
-COMP_NAME="setup-housekeeping"
+COMP_NAME="$0"
 COMP_MESSAGE="Setting up housekeeping (crontab updates, log rotation)"
 
 MSG=$COMP_MESSAGE
@@ -25,7 +25,7 @@ function getCrontabScript {
 		if [ $? -eq 0 ];then
 			mv ${TMPFILE} ${DEST}
 		else
-			FUNC_NAME="getCrontabScript"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -57,7 +57,7 @@ function getAloeLogConf
 		if [ $? -eq 0 ];then
 			mv ${TMPFILE} ${DEST}
 		else
-			FUNC_NAME="setCrontabJob"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -81,7 +81,7 @@ function getRotateAloeLogs
 		if [ $? -eq 0 ];then
 			mv ${TMPFILE} ${DEST}
 		else
-			FUNC_NAME="getRotateAloeLogs"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo

@@ -3,7 +3,7 @@
 COMMONFILE=/usr/local/aloe/scripts/common.sh
 . $COMMONFILE
 
-COMP_NAME="get-install-animated-bootsequence"
+COMP_NAME="$0"
 COMP_MESSAGE=""
 
 MSG="Installing animated boot sequence (run by OMX player)"
@@ -21,7 +21,7 @@ function installOmxPlayer
         then
            echo "Successful - after being assisted by DPKG helpscript"
         else
-            FUNC_NAME="installOmxPlayer"
+            FUNC_NAME="${FUNCNAME[0]}"
             FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
             functionInfo
             return 1
@@ -54,7 +54,7 @@ function getBootSequence
         if [ $? -eq 0 ];then
 		    mv ${TMPFILE} ${DEST}
         else
-		    FUNC_NAME="getUpdateService"
+		    FUNC_NAME="${FUNCNAME[0]}"
 		    FUNC_SUCCESS=false
 		    FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 		    functionInfo
@@ -80,7 +80,7 @@ function getServicesAnimatedBoot
             systemctl daemon-reload &>> $INSTALL_LOG
             systemctl enable /etc/systemd/system/$COMPONENT
         else
-            FUNC_NAME="getServicesAnimatedBootService"
+            FUNC_NAME="${FUNCNAME[0]}"
             FUNC_SUCCESS=false
             FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
             functionInfo
@@ -104,7 +104,6 @@ function removeRainbowSplash
 }
 
 updateApt
-###############
 COMP_MESSAGE="Optimising the system - Omxplayer install"
 componentInfo
 installOmxPlayer || COMP_SUCCESS=false

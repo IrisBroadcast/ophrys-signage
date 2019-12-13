@@ -3,7 +3,7 @@
 COMMONFILE=/usr/local/aloe/scripts/common.sh
 . $COMMONFILE
 
-COMP_NAME="install-configure-firewall"
+COMP_NAME="$0"
 COMP_MESSAGE="Setting up local firewall (ufw)"
 
 MSG=$COMP_MESSAGE
@@ -11,7 +11,7 @@ INSTALLPROGRESS=68
 
 function getUfwFirewall
 {
-    FUNC_NAME="getUfwFirewall"
+    FUNC_NAME="${FUNCNAME[0]}"
 
     if apt-get install ufw -y &>> $INSTALL_LOG
     then
@@ -22,7 +22,6 @@ function getUfwFirewall
         then
             echo "Successful - after being assisted by DPKG helpscript"
         else
-            #################
             FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
             functionInfo
             reportError
@@ -44,7 +43,6 @@ function configureFirewall
 }
 
 updateApt
-#################
 componentInfo
 getUfwFirewall || COMP_SUCCESS=false
 configureFirewall || COMP_SUCCESS=false

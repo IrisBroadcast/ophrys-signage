@@ -3,7 +3,7 @@
 COMMONFILE=/usr/local/aloe/scripts/common.sh
 . $COMMONFILE
 
-COMP_NAME="debian-os-optimisation"
+COMP_NAME="$0"
 COMP_MESSAGE="Optimising the system - Disabling unwanted services"
 
 MSG=$COMP_MESSAGE

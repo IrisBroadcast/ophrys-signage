@@ -3,7 +3,7 @@
 COMMONFILE=/usr/local/aloe/scripts/common.sh
 . $COMMONFILE
 
-COMP_NAME="install-dependencies-graphics"
+COMP_NAME="$0"
 COMP_MESSAGE=""
 
 MSG="Installing dependencies graphics 2/2"
@@ -12,7 +12,7 @@ INSTALLPROGRESS=77
 function fehInstall
 {
     # Feh is used for for splash screen/background image
-    FUNC_NAME="fehInstall"
+    FUNC_NAME="${FUNCNAME[0]}"
 
     if apt-get -y install feh &>> $INSTALL_LOG
     then
@@ -33,7 +33,7 @@ function fehInstall
 function jqInstall
 {
     # JQ is a json parser for bash
-    FUNC_NAME="fqInstall"
+    FUNC_NAME="${FUNCNAME[0]}"
 
     if apt-get -y install jq &>> $INSTALL_LOG
     then
@@ -54,7 +54,7 @@ function jqInstall
 function imagemagickInstall
 {
     # JQ is a json parser for bash
-    FUNC_NAME="fqInstall"
+    FUNC_NAME="${FUNCNAME[0]}"
 
     if apt-get -y install imagemagick &>> $INSTALL_LOG
     then
@@ -92,7 +92,7 @@ function getBackgroundImages
 		if [ $? -eq 0 ];then
 			mv ${TMPFILE} ${DEST}
 		else
-			FUNC_NAME="getBackgroundImages"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -113,7 +113,7 @@ function getBackgroundImages
 		if [ $? -eq 0 ];then
 			mv ${TMPFILE} ${DEST}
 		else
-			FUNC_NAME="getBackgroundImages"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -133,7 +133,7 @@ function getBackgroundImages
 		if [ $? -eq 0 ];then
 			mv ${TMPFILE} ${DEST}
 		else
-			FUNC_NAME="getBackgroundImages"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -153,7 +153,7 @@ function getBackgroundImages
 		if [ $? -eq 0 ];then
 			mv ${TMPFILE} ${DEST}
 		else
-			FUNC_NAME="getBackgroundImages"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -173,7 +173,7 @@ function getBackgroundImages
 		if [ $? -eq 0 ];then
 			mv ${TMPFILE} ${DEST}
 		else
-			FUNC_NAME="getBackgroundImages"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -193,7 +193,7 @@ function getBackgroundImages
 		if [ $? -eq 0 ];then
 			mv ${TMPFILE} ${DEST}
 		else
-			FUNC_NAME="getBackgroundImages"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -213,7 +213,7 @@ function getBackgroundImages
 		if [ $? -eq 0 ];then
 			mv ${TMPFILE} ${DEST}
 		else
-			FUNC_NAME="getBackgroundImages"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -233,7 +233,7 @@ function getBackgroundImages
 		if [ $? -eq 0 ];then
 			mv ${TMPFILE} ${DEST}
 		else
-			FUNC_NAME="getBackgroundImages"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -293,7 +293,7 @@ function autoLogin
 
 function installEvdev
 {
-    FUNC_NAME="installEvdev"
+    FUNC_NAME="${FUNCNAME[0]}"
 
     if apt-get install -y xserver-xorg-input-evdev &>> $INSTALL_LOG
     then
@@ -396,7 +396,6 @@ EOT
 }
 
 updateApt
-#################
 COMP_MESSAGE="Installing Feh - enables custom splash screen"
 componentInfo
 fehInstall || COMP_SUCCESS=false

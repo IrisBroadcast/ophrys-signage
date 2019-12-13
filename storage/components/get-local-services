@@ -3,7 +3,7 @@
 COMMONFILE=/usr/local/aloe/scripts/common.sh
 . $COMMONFILE
 
-COMP_NAME="get-local-services"
+COMP_NAME="$0"
 COMP_MESSAGE="Getting and activating local services"
 
 MSG=$COMP_MESSAGE
@@ -25,7 +25,7 @@ function getUpdateService
 			systemctl daemon-reload &>> $INSTALL_LOG
 			systemctl enable /etc/systemd/system/$COMPONENT &>> $INSTALL_LOG
 		else
-			FUNC_NAME="getUpdateService"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -50,7 +50,7 @@ function getCheckIpService
 			systemctl daemon-reload &>> $INSTALL_LOG
 			systemctl enable /etc/systemd/system/$COMPONENT &>> $INSTALL_LOG
 		else
-			FUNC_NAME="getCheckIpService"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -78,7 +78,7 @@ function getDisplayWebpageService
 			systemctl daemon-reload &>> $INSTALL_LOG
 			systemctl enable /etc/systemd/system/$COMPONENT &>> $INSTALL_LOG
 		else
-			FUNC_NAME="getDisplayWebpageService"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo
@@ -106,7 +106,7 @@ function getOprhysSignageService
 			systemctl daemon-reload &>> $INSTALL_LOG
 			systemctl enable /etc/systemd/system/$COMPONENT &>> $INSTALL_LOG
 		else
-			FUNC_NAME="getOprhysSignageService"
+			FUNC_NAME="${FUNCNAME[0]}"
 			FUNC_SUCCESS=false
 			FUNC_MESSAGE="Will not continue due to error in downloaded file - ${COMPONENT}"
 			functionInfo

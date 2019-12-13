@@ -3,7 +3,7 @@
 COMMONFILE=/usr/local/aloe/scripts/common.sh
 . $COMMONFILE
 
-COMP_NAME="install-dependencies-graphics"
+COMP_NAME="$0"
 COMP_MESSAGE=""
 
 MSG="Installing dependencies graphics 1/2"
@@ -11,7 +11,7 @@ INSTALLPROGRESS=72
 
 function xserverInstall
 {
-    FUNC_NAME="xserverInstall"
+    FUNC_NAME="${FUNCNAME[0]}"
 
     if apt-get -y install --no-install-recommends xserver-xorg &>> $INSTALL_LOG
     then
@@ -31,7 +31,7 @@ function xserverInstall
 
 function openboxInstall
 {
-    FUNC_NAME="openboxInstall"
+    FUNC_NAME="${FUNCNAME[0]}"
 
     if apt-get -y install openbox &>> $INSTALL_LOG
     then
@@ -51,7 +51,7 @@ function openboxInstall
 
 function lightdmInstall
 {
-    FUNC_NAME="lightdmInstall"
+    FUNC_NAME="${FUNCNAME[0]}"
 
     if apt-get -y install lightdm &>> $INSTALL_LOG
     then
@@ -71,7 +71,7 @@ function lightdmInstall
 
 function chromiumInstall
 {
-    FUNC_NAME="chromiumInstall"
+    FUNC_NAME="${FUNCNAME[0]}"
 
     if apt-get -y install chromium-browser &>> $INSTALL_LOG
     then
@@ -90,7 +90,6 @@ function chromiumInstall
 }
 
 updateApt
-#################
 COMP_MESSAGE="Installing Xserver"
 componentInfo
 xserverInstall || COMP_SUCCESS=false

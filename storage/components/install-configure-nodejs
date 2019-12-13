@@ -3,7 +3,7 @@
 COMMONFILE=/usr/local/aloe/scripts/common.sh
 . $COMMONFILE
 
-COMP_NAME="install-configure-nodejs"
+COMP_NAME="$0"
 COMP_MESSAGE="Configuring NodeJS and NPM"
 
 DIR_TEMP="/tmp"
@@ -63,8 +63,3 @@ checkIfUpdateIsNeeded || COMP_SUCCESS=false
 getNodeJs || COMP_SUCCESS=false
 npmSettings || COMP_SUCCESS=false
 reportResult
-
-##############################
-#Choose what will happend after this component is run
-#Only one of the below lines should be activated
-##############################

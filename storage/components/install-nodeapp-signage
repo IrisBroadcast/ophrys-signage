@@ -3,7 +3,7 @@
 COMMONFILE=/usr/local/aloe/scripts/common.sh
 . $COMMONFILE
 
-COMP_NAME="install-signage-nodeapp"
+COMP_NAME="$0"
 COMP_MESSAGE="Getting and installing latest Ophrys Signage"
 
 MSG=$COMP_MESSAGE
@@ -25,7 +25,7 @@ function checkOut
         if [ $? -eq 0 ];then
             echo "Repository is reachable, activating checkout"
         else
-            FUNC_NAME="checkout_OphrysSignage"
+            FUNC_NAME="${FUNCNAME[0]}"
             FUNC_SUCCESS=false
             FUNC_MESSAGE="Will not continue as repository was unreachable - ${FUNC_NAME}"
             functionInfo
@@ -85,7 +85,7 @@ function checkOut
             git checkout $GITVERSION &>> $INSTALL_LOG
             echo "Cloned repository - version" $GITVERSION
             else
-                FUNC_NAME="install signage"
+                FUNC_NAME="${FUNCNAME[0]}"
                 FUNC_SUCCESS=false
                 FUNC_MESSAGE="Couldn't clone repository was unreachable - no fallback available- ${FUNC_NAME}"
                 functionInfo

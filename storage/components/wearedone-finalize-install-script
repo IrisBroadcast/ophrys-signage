@@ -3,7 +3,7 @@
 COMMONFILE=/usr/local/aloe/scripts/common.sh
 . $COMMONFILE
 
-COMP_NAME="wearedone-finalize-install-script"
+COMP_NAME="$0"
 COMP_MESSAGE="Install finished - device will now reboot"
 
 MSG=$COMP_MESSAGE
