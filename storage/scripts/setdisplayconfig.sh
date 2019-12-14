@@ -132,32 +132,32 @@ function setCorrespondingBackgroundImage
     if [ "$ARG1" == "rotate" ];then
 
         if [ "$STATE_ROTATE" == "normal" ];then
-        cp $GRAPHICSFOLDER/rotate_normal_inverted.png $GRAPHICSFOLDER/splash.png
-        restartServices
-        sleep 5
-        # Re-set default splash
-        cp $GRAPHICSFOLDER/splash_normal_inverted.png $GRAPHICSFOLDER/splash.png
+            cp $GRAPHICSFOLDER/rotate_normal_inverted.png $GRAPHICSFOLDER/splash.png
+            restartServices
+            sleep 5
+            # Re-set default splash
+            cp $GRAPHICSFOLDER/splash_normal_inverted.png $GRAPHICSFOLDER/splash.png
 
         elif [ "$STATE_ROTATE" == "inverted" ];then
-        cp $GRAPHICSFOLDER/rotate_normal_inverted.png $GRAPHICSFOLDER/splash.png
-        restartServices
-        sleep 5
-        # Re-set default splash
-        cp $GRAPHICSFOLDER/splash_normal_inverted.png $GRAPHICSFOLDER/splash.png
+            cp $GRAPHICSFOLDER/rotate_normal_inverted.png $GRAPHICSFOLDER/splash.png
+            restartServices
+            sleep 5
+            # Re-set default splash
+            cp $GRAPHICSFOLDER/splash_normal_inverted.png $GRAPHICSFOLDER/splash.png
 
         elif [ "$STATE_ROTATE" == "left" ];then
-        cp $GRAPHICSFOLDER/rotate_left_right.png $GRAPHICSFOLDER/splash.png
-        restartServices
-        sleep 5
-        # Re-set default splash
-        cp $GRAPHICSFOLDER/splash_left_right.png $GRAPHICSFOLDER/splash.png
+            cp $GRAPHICSFOLDER/rotate_left_right.png $GRAPHICSFOLDER/splash.png
+            restartServices
+            sleep 5
+            # Re-set default splash
+            cp $GRAPHICSFOLDER/splash_left_right.png $GRAPHICSFOLDER/splash.png
 
         elif [ "$STATE_ROTATE" == "right" ];then
-        cp $GRAPHICSFOLDER/rotate_left_right.png $GRAPHICSFOLDER/splash.png
-        restartServices
-        sleep 5
-        # Re-set default splash
-        cp $GRAPHICSFOLDER/splash_left_right.png $GRAPHICSFOLDER/splash.png
+            cp $GRAPHICSFOLDER/rotate_left_right.png $GRAPHICSFOLDER/splash.png
+            restartServices
+            sleep 5
+            # Re-set default splash
+            cp $GRAPHICSFOLDER/splash_left_right.png $GRAPHICSFOLDER/splash.png
         fi
 
     elif [ "$ARG1" == "url" ] || [ "$ARG1" == "refresh" ];then

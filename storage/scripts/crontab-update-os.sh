@@ -2,7 +2,6 @@
 
 COMMONFILE=/usr/local/aloe/scripts/common.sh
 . $COMMONFILE
-###################################
 
 # This script updates the Linux system - attended to be used during night time on hosts that are online 24/7
 # The script will check the output/the log file after the update to decide whether a reboot is required

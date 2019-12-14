@@ -35,25 +35,22 @@ function safeApt ()
     ## Or a corrupt file problem
     ## Below might fix "dpkg return error (2)"
     for listfile in /var/lib/dpkg/info/*.list; do
-    listfilename=$(basename -- "$listfile")
-    listfilename="${listfilename%.*}"
-    echo ${listfilename}
-    #break
-    output=$(file ${listfile}| awk '{print $2}')
-    #echo "${output}"
-    if [[ $output == *"data"* ]]
-    then
-        echo "${listfile} is CORRUPT!"
-        echo "mv $listfile "${listfile}.broken" || exit $?"
-        mv $listfile "${listfile}.broken"
-        #################
-        FUNC_STATUS="Found Broken file"
-        FUNC_REPAIR_FILES=true
-        BROKENFILE=$listfile
-        functionInfo
-        #################
-        ##Creating a new empy file
-        touch $listfile "${listfile}"  || exit $?
-    fi
+        listfilename=$(basename -- "$listfile")
+        listfilename="${listfilename%.*}"
+        echo ${listfilename}
+        #break
+        output=$(file ${listfile}| awk '{print $2}')
+        #echo "${output}"
+        if [[ $output == *"data"* ]];then
+            echo "${listfile} is CORRUPT!"
+            echo "mv $listfile "${listfile}.broken" || exit $?"
+            mv $listfile "${listfile}.broken"
+            FUNC_STATUS="Found Broken file"
+            FUNC_REPAIR_FILES=true
+            BROKENFILE=$listfile
+            functionInfo
+            ##Creating a new empy file
+            touch $listfile "${listfile}"  || exit $?
+        fi
     done
 }
