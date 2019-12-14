@@ -31,11 +31,10 @@ function installOmxPlayer
 
 function removeTextDuringBoot
 {
+    # add text to cmdline.txt if not present
     FILE=/boot/cmdline.txt
-
     grep -q "splash quiet plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0" $FILE
     if [ $? -eq 0 ];then
-        echo "Already in $FILE -  Nothing added"
     else
         sed -i '$s/$/ splash quiet plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0/' $FILE
     fi
@@ -44,7 +43,7 @@ function removeTextDuringBoot
 function getBootSequence
 {
     COMPONENT=bootsequence.mp4
-    DEST="$GRAPHICSFOLDER/bootsequence.mp4"
+    DEST="$GRAPHICSFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
         URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
         SRC="$HOSTURL$URLEND"
@@ -68,7 +67,7 @@ function getBootSequence
 function getServicesAnimatedBoot
 {
     COMPONENT=ophrys_animatedboot.service
-    DEST="/etc/systemd/system/ophrys_animatedboot.service"
+    DEST="/etc/systemd/system/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
         URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
         SRC="$HOSTURL$URLEND"

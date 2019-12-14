@@ -273,7 +273,6 @@ function disableCursorBlanking
     grep -q "xserver-command=X -s 0 -dpms -nocursor" $FILE
     if [ $? -ne 0 ];then
         sed -i "s/^\(\[Seat:\*\]\\)$/\1\nxserver-command=X -s 0 -dpms -nocursor/" $FILE
-        echo "Adding text as no match was found"
     fi
 }
 

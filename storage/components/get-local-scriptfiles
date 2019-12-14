@@ -18,7 +18,7 @@ function getConfigurationFile
 	fi
 
 	COMPONENT=configuration
-	DEST="$CONFIGURATIONFOLDER/configuration"
+	DEST="$CONFIGURATIONFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
 		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
 		SRC="$HOSTURL$URLEND"
@@ -40,8 +40,8 @@ function getConfigurationFile
 
 function getCommonFile
 {
-	COMPONENT=commonfile
-	DEST="$SCRIPTFOLDER/common.sh"
+	COMPONENT=common.sh
+	DEST="$SCRIPTFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
 		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
 		SRC="$HOSTURL$URLEND"
@@ -64,7 +64,7 @@ function getCommonFile
 function getDpkgHelpScript
 {
 	COMPONENT=dpkg-helpscript.sh
-	DEST="$SCRIPTFOLDER/dpkg-helpscript.sh"
+	DEST="$SCRIPTFOLDER/$COMPONENT"
 	if [ $MQTT_ENABLE == true ];then
 		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
 		SRC="$HOSTURL$URLEND"
@@ -110,7 +110,7 @@ function getCheckIpScript
 function getOphrysDisplayConfigScript
 {
     COMPONENT=setdisplayconfig.sh
-    DEST=$SCRIPTFOLDER/setdisplayconfig.sh
+    DEST=$SCRIPTFOLDER/$COMPONENT
     if [ $MQTT_ENABLE == true ];then
 		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
 		SRC="$HOSTURL$URLEND"
@@ -133,7 +133,7 @@ function getOphrysDisplayConfigScript
 function getWebclientScript
 {
 	COMPONENT=displaywebpagescript.sh
-	DEST="$SCRIPTFOLDER/displaywebpagescript.sh"
+	DEST="$SCRIPTFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
 		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
 		SRC="$HOSTURL$URLEND"

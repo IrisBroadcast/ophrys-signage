@@ -64,7 +64,6 @@ function disableIPv6
     if [ $? -ne 0 ];then
 		sed -i -e "\$a$TEXT3" $IPV6FILE
     fi
-	echo "IPv6 - disabled"
 }
 
 componentInfo
