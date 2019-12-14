@@ -28,6 +28,8 @@ We use it to display system monitoring and door-signage for our broadcast studio
 - REST API for page refresh and */health* endpoint for status information
 - Built in multi webpage iframe view, with transitioning abilities
 - Built in webpage with a studio-clock
+- Automatic and regular security updates (default: once a week)
+- Local firewall included in installation (add your custom rules in the configuration file)
 
 ![Signage Screen](static/gfx-screen-2.png)
 ![Raspberry Pi](static/gfx-pi.png)
