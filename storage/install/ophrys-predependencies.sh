@@ -52,7 +52,7 @@ function copyPrimaryFilesToHostFolders
     MSG="Copying primary files to host"
     INSTALLPROGRESS=30
 
-    cp $STORAGEFOLDER/scripts/commonfile $HOST_BASEFOLDER/scripts/common.sh
+    cp $STORAGEFOLDER/scripts/common.sh $HOST_BASEFOLDER/scripts/common.sh
     cp $STORAGEFOLDER/scripts/dpkg-helpscript.sh $HOST_BASEFOLDER/scripts/dpkg-helpscript.sh
     cp $STORAGEFOLDER/conf/configuration $HOST_BASEFOLDER/conf/configuration
     cp $STORAGEFOLDER/conf/device.txt $HOST_BASEFOLDER/conf/device.txt
