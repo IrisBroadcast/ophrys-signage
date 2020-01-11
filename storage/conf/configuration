@@ -21,12 +21,12 @@ CONFIGURATIONFOLDER="/usr/local/aloe/conf"
 GITREPO_REMOTE="https://github.com/IrisBroadcast/OphrysSignage.git"
 
 # Local Git repository
-STORAGEFOLDER="/usr/local/aloe/nodewebb/OphrysSignage/storage"
-GITREPO_LOCAL="/usr/local/aloe/nodewebb/OphrysSignage"
 REPO_NAME="OphrysSignage"
+STORAGEFOLDER="/usr/local/aloe/nodewebb/$REPO_NAME/storage"
+GITREPO_LOCAL="/usr/local/aloe/nodewebb/$REPO_NAME"
 
-NODEMODULESFOLDER="/usr/local/aloe/nodewebb/OphrysSignage/node_modules"
-TARMODULES="/usr/local/aloe/nodewebb/OphrysSignage/storage/modules-tar/node_modules.tar.gz"
+NODEMODULESFOLDER="/usr/local/aloe/nodewebb/$REPO_NAME/node_modules"
+TARMODULES="/usr/local/aloe/nodewebb/$REPO_NAME/storage/modules-tar/node_modules.tar.gz"
 
 # NTP servers
 NTPSERVER1="0.pool.ntp.org"
