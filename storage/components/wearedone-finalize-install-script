@@ -6,9 +6,6 @@ COMMONFILE=/usr/local/aloe/scripts/common.sh
 COMP_NAME="$0"
 COMP_MESSAGE="Install finished - device will now reboot"
 
-MSG=$COMP_MESSAGE
-INSTALLPROGRESS=100
-
 INSTALLSERVICE="/etc/systemd/system/aloe_getstarthere.service"
 INSTALLFILES_DEST="/home/pi/used_install_files"
 

@@ -6,9 +6,6 @@ COMMONFILE=/usr/local/aloe/scripts/common.sh
 COMP_NAME="$0"
 COMP_MESSAGE="Getting local scriptfiles"
 
-MSG=$COMP_MESSAGE
-INSTALLPROGRESS=45
-
 function getConfigurationFile
 {
 	# This file must not be downloaded if it exists, as it userconfigurable and we don't want to wipe that file....

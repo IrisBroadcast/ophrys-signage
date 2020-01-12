@@ -6,9 +6,6 @@ COMMONFILE=/usr/local/aloe/scripts/common.sh
 COMP_NAME="$0"
 COMP_MESSAGE=""
 
-MSG="Installing dependencies graphics 1/2"
-INSTALLPROGRESS=72
-
 function xserverInstall
 {
     FUNC_NAME="${FUNCNAME[0]}"
@@ -69,26 +66,6 @@ function lightdmInstall
     fi
 }
 
-function chromiumInstall
-{
-    FUNC_NAME="${FUNCNAME[0]}"
-
-    if apt-get -y install chromium-browser &>> $INSTALL_LOG
-    then
-        echo "Successful"
-    else
-        safeApt $FUNC_NAME
-        if apt-get -y install chromium-browser &>> $INSTALL_LOG
-        then
-            echo "Successful - after being assisted by DPKG helpscript"
-        else
-            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
-            functionInfo
-            return 1
-        fi
-    fi
-}
-
 updateApt
 COMP_MESSAGE="Installing Xserver"
 componentInfo
@@ -103,8 +80,4 @@ componentInfo
 if [ ! -f $NEWINSTALL ];then
 lightdmInstall || COMP_SUCCESS=false
 fi
-#################
-COMP_MESSAGE="Installing Chromium"
-componentInfo
-chromiumInstall || COMP_SUCCESS=false
 reportResult

@@ -13,9 +13,6 @@ VERSION="v12.12.0"
 CURRENTVERSION=$(node --version)
 NEEDUPDATE=""
 
-MSG=$COMP_MESSAGE
-INSTALLPROGRESS=65
-
 function checkIfUpdateIsNeeded
 {
 	if [ $VERSION == $CURRENTVERSION ];then
@@ -39,7 +36,7 @@ function getNodeJs
 		cd $DIR_TEMP
 		tar -xvf nodenpm.tar.xz &>> /dev/null
 		cd $DIR_VERSION
-		sudo cp -R * /usr/ &>> /dev/null
+		sudo cp -fR * /usr/ &>> /dev/null
 	fi
 }
 

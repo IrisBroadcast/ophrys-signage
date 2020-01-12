@@ -6,9 +6,6 @@ COMMONFILE=/usr/local/aloe/scripts/common.sh
 COMP_NAME="$0"
 COMP_MESSAGE="Setting up housekeeping (crontab updates, log rotation)"
 
-MSG=$COMP_MESSAGE
-INSTALLPROGRESS=95
-
 HOSTNAME_FULL=$(hostname)
 DAYOFWEEK="$((1 + RANDOM % 7))" #Random day of the week
 

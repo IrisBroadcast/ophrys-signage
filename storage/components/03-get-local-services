@@ -6,9 +6,6 @@ COMMONFILE=/usr/local/aloe/scripts/common.sh
 COMP_NAME="$0"
 COMP_MESSAGE="Getting and activating local services"
 
-MSG=$COMP_MESSAGE
-INSTALLPROGRESS=60
-
 function getUpdateService
 {
 	# This service is only used if the ophrys client is managed by aloemanager (MQTT)

@@ -6,9 +6,6 @@ COMMONFILE=/usr/local/aloe/scripts/common.sh
 COMP_NAME="$0"
 COMP_MESSAGE="Setting up local firewall (ufw)"
 
-MSG=$COMP_MESSAGE
-INSTALLPROGRESS=68
-
 function getUfwFirewall
 {
     FUNC_NAME="${FUNCNAME[0]}"
