@@ -34,8 +34,7 @@ function removeTextDuringBoot
     # add text to cmdline.txt if not present
     FILE=/boot/cmdline.txt
     grep -q "splash quiet plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0" $FILE
-    if [ $? -eq 0 ];then
-    else
+    if [ $? -ne 0 ];then
         sed -i '$s/$/ splash quiet plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0/' $FILE
     fi
 }
