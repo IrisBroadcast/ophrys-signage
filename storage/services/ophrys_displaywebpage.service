@@ -5,7 +5,6 @@ After=ophrys_signage.service
 
 [Service]
 Environment=XAUTHORITY=/home/pi/.Xauthority
-export DISPLAY=:0.0
 User=pi
 ExecStart=/bin/bash /usr/local/aloe/scripts/displaywebpagescript.sh
 StandardOutput=syslog
