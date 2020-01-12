@@ -3,7 +3,6 @@
 USERINPUTFILE="/usr/local/aloe/conf/userinput"
 . $USERINPUTFILE
 
-
 HOST_BASEFOLDER="/usr/local/aloe"
 STORAGEFOLDER="/usr/local/aloe/nodewebb/OphrysSignage/storage"
 COMPONENTFOLDER="/usr/local/aloe/nodewebb/OphrysSignage/storage/components"
@@ -145,24 +144,9 @@ function finalizePreInstall
     fi
 }
 
-# This script will run all components located in storage/components - run via info in profilelist
-function runFullInstall
-{
-    cd $COMPONENTFOLDER
-    cat _ophrys-profile-list | jq -r '.components[] | .[]' | sed 's/[0-9]*//g' | sed -r '/^\s*$/d' > temp
-    while read p; do
-        . $p
-        echo XXX
-        echo $INSTALLPROGRESS
-        echo ${MSG[i1]}
-        echo XXX
-        sleep 3
-    done < temp | whiptail --title "Ophrys Signage" --gauge "Component install" 8 70 45
-    rm temp
-}
-
 function runWhiptailPreDependencies()
 {
+    sleep 3
     for var in "$@"
     do
         $var
@@ -170,10 +154,22 @@ function runWhiptailPreDependencies()
         echo $INSTALLPROGRESS
         echo ${MSG[i1]}
         echo XXX
-        sleep 3;
-    done | whiptail --title "Ophrys Signage" --gauge "Installation - preparing components" 8 70 20
-    sleep 2
+    done | whiptail --title "Ophrys Signage" --gauge "Installation - dependencies" 6 70 20
 }
 runWhiptailPreDependencies startTimingTheInstall setUpLogDirectory createFolders copyPrimaryFilesToHostFolders installJq installLightDm installNodeJsAndNpm npmSettings enableOpenBox finalizePreInstall
-runFullInstall
+
+# Below will run all components located in storage/components - run via info in profilelist
+{
+    sleep 3
+    number=45
+    for entry in $COMPONENTFOLDER/*
+    do
+        echo -e "XXX\n\nRunning Component:${entry##*/}\nXXX"
+        echo $number
+        bash $entry > /dev/null 2>&1
+        number=$((number+5))
+    done
+    echo -e "XXX\n100\nInstallation finished ... device will reboot\nXXX"
+    sleep 5
+} | whiptail --title "Ophrys Signage" --gauge "Preparing component install ... " 6 70 45
 reboot
