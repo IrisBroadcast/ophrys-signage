@@ -11,9 +11,6 @@ NPM_HTTP_PROXY=$USER_HTTP_PROXY
 NPM_HTTPS_PROXY=$USER_HTTPS_PROXY
 NPM_REGISTRY="http://registry.npmjs.org/"
 
-TEXT_PROGRESS="/tmp/text_progress"
-
-
 function startTimingTheInstall
 {
     # Start timing the install
@@ -39,7 +36,7 @@ function setUpLogDirectory
 
 function createFolders
 {
-    # Create needed folders.
+    # Create needed folders
     mkdir -p $HOST_BASEFOLDER/scripts
     mkdir -p $HOST_BASEFOLDER/conf
     mkdir -p $HOST_BASEFOLDER/graphics
@@ -95,7 +92,7 @@ function installNodeJsAndNpm
 
 function npmSettings
 {
-    # NPM settings - proxy
+    # NPM settings - proxy & registry
     MSG="Configuring NPM"
     INSTALLPROGRESS=40
 
@@ -158,7 +155,7 @@ function runWhiptailPreDependencies()
 }
 runWhiptailPreDependencies startTimingTheInstall setUpLogDirectory createFolders copyPrimaryFilesToHostFolders installJq installLightDm installNodeJsAndNpm npmSettings enableOpenBox finalizePreInstall
 
-# Below will run all components located in storage/components - run via info in profilelist
+# Below will run all components located in storage/components
 {
     sleep 3
     number=45
