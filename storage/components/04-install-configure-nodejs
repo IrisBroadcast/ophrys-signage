@@ -34,7 +34,7 @@ function getNodeJs
    		if [ -z "$USER_HTTP_PROXY" ];then
         	wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/$NODEVERSION/node-$NODEVERSION-linux-armv7l.tar.xz &>> /dev/null
     	else
-        	wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/$NODEVERSIONnode-$NODEVERSION-linux-armv7l.tar.xz -e use_proxy=yes -e https_proxy=$USER_HTTPS_PROXY &>> /dev/null
+        	wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/$NODEVERSION/node-$NODEVERSION-linux-armv7l.tar.xz -e use_proxy=yes -e https_proxy=$USER_HTTPS_PROXY &>> /dev/null
     	fi
 		cd $DIR_TEMP
 		tar -xvf nodenpm.tar.xz &>> /dev/null
