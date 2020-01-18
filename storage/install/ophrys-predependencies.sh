@@ -77,17 +77,17 @@ function installNodeJsAndNpm
     INSTALLPROGRESS=35
 
 	DIR_TEMP="/tmp"
-	DIR_VERSION="node-v12.12.0-linux-armv7l"
+	DIR_VERSION="node-v12.14.1-linux-armv7l"
 
     if [ -z "$USER_HTTP_PROXY" ];then
-        wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/v12.12.0/node-v12.12.0-linux-armv7l.tar.xz &>> $INSTALL_LOG
+        wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-armv7l.tar.xz &>> $INSTALL_LOG
     else
-        wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/v12.12.0/node-v12.12.0-linux-armv7l.tar.xz -e use_proxy=yes -e https_proxy=$USER_HTTPS_PROXY &>> $INSTALL_LOG
+        wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-armv7l.tar.xz -e use_proxy=yes -e https_proxy=$USER_HTTPS_PROXY &>> $INSTALL_LOG
     fi
     cd $DIR_TEMP
 	tar -xvf nodenpm.tar.xz &>> $INSTALL_LOG
 	cd $DIR_VERSION
-	sudo cp -R * /usr/ &>> $INSTALL_LOG
+	sudo cp -fR * /usr/ &>> $INSTALL_LOG
 }
 
 function npmSettings
