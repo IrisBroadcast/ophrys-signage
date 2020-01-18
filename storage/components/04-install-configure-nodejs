@@ -6,9 +6,12 @@ COMMONFILE=/usr/local/aloe/scripts/common.sh
 COMP_NAME="$0"
 COMP_MESSAGE="Configuring NodeJS and NPM"
 
-VERSION="v12.14.0"
+### CHANGE THIS WHEN UPDATING VERSION
+NODEVERSION="v12.14.1"
+###
+
 DIR_TEMP="/tmp"
-DIR_VERSION="node-$VERSION-linux-armv7l"
+DIR_VERSION="node-$NODEVERSION-linux-armv7l"
 NODE=$(which node)
 CURRENTVERSION=$(node --version)
 NEEDUPDATE=""
@@ -29,9 +32,9 @@ function getNodeJs
 	if [ $NEEDUPDATE == true ];then
 
    		if [ -z "$USER_HTTP_PROXY" ];then
-        	wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/v12.12.0/node-$VERSION-linux-armv7l.tar.xz &>> /dev/null
+        	wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/$NODEVERSION/node-$NODEVERSION-linux-armv7l.tar.xz &>> /dev/null
     	else
-        	wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/v12.12.0/node-$VERSION-linux-armv7l.tar.xz -e use_proxy=yes -e https_proxy=$USER_HTTPS_PROXY &>> /dev/null
+        	wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/$NODEVERSIONnode-$NODEVERSION-linux-armv7l.tar.xz -e use_proxy=yes -e https_proxy=$USER_HTTPS_PROXY &>> /dev/null
     	fi
 		cd $DIR_TEMP
 		tar -xvf nodenpm.tar.xz &>> /dev/null
