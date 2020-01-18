@@ -1,2 +1,2 @@
 # Ophrys main device file
-# File is a config file used only in conjunction with the central management system Aloe)
+# File is a config file used only in conjunction with the central management system Aloe
