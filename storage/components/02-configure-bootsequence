@@ -41,7 +41,7 @@ function getBootSequence
     COMPONENT=bootsequence.mp4
     DEST="$GRAPHICSFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-        URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+        URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
         SRC="$HOSTURL$URLEND"
 
         curling ${SRC} ${TMPFILE}
@@ -65,7 +65,7 @@ function getServicesAnimatedBoot
     COMPONENT=ophrys_animatedboot.service
     DEST="/etc/systemd/system/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-        URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+        URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
         SRC="$HOSTURL$URLEND"
 
         curling ${SRC} ${TMPFILE}

@@ -14,7 +14,7 @@ function getCrontabScript {
 	COMPONENT=crontab-update-os.sh
 	DEST="$SCRIPTFOLDER/$COMPONENT"
 	if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -46,7 +46,7 @@ function getAloeLogConf
 	COMPONENT=aloelog.conf
 	DEST="/etc/rsyslog.d/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -70,7 +70,7 @@ function getRotateAloeLogs
 	COMPONENT=rotate-aloelogs
 	DEST="/etc/logrotate.d/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}

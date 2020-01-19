@@ -102,7 +102,7 @@ function getBackgroundImages
     DEST2="$GRAPHICSFOLDER/splash.png"
 
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -123,7 +123,7 @@ function getBackgroundImages
     COMPONENT=splash_left_right.png
     DEST="$GRAPHICSFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -143,7 +143,7 @@ function getBackgroundImages
     COMPONENT=rotate_normal_inverted.png
 	DEST="$GRAPHICSFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -163,7 +163,7 @@ function getBackgroundImages
     COMPONENT=rotate_left_right.png
 	DEST="$GRAPHICSFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -183,7 +183,7 @@ function getBackgroundImages
     COMPONENT=embedip.png
 	DEST="$GRAPHICSFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -203,7 +203,7 @@ function getBackgroundImages
     COMPONENT=url_progress_normal_inverted.png
 	DEST="$GRAPHICSFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -223,7 +223,7 @@ function getBackgroundImages
     COMPONENT=url_progress_left_right.png
 	DEST="$GRAPHICSFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -243,7 +243,7 @@ function getBackgroundImages
     COMPONENT=splash_init.png
 	DEST="$GRAPHICSFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -347,7 +347,7 @@ function getEvdevFile
     COMPONENT=45-evdev.conf
 	DEST="/usr/share/X11/xorg.conf.d/45-evdev.conf"
     if [ $MQTT_ENABLE == true ];then
-        URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+        URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
         SRC="$HOSTURL$URLEND"
 
         curling ${SRC} ${TMPFILE}

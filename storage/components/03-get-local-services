@@ -12,7 +12,7 @@ function getUpdateService
 	if [ $MQTT_ENABLE == true ];then
 	COMPONENT=aloeupdate.service
 	DEST="/etc/systemd/system/$COMPONENT"
-	URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+	URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 	SRC="$HOSTURL$URLEND"
 
 	curling ${SRC} ${TMPFILE}
@@ -37,7 +37,7 @@ function getCheckIpService
 	COMPONENT=aloe_checkip.service
 	DEST="/etc/systemd/system/$COMPONENT"
 	if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -65,7 +65,7 @@ function getDisplayWebpageService
 	COMPONENT=ophrys_displaywebpage.service
 	DEST="/etc/systemd/system/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -93,7 +93,7 @@ function getOprhysSignageService
 	COMPONENT=ophrys_signage.service
 	DEST="/etc/systemd/system/$COMPONENT"
 	if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}

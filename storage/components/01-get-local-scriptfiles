@@ -17,7 +17,7 @@ function getConfigurationFile
 	COMPONENT=configuration
 	DEST="$CONFIGURATIONFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -40,7 +40,7 @@ function getCommonFile
 	COMPONENT=common.sh
 	DEST="$SCRIPTFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -63,7 +63,7 @@ function getDpkgHelpScript
 	COMPONENT=dpkg-helpscript.sh
 	DEST="$SCRIPTFOLDER/$COMPONENT"
 	if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -86,7 +86,7 @@ function getCheckIpScript
 	COMPONENT=checkip
 	DEST="$SCRIPTFOLDER/checkIP.sh"
 	if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -109,7 +109,7 @@ function getOphrysDisplayConfigScript
     COMPONENT=setdisplayconfig.sh
     DEST=$SCRIPTFOLDER/$COMPONENT
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
@@ -132,7 +132,7 @@ function getWebclientScript
 	COMPONENT=displaywebpagescript.sh
 	DEST="$SCRIPTFOLDER/$COMPONENT"
     if [ $MQTT_ENABLE == true ];then
-		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$TYPE&Version=$VERSION"
+		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"
 
 		curling ${SRC} ${TMPFILE}
