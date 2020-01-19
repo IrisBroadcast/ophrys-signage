@@ -12,54 +12,40 @@ NODEVERSION="v12.14.1"
 
 DIR_TEMP="/tmp"
 DIR_VERSION="node-$NODEVERSION-linux-armv7l"
-NODE=$(which node)
 CURRENTVERSION=$(node --version)
-NEEDUPDATE=""
-
-function checkIfUpdateIsNeeded
-{
-	if [ $NODEVERSION == $CURRENTVERSION ];then
-		echo "Correct version installed, no need to update node"
-		NEEDUPDATE=false
-	else
-		echo "NodeJS will be updated"
-		NEEDUPDATE=true
-	fi
-}
 
 function getNodeJs
 {
-	if [ $NEEDUPDATE == true ];then
-
-   		if [ -z "$USER_HTTP_PROXY" ];then
-        	wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/$NODEVERSION/node-$NODEVERSION-linux-armv7l.tar.xz &>> /dev/null
-    	else
-        	wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/$NODEVERSION/node-$NODEVERSION-linux-armv7l.tar.xz -e use_proxy=yes -e https_proxy=$USER_HTTPS_PROXY &>> /dev/null
-    	fi
-		cd $DIR_TEMP
-		tar -xvf nodenpm.tar.xz &>> /dev/null
-		cd $DIR_VERSION
-		sudo cp -fR * /usr/ &>> /dev/null
+	if [ $NODEVERSION == $CURRENTVERSION ];then
+		echo "Correct version installed, no need to update node"
+		return 0
 	fi
+
+	if [ -z "$USER_HTTP_PROXY" ];then
+		wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/$NODEVERSION/node-$NODEVERSION-linux-armv7l.tar.xz &>> /dev/null
+	else
+		wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/$NODEVERSION/node-$NODEVERSION-linux-armv7l.tar.xz -e use_proxy=yes -e https_proxy=$USER_HTTPS_PROXY &>> /dev/null
+	fi
+	cd $DIR_TEMP
+	tar -xvf nodenpm.tar.xz &>> /dev/null
+	cd $DIR_VERSION
+	sudo cp -fR * /usr/ &>> /dev/null
 }
 
 function npmSettings
 {
-	if [ $NEEDUPDATE == true ];then
-		if [ ! -z "$NPM_HTTP_PROXY" ];then
-			npm config set proxy $NPM_HTTP_PROXY &>> $INSTALL_LOG
-			npm config set no_proxy .localhost &>> $INSTALL_LOG
-		fi
-		if [ ! -z "$NPM_HTTPS_PROXY" ];then
-			npm config set https-proxy $NPM_HTTPS_PROXY &>> $INSTALL_LOG
-			npm config set no_proxy .localhost &>> $INSTALL_LOG
-		fi
-		npm config set registry $NPM_REGISTRY &>> $INSTALL_LOG
+	if [ ! -z "$NPM_HTTP_PROXY" ];then
+		npm config set proxy $NPM_HTTP_PROXY &>> $INSTALL_LOG
+		npm config set no_proxy .localhost &>> $INSTALL_LOG
 	fi
+	if [ ! -z "$NPM_HTTPS_PROXY" ];then
+		npm config set https-proxy $NPM_HTTPS_PROXY &>> $INSTALL_LOG
+		npm config set no_proxy .localhost &>> $INSTALL_LOG
+	fi
+	npm config set registry $NPM_REGISTRY &>> $INSTALL_LOG
 }
 
 componentInfo
-checkIfUpdateIsNeeded || COMP_SUCCESS=false
 getNodeJs || COMP_SUCCESS=false
 npmSettings || COMP_SUCCESS=false
 reportResult

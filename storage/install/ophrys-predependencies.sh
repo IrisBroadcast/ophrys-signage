@@ -76,13 +76,23 @@ function installNodeJsAndNpm
     MSG="Installing NodeJS-NPM"
     INSTALLPROGRESS=35
 
-	DIR_TEMP="/tmp"
-	DIR_VERSION="node-v12.14.1-linux-armv7l"
+    ### CHANGE THIS WHEN UPDATING VERSION
+    NODEVERSION="v12.14.1"
+    ###
+
+    DIR_TEMP="/tmp"
+    DIR_VERSION="node-$NODEVERSION-linux-armv7l"
+    CURRENTVERSION=$(node --version)
+
+    if [ $NODEVERSION == $CURRENTVERSION ];then
+		echo "Correct version installed, no need to update node"
+        return 0
+	fi
 
     if [ -z "$USER_HTTP_PROXY" ];then
-        wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-armv7l.tar.xz &>> $INSTALL_LOG
+        wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/$NODEVERSION/node-$NODEVERSION-linux-armv7l.tar.xz &>> $INSTALL_LOG
     else
-        wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-armv7l.tar.xz -e use_proxy=yes -e https_proxy=$USER_HTTPS_PROXY &>> $INSTALL_LOG
+        wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/$NODEVERSION/node-$NODEVERSION-linux-armv7l.tar.xz -e use_proxy=yes -e https_proxy=$USER_HTTPS_PROXY &>> $INSTALL_LOG
     fi
     cd $DIR_TEMP
 	tar -xvf nodenpm.tar.xz &>> $INSTALL_LOG
@@ -155,7 +165,7 @@ function runWhiptailPreDependencies()
 }
 runWhiptailPreDependencies startTimingTheInstall setUpLogDirectory createFolders copyPrimaryFilesToHostFolders installJq installLightDm installNodeJsAndNpm npmSettings enableOpenBox finalizePreInstall
 
-# Below will run all components located in storage/components
+# Below will run all components located in directory storage/components
 {
     sleep 3
     number=45
