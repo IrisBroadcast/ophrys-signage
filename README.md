@@ -54,7 +54,7 @@ Depending on your way of installing and later setup, decide between:
 - Connect via SSH and write all the commands and follow instruction in the terminal on screen.
 
 If SSH is used, remember to add an empty file to the **/boot/** folder named “SSH” without file end, this is done after the image has been written to your SD card.
-This empty file in boot folder enables SSH on Debian with the default username “pi” and password “raspberry” on boot.
+This empty file enables SSH on Debian with the default username “pi” and password “raspberry” on boot.
 
 ======================
 
