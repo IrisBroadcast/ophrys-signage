@@ -45,9 +45,9 @@ The license for Ophrys Signage is in the LICENSE.txt file
 
 ## How to get started (Using a Raspberry Pi)
 
-First go to [Raspbian Buster Download](https://www.raspberrypi.org/downloads/) and download Raspbian Buster Lite or Raspian Buster Desktop - we normally use Buster Lite
+First go to [Raspbian Buster Download](https://www.raspberrypi.org/downloads/raspbian/) and download Raspbian Buster Lite or Raspian Buster Desktop - we normally use Buster Lite
 
-Burn the image on an SD-card. We use “Balena Etcher” to get the image on to the SD-card (https://www.balena.io/etcher/)
+Burn the image on an SD-card. We use [Balena Etcher](https://www.balena.io/etcher/) when flashing the OS image to an SD card.
 
 Depending on your way of installing and later setup, decide between:
 - Connecting a mouse and keyboard and write all the commands and follow instruction in the terminal on screen.
