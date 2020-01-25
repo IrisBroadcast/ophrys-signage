@@ -10,15 +10,11 @@ function chromiumInstall
 {
     FUNC_NAME="${FUNCNAME[0]}"
 
-    if apt-get -y install chromium-browser &>> $INSTALL_LOG
-    then
-        echo "Successful"
-    else
+    if !(apt-get -y install chromium-browser &>> $INSTALL_LOG);then
+
         safeApt $FUNC_NAME
-        if apt-get -y install chromium-browser &>> $INSTALL_LOG
-        then
-            echo "Successful - after being assisted by DPKG helpscript"
-        else
+
+        if !(apt-get -y install chromium-browser &>> $INSTALL_LOG);then
             FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
             functionInfo
             return 1
@@ -31,15 +27,11 @@ function fehInstall
     # Feh is used for for splash screen/background image
     FUNC_NAME="${FUNCNAME[0]}"
 
-    if apt-get -y install feh &>> $INSTALL_LOG
-    then
-        echo "Successful"
-    else
+    if !(apt-get -y install feh &>> $INSTALL_LOG);then
+
         safeApt $FUNC_NAME
-        if apt-get -y install feh &>> $INSTALL_LOG
-        then
-            echo "Successful - after being assisted by DPKG helpscript"
-        else
+
+        if !(apt-get -y install feh &>> $INSTALL_LOG);then
             FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
             functionInfo
             return 1
@@ -52,15 +44,11 @@ function jqInstall
     # JQ is a json parser for bash
     FUNC_NAME="${FUNCNAME[0]}"
 
-    if apt-get -y install jq &>> $INSTALL_LOG
-    then
-        echo "Successful"
-    else
+    if !(apt-get -y install jq &>> $INSTALL_LOG);then
+
         safeApt $FUNC_NAME
-        if apt-get -y install jq &>> $INSTALL_LOG
-        then
-            echo "Successful - after being assisted by DPKG helpscript"
-        else
+
+        if !(apt-get -y install jq &>> $INSTALL_LOG);then
             FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
             functionInfo
             return 1
@@ -73,15 +61,11 @@ function imagemagickInstall
     # JQ is a json parser for bash
     FUNC_NAME="${FUNCNAME[0]}"
 
-    if apt-get -y install imagemagick &>> $INSTALL_LOG
-    then
-        echo "Successful"
-    else
+    if !(apt-get -y install imagemagick &>> $INSTALL_LOG);then
+
         safeApt $FUNC_NAME
-        if apt-get -y install imagemagick &>> $INSTALL_LOG
-        then
-            echo "Successful - after being assisted by DPKG helpscript"
-        else
+
+        if !(apt-get -y install imagemagick &>> $INSTALL_LOG);then
             FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
             functionInfo
             return 1
@@ -311,15 +295,11 @@ function installEvdev
 {
     FUNC_NAME="${FUNCNAME[0]}"
 
-    if apt-get install -y xserver-xorg-input-evdev &>> $INSTALL_LOG
-    then
-        echo "Successful"
-    else
+    if !(apt-get install -y xserver-xorg-input-evdev &>> $INSTALL_LOG);then
+
         safeApt $FUNC_NAME
-        if apt-get install -y xserver-xorg-input-evdev &>> $INSTALL_LOG
-        then
-            echo "Successful - after being assisted by DPKG helpscript"
-        else
+
+        if !(apt-get install -y xserver-xorg-input-evdev &>> $INSTALL_LOG);then
             FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
             functionInfo
             return 1

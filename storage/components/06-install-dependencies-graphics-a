@@ -10,15 +10,11 @@ function xserverInstall
 {
     FUNC_NAME="${FUNCNAME[0]}"
 
-    if apt-get -y install --no-install-recommends xserver-xorg &>> $INSTALL_LOG
-    then
-        echo "Successful"
-    else
+    if !(apt-get -y install --no-install-recommends xserver-xorg &>> $INSTALL_LOG);then
+
         safeApt $FUNC_NAME
-        if apt-get -y install --no-install-recommends xserver-xorg &>> $INSTALL_LOG
-        then
-            echo "Successful - after being assisted by DPKG helpscript"
-        else
+
+        if !(apt-get -y install --no-install-recommends xserver-xorg &>> $INSTALL_LOG);then
             FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
             functionInfo
             return 1
@@ -30,15 +26,11 @@ function openboxInstall
 {
     FUNC_NAME="${FUNCNAME[0]}"
 
-    if apt-get -y install openbox &>> $INSTALL_LOG
-    then
-        echo "Successful"
-    else
+    if !(apt-get -y install openbox &>> $INSTALL_LOG);then
+
         safeApt $FUNC_NAME
-        if apt-get -y install openbox &>> $INSTALL_LOG
-        then
-            echo "Successful - after being assisted by DPKG helpscript"
-        else
+
+        if !(apt-get -y install openbox &>> $INSTALL_LOG);then
             FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
             functionInfo
             return 1
@@ -50,15 +42,11 @@ function lightdmInstall
 {
     FUNC_NAME="${FUNCNAME[0]}"
 
-    if apt-get -y install lightdm &>> $INSTALL_LOG
-    then
-        echo "Successful"
-    else
+    if !(apt-get -y install lightdm &>> $INSTALL_LOG);then
+
         safeApt $FUNC_NAME
-        if apt-get -y install lightdm &>> $INSTALL_LOG
-        then
-            echo "Successful - after being assisted by DPKG helpscript"
-        else
+
+        if !(apt-get -y install lightdm &>> $INSTALL_LOG);then
             FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
             functionInfo
             return 1
