@@ -71,7 +71,7 @@ Boot up the device, open a terminal window (through SSH or with a keyboard and d
    ```
 
 
-The script will fetch an installation tool and start it up automatically. To continue setup follow the on-screen instructions.
+The script will fetch an installation tool and start it up automatically. To continue setup, follow the on-screen instructions.
 
 
 ### Advanced
