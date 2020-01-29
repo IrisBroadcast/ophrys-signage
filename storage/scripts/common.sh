@@ -66,7 +66,7 @@ function restartservice()
     fi
 }
 
-function checkifnewinstall
+function checkIfNewInstall
 {
     if [ ! -f /tmp/newinstall ];then
         echo "This is not a new install - continuing..."

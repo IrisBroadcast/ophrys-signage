@@ -3,8 +3,8 @@
 # Ophrys main configuration file
 
 # MQTT settings
-MQTT_ENABLE=false # Possible values: true, false
-VERSION="" #used and needed in MQTT messages - currently same version is used always
+MQTT_ENABLE=false # true, false
+VERSION=""        # used and needed in MQTT messages - currently same version is used always
 HOSTURL=""
 MQTT_BROKER=""
 MQTT_PORT=""
