@@ -819,6 +819,11 @@ app.get('/view/tab', function(req, res)
 	res.sendFile(__dirname + '/views/viewFrame.html');
 });
 
+app.get('/view/site', function(req, res)
+{
+	res.sendFile(__dirname + '/views/viewSite.html');
+});
+
 app.get('/view/multi', function(req, res)
 {
 	res.sendFile(__dirname + '/views/viewBlocks.html');
