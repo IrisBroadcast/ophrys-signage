@@ -74,7 +74,7 @@ Boot up the device, open a terminal window (through SSH or with a keyboard and d
 The script will fetch an installation tool and start it up automatically. To continue setup, follow the on-screen instructions.
 
 
-### Advanced
+### Advanced - detailed log during install
 If you want to follow along with the installation, in more detail than the whiptail interface. Open a new terminal window and type this command to follow the installation process.
 ```sh
 tail -f /var/log/ophrys-full-install.log
@@ -84,6 +84,15 @@ When the applications and scripts are running they log to the following file:
 ```sh
 tail -f /var/log/aloe/main.log
 ```
+<br>
+
+## Start using your Ophrys Signage
+When the installation is finished, remote control your Ophrys Signage device via the following url:
+```device-ip-adress:82```<br>
+Example: ```192.168.10.13:82```
+
+- [Find all usage examples here](https://github.com/IrisBroadcast/OphrysSignage/blob/master/views/README.md)
+
 
 ## Responsible Maintainers
 - [Jim Eld](https://github.com/djhenley)
