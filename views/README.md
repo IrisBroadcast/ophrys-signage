@@ -1,7 +1,7 @@
 # Special views, if you don't have anything better to display.
 
 ## View/clock
-Displays a studio like clock. It shows the local "browser" clock, so make sure the operating system timezone is set. It could also be a good idea to set a NTP endpoint to one of your choice.
+Displays a studio like clock. It shows the local "browser" clock, so make sure the operating system timezone is set. It could also be a good idea to set an NTP endpoint to one of your choice.
 
 ### Example
 - `http://localhost:82/view/clock`
