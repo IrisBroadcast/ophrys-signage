@@ -13,7 +13,7 @@ An iframe webpage slideshow. This is not suitable for all types of webpages sinc
 - Url1 { "url without http" }
 - Url2
 - Url3
-- Delay { “15” } (time for showing each page in seconds")
+- Delay { “15” } (time for showing each page in seconds)
 - Transition { "slide" | "fade" }
 - Reload { "true" | "false" } (Should the site reload after being showed)
 
@@ -29,6 +29,20 @@ Loads 2 iframes side-by-side or on-top of each other.
 
 ### Example
 - `http://localhost:82/view/multi?url1=example.com&url2=mysite.com`
+
+## View/site
+Shows only one site embeded in an iframe to add variables to modify how the site is being shown.
+
+### Variables:
+ - Url1 { "url without http" } (the site to show)
+ - reload { "true" | "false" } (if the site should automatically be reloaded at a set interval)
+ - delay { “15” } (number of seconds between each reload if reload=true)
+ - bodypadding { "20px" } (add a boarder around the shown site)
+ - bodybg { "white" | "black" | etc.} (choose color of the background that becomes visible if bodypadding is used)
+ - clock { "true" | "false" } (show a clock at the bottom of the site)
+ 
+ ### Example
+ - `http://localhost:82/view/site?url1=example.com&reload=true&delay=10&bodypadding=20px&bodybg=white&clock=true`
 
 ## Advanced browser start-up parameters
 All views can be used with one or multiple Chromium start-up parameters.
