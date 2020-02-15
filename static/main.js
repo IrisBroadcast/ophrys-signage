@@ -357,87 +357,6 @@ var util = function() {
 var utils = new util();
 
 //////////////////////////////////////////////////////////////////////////////
-// Clock
-if(utils.elementExists("hand-sec-ball") || utils.elementExists("hours"))
-{
-    (function() {
-        // Initial
-        var secondBall = utils.getElem('hand-sec-ball');
-        var marksSeconds = utils.getElem('marks-seconds');
-
-        var time_hours = utils.getElem("hours");
-        var time_minutes = utils.getElem("minutes");
-        var time_seconds = utils.getElem("seconds");
-        var time_full = utils.getElem("fulltime");
-
-        // Initial
-        for (let ii = 0; ii < 60; ii++)
-        {
-            var deg = ii*6;
-            var lline = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            lline.setAttribute("class", "secondMark");
-            lline.setAttribute("id", "secondMark"+deg);
-            lline.setAttribute("x1", "0");
-            lline.setAttribute("y1", "-46");
-            lline.setAttribute("x2", "0");
-            lline.setAttribute("y2", "-46");
-            lline.setAttribute("stroke-linecap", "round");
-            lline.setAttribute("stroke-width", "2");
-            lline.setAttribute('transform', 'rotate(' + deg + ' 0 0)');
-            lline.setAttribute("stroke", "#ff0000");
-            lline.setAttribute("opacity", "0.1");
-            marksSeconds.appendChild(lline);
-
-            if((6 * new Date().getSeconds()) >= deg) {
-                utils.getElem("secondMark"+deg).setAttribute("opacity", "1");
-            }
-        }
-
-        var now = new Date();
-        secondBall.setAttribute('transform', 'rotate(' + 6 * now.getSeconds() + ' 0 0)');
-
-        function pad(number)
-        {
-            if (number < 10) return "0" + number;
-            else return "" + number;
-        }
-
-        function rot(el, deg) {
-            //el.setAttribute('transform', 'rotate(' + deg + ' 0 0)');
-
-            if(el.id == "hand-sec-ball")
-            {
-                // Reset face
-                if(deg == 0)
-                {
-                    var elems = document.getElementsByClassName("secondMark");
-                    for(let bb = 0; bb < 60; bb++)
-                    {
-                        elems["secondMark"+bb*6].setAttribute("opacity", "0.1");
-                    }
-                }
-                utils.getElem("secondMark"+deg).setAttribute("opacity", "1");
-            }
-        }
-
-        function draw(timestamp)
-        {
-            var now = new Date();
-            rot(secondBall, 6 * now.getSeconds());
-
-            time_hours.textContent = pad(now.getHours());
-            time_minutes.textContent = pad(now.getMinutes());
-            time_seconds.textContent = pad(now.getSeconds());
-            time_full.innerHTML = now;
-
-            window.requestAnimationFrame(draw);
-        }
-
-        window.requestAnimationFrame(draw);
-    })();
-}
-
-//////////////////////////////////////////////////////////////////////////////
 // CONFIGURATION
 var socket = io()
 
@@ -502,6 +421,7 @@ utils.addEvent(utils.getElem("reload-url-btn"), "click", function(event)
     return false;
 });
 
+// Toggle configuration form elements visibility
 utils.addEvent(utils.getElem("input-fetch_config_from_url"), "click", function()
 {
     if(utils.getProperty("input-fetch_config_from_url", "checked"))
@@ -531,7 +451,7 @@ function setFeatureRemoteConfig(value)
     }
 }
 
-// Get system infor from server
+// Get system info from server
 socket.on('system-status', function(msg)
 {
     console.dir(msg);
@@ -683,6 +603,90 @@ socket.on('config-options--state', function(msg)
     }
 });
 
+//////////////////////////////////////////////////////////////////////////////
+// VIEW AND NICE TO HAVE THINGS
+
+// Clock
+if(utils.elementExists("hand-sec-ball") || utils.elementExists("hours"))
+{
+    (function() {
+        // Initial
+        var secondBall = utils.getElem('hand-sec-ball');
+        var marksSeconds = utils.getElem('marks-seconds');
+
+        var time_hours = utils.getElem("hours");
+        var time_minutes = utils.getElem("minutes");
+        var time_seconds = utils.getElem("seconds");
+        var time_full = utils.getElem("fulltime");
+
+        // Initial
+        for (let ii = 0; ii < 60; ii++)
+        {
+            var deg = ii*6;
+            var lline = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            lline.setAttribute("class", "secondMark");
+            lline.setAttribute("id", "secondMark"+deg);
+            lline.setAttribute("x1", "0");
+            lline.setAttribute("y1", "-46");
+            lline.setAttribute("x2", "0");
+            lline.setAttribute("y2", "-46");
+            lline.setAttribute("stroke-linecap", "round");
+            lline.setAttribute("stroke-width", "2");
+            lline.setAttribute('transform', 'rotate(' + deg + ' 0 0)');
+            lline.setAttribute("stroke", "#ff0000");
+            lline.setAttribute("opacity", "0.1");
+            marksSeconds.appendChild(lline);
+
+            if((6 * new Date().getSeconds()) >= deg) {
+                utils.getElem("secondMark"+deg).setAttribute("opacity", "1");
+            }
+        }
+
+        var now = new Date();
+        secondBall.setAttribute('transform', 'rotate(' + 6 * now.getSeconds() + ' 0 0)');
+
+        function pad(number)
+        {
+            if (number < 10) return "0" + number;
+            else return "" + number;
+        }
+
+        function rot(el, deg) {
+            //el.setAttribute('transform', 'rotate(' + deg + ' 0 0)');
+
+            if(el.id == "hand-sec-ball")
+            {
+                // Reset face
+                if(deg == 0)
+                {
+                    var elems = document.getElementsByClassName("secondMark");
+                    for(let bb = 0; bb < 60; bb++)
+                    {
+                        elems["secondMark"+bb*6].setAttribute("opacity", "0.1");
+                    }
+                }
+                utils.getElem("secondMark"+deg).setAttribute("opacity", "1");
+            }
+        }
+
+        function draw(timestamp)
+        {
+            var now = new Date();
+            rot(secondBall, 6 * now.getSeconds());
+
+            time_hours.textContent = pad(now.getHours());
+            time_minutes.textContent = pad(now.getMinutes());
+            time_seconds.textContent = pad(now.getSeconds());
+            time_full.innerHTML = now;
+
+            window.requestAnimationFrame(draw);
+        }
+
+        window.requestAnimationFrame(draw);
+    })();
+}
+
+// Window size calculation and onload
 window.onload = function(e)
 {
     windowResized();

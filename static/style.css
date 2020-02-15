@@ -596,3 +596,37 @@ input:checked + .slider:before {
 .tv-bar-color-8 {
     background-color: #000000;
 }
+
+/* Loading */
+#pagefader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    pointer-events: none;
+    background: #000000;
+    animation-duration: 1300ms;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes fade-out {
+    from { opacity: 1 }
+    to { opacity: 0 }
+}
+
+@keyframes fade-in {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+
+#pagefader.fade-out {
+    opacity: 0;
+    animation-name: fade-out;
+}
+
+#pagefader.fade-in {
+    opacity: 1;
+    animation-name: fade-in;
+}

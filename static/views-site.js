@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function()
 
     var anchors = document.getElementsByTagName('a');
 
-    for (var idx=0; idx<anchors.length; idx+=1)
+    for (var idx = 0; idx < anchors.length; idx += 1)
     {
         if (anchors[idx].hostname !== window.location.hostname)
         {

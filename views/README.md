@@ -40,7 +40,7 @@ Shows only one site embeded in an iframe to add variables to modify how the site
  - bodypadding { "20px" } (add a boarder around the shown site)
  - bodybg { "white" | "black" | etc.} (choose color of the background that becomes visible if bodypadding is used)
  - clock { "true" | "false" } (show a clock at the bottom of the site)
- 
+
  ### Example
  - `http://localhost:82/view/site?url1=example.com&reload=true&delay=10&bodypadding=20px&bodybg=white&clock=true`
 

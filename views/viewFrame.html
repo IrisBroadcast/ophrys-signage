@@ -1,17 +1,21 @@
 <!doctype html>
 <html>
 <head>
-	<title>Ophrys Signage - Frame</title>
+    <title>Ophrys Signage - Frame</title>
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1.0, minimum-scale=0.5">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
     <link href="/style.css" rel="stylesheet">
-	<style type="text/css">
-
-        /* ========================== */
+    <style type="text/css">
         body {
             background: #000000;
             color: #ffffff;
             overflow-y: hidden;
         }
+
+        * {
+            max-width: unset !important;
+        }
+
         .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock {
             font-family: 'Roboto', Arial, Helvetica, sans-serif;
             font-size: 3vmin;
@@ -20,9 +24,11 @@
             color: #3e3e3e;
             display: block;
         }
+
         .logo-text {
             color: #505050;
         }
+
         .vertical-align {
             position: absolute;
             top: 50%;
@@ -30,65 +36,12 @@
             transform: translate(-50%, -50%);
         }
 
-        .overlay-feedback--frames {
+        .frame-container {
             white-space: nowrap;
             text-align: center;
             color: rgba(130, 130, 130, 0.14);
             font-weight: 600;
             margin: 0 auto;
-        }
-
-        @media (orientation: landscape) {
-            .overlay-feedback--frames {
-                white-space: nowrap;
-                text-align: center;
-                color: rgba(130, 130, 130, 0.14);
-                font-weight: 600;
-                margin: 0 auto;
-            }
-        }
-
-        @media (orientation: portrait) {
-            .overlay-feedback--frames {
-                white-space: nowrap;
-                text-align: center;
-                color: rgba(130, 130, 130, 0.14);
-                font-weight: 600;
-                margin: 0 auto;
-            }
-        }
-
-        #pagefader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 999999;
-            pointer-events: none;
-            background: #000000;
-            animation-duration: 1300ms;
-            animation-timing-function: ease-in-out;
-        }
-
-        @keyframes fade-out {
-            from { opacity: 1 }
-            to { opacity: 0 }
-        }
-
-        @keyframes fade-in {
-            from { opacity: 0 }
-            to { opacity: 1 }
-        }
-
-        #pagefader.fade-out {
-            opacity: 0;
-            animation-name: fade-out;
-        }
-
-        #pagefader.fade-in {
-            opacity: 1;
-            animation-name: fade-in;
         }
 
         .tab-iframe {
@@ -99,18 +52,36 @@
             padding: 1vh 1vh;
         }
 
-        h3 {
-            color: white;
+        @media (orientation: landscape) {
+            .frame-container {
+                white-space: nowrap;
+                text-align: center;
+                color: rgba(130, 130, 130, 0.14);
+                font-weight: 600;
+                margin: 0 auto;
+            }
         }
 
-	</style>
+        @media (orientation: portrait) {
+            .frame-container {
+                white-space: nowrap;
+                text-align: center;
+                color: rgba(130, 130, 130, 0.14);
+                font-weight: 600;
+                margin: 0 auto;
+            }
+        }
+
+        .tab-iframe--feedback h3 {
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
     <svg id="pagefader"></svg>
 
-    <div class="overlay-feedback--frames">
-
+    <div class="frame-container">
         <div id="frame-widget-0"
             class="tab-iframe tab-iframe--feedback">
             <h3 id="frame-widget-feedback" class="vertical-align"></h3>
@@ -139,11 +110,10 @@
             allowfullscreen="true"
             src=""
             class="tab-iframe tab-iframe--third"></iframe>
-
     </div>
 
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="/main.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/main.js"></script>
     <script src="/views.js"></script>
 </body>
 </html>
