@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Ophrys Signage - Configuration</title>
+    <title>Ophrys Signage - Views</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
     <style type="text/css">
         * {
@@ -651,98 +651,18 @@
 
         <div class="content">
             <form action="">
-                <label for="input-title">
-                    Title
-                    <input id="input-title" autocomplete="off" />
+                <label for="input-view">
+                    View
+                    <input id="input-view" autocomplete="off" />
                 </label>
 
-                <label for="input-description">
-                    Description
-                    <input id="input-description" autocomplete="off" />
-                </label>
-
-                <label for="input-fetch_config_from_url">
-                    Fetch configuration from URL<br/>
-                    <label class="switch">
-                        <input type="checkbox" id="input-fetch_config_from_url" />
-                        <span class="slider" id="settingSwitchEngineerView"></span>
-                    </label>
-                </label>
-
-                <label for="input-remote_config_url" class="feature--remote-config-info">
-                    Remote configuration from URL
-                    <input id="input-remote_config_url" autocomplete="off" class="feature--remote-config" />
-                </label>
-                <label class="feature--remote-config-info feature--field-info">
-                    <i>The remote configuration should provide <span class="code">{ 'url': 'URL to be loaded', 'rotation': 'normal|left|right|inverted' }</span></i> 
-                    <i><span id="infoRemoteConfigTimer"></span> <span id="infoRemoteConfigError"></span></i>
-                </label>
-
-                <label for="input-current_url" class="feature--local-config-info">
-                    URL to display
-                    <input id="input-current_url" autocomplete="off" class="feature--local-config" />
-                </label>
-                <label class="feature--local-config-info feature--field-info">
-                    <i>Ophrys has a built in webserver with some feature pages and helper views. Check out the options <a href="/view">here</a>.</i>
-                </label>
-
-                <label for="input-screen_rotation" class="feature--local-config-info">
-                    Rotate screen
-                </label>
-
-                <label class="ui-form--label feature--local-config-info">
-                    <label class="radiobtn-box" id="input-screen_rotation--normal-rlbl">
-                        <input type="radio" name="selection-screen-rotation" value="normal" id="input-screen_rotation--normal" class="feature--local-config">
-                        <span class="radiobtn-check"></span>
-                    </label>
-                    <label for="input-screen_rotation--normal" id="input-screen_rotation--normal-label" class="radio-label">Normal</label>
-                </label>
-
-                <label class="ui-form--label feature--local-config-info">
-                    <label class="radiobtn-box" id="input-screen_rotation--left-rlbl">
-                        <input type="radio" name="selection-screen-rotation" value="left" id="input-screen_rotation--left" class="feature--local-config">
-                        <span class="radiobtn-check"></span>
-                    </label>
-                    <label for="input-screen_rotation--left" id="input-screen_rotation--left-label" class="radio-label">Left</label>
-                </label>
-
-                <label class="ui-form--label feature--local-config-info">
-                    <label class="radiobtn-box" id="input-screen_rotation--right-rlbl">
-                        <input type="radio" name="selection-screen-rotation" value="right" id="input-screen_rotation--right" class="feature--local-config">
-                        <span class="radiobtn-check"></span>
-                    </label>
-                    <label for="input-screen_rotation--right" id="input-screen_rotation--right-label" class="radio-label">Right</label>
-                </label>
-
-                <label class="ui-form--label feature--local-config-info">
-                    <label class="radiobtn-box" id="input-screen_rotation--inverted-rlbl">
-                        <input type="radio" name="selection-screen-rotation" value="inverted" id="input-screen_rotation--inverted" class="feature--local-config">
-                        <span class="radiobtn-check"></span>
-                    </label>
-                    <label for="input-screen_rotation--inverted" id="input-screen_rotation--inverted-label" class="radio-label">Inverted</label>
-                </label>
-
-                <label for="input-browser_parameter">
-                    Advanced browser start-up parameters
-                    <input id="input-browser_parameter" autocomplete="off" class="feature--advanced-config" />
-                </label>
-                <label class="feature--field-info">
-                    <i>Used as arguments when starting up browser (Chromium). Use single-quotes if needed. Leave empty for standard parameters</i>
+                <label for="input-html">
+                    Html<br/>
+                    <textarea id="input-html" autocomplete="off"></textarea>
                 </label>
 
                 <label>
-                    <button id="save-config-btn" class="button">Save</button>
-                </label>
-            </form>
-        </div>
-
-        <div class="content">
-            <h2>
-                Control
-            </h2>
-            <form>
-                <label>
-                    <button id="reload-url-btn" class="button button--action">Reload webpage</button>
+                    <button id="save-view-data-btn" class="button">Save</button>
                 </label>
             </form>
         </div>

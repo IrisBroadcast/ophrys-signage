@@ -38,6 +38,7 @@ const express = require('express');
 
 var signageConfigPath = '/usr/local/aloe/scripts/ophrys_state_node.json',
 	signageStatePath = '/usr/local/aloe/scripts/ophrys_state_bash.json',
+	signageViewDataPath = '/usr/local/aloe/scripts/ophrys_state_view.json',
 	signageConfigFile = {
 		"title": "Ophrys Signage",
 		"description": "",
@@ -53,6 +54,10 @@ var signageConfigPath = '/usr/local/aloe/scripts/ophrys_state_node.json',
 		"browserparameter": "",
 		"hardwaremodel": "",
 		"hostname": ""
+	},
+	signageViewDataFile = {
+		"view": "none",
+		"html": ""
 	},
 	signageUrlUpdateScript = '/usr/local/aloe/scripts/setdisplayconfig.sh',
 	signageUrlRefreshScript = '/usr/local/aloe/scripts/setdisplayconfig.sh',
@@ -73,6 +78,7 @@ process.argv.forEach(function (val, index, array)
 		console.log("# Entering DEBUG Mode");
 		signageConfigPath = './ophrys_state_node.json';
 		signageStatePath = './ophrys_state_bash.json';
+		signageViewDataPath = './ophrys_state_view.json',
 		signageUrlUpdateScript = './debugscript.sh';
 		signageUrlRefreshScript = './debugscript.sh';
 		signageScreenScript = './debugscript.sh';
@@ -307,6 +313,18 @@ var initListeners = function()
 			readStateFile();
 		}
 	});
+
+	// Signage view data state
+	readViewDataFile();
+
+	fs.watch(signageViewDataPath, { encoding: 'buffer' }, (eventType, filename) =>
+	{
+		if(filename)
+		{
+			console.log("Change detected: " + eventType.toString() + " file: " + filename.toString());
+			readViewDataFile();
+		}
+	});
 }
 
 var initConfig = function()
@@ -338,19 +356,52 @@ var initState = function()
 	{
 		if (err)
 		{
-			// file doesn't exist
+			// File doesn't exist
 			console.log("File doesn't exist:" + signageStatePath);
 			console.log(signageStateFile);
 			writeJsonToFile(signageStatePath, signageStateFile);
+			initViewData();
+		}
+		else
+		{
+			// File exists
+			console.log("File exist:" + signageStatePath);
+			initViewData();
+		}
+	});
+}
+
+var initViewData = function()
+{
+	console.log("Init: " + signageViewDataPath);
+	fs.access(signageViewDataPath, fs.F_OK, (err) =>
+	{
+		if (err)
+		{
+			// File doesn't exist
+			console.log("File doesn't exist:" + signageViewDataPath);
+			console.log(signageViewDataFile);
+			writeJsonToFile(signageViewDataPath, signageViewDataFile);
 			initListeners();
 		}
 		else
 		{
-			// file exists
-			console.log("File exist:" + signageStatePath);
+			// File exists
+			console.log("File exist:" + signageViewDataPath);
 			initListeners();
 		}
 	});
+}
+
+var readConfigFile = function()
+{
+	xReadFile(signageConfigPath)
+		.then((data) => {
+			parseConfigurationOptions(data);
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 }
 
 var readStateFile = function()
@@ -364,11 +415,11 @@ var readStateFile = function()
 		});
 }
 
-var readConfigFile = function()
+var readViewDataFile = function()
 {
-	xReadFile(signageConfigPath)
+	xReadFile(signageViewDataPath)
 		.then((data) => {
-			parseConfigurationOptions(data);
+			parseViewDataOptions(data);
 		})
 		.catch((err) => {
 			console.log(err);
@@ -500,6 +551,42 @@ var parseStateOptions = function(data)
 
 	// Emit to clients
 	io.emit('config-options--state', signageStateFile);
+}
+
+// Read local view data and emit
+var parseViewDataOptions = function(data)
+{
+	console.log("parseViewDataOptions:");
+	console.log(data);
+
+	var configUpdate = {};
+	var tmp = {
+		"view": "none",
+		"html": ""
+	};
+
+	try {
+		configUpdate = JSON.parse(data);
+	}
+	catch (err) {
+		configUpdate = data;
+	}
+
+	// View
+	if(configUpdate.hasOwnProperty('view')) {
+		tmp.view = configUpdate.view;
+	}
+
+	// Html
+	if(configUpdate.hasOwnProperty('html')) {
+		tmp.html = configUpdate.html;
+	}
+
+	// Store the read in configuration
+	signageViewDataFile = tmp;
+
+	// Emit to clients
+	io.emit('config-options--view-data', signageViewDataFile);
 }
 
 // =============================================
@@ -646,6 +733,36 @@ var doTranslateConfigFromForm = function(configUpdate)
 	doActionBrowserParameters();
 }
 
+var doTranslateViewDataFromForm = function(configUpdate)
+{
+	// Store everything in View Data config
+	var tmp = {};
+
+	// Get view selected
+	if(configUpdate.hasOwnProperty('view')) {
+		tmp.view = configUpdate.view;
+	} else if(signageConfigFile.hasOwnProperty('view')) {
+		tmp.view = signageConfigFile.view;
+	} else {
+		tmp.view = "";
+	}
+
+	// Get HTML data
+	if(configUpdate.hasOwnProperty('html')) {
+		tmp.html = configUpdate.html;
+	} else if(signageConfigFile.hasOwnProperty('html')) {
+		tmp.html = signageConfigFile.html;
+	} else {
+		tmp.html = "";
+	}
+
+	console.log("Writing down view data file content:");
+	console.log(tmp);
+
+	// Write down a JSON view-data file
+	writeJsonToFile(signageViewDataPath, tmp);
+}
+
 // =============================================
 // Script action
 var doActionUpdateUrl = async function(url)
@@ -785,6 +902,15 @@ io.on('connection', function(Socket)
 		doTranslateConfigFromForm(configUpdate);
 	});
 
+	// Emit view data configuration
+	io.emit('config-options--view-data', signageViewDataFile);
+
+	// User saves view data
+	Socket.on('save config-view-data', function(configUpdate)
+	{
+		doTranslateViewDataFromForm(configUpdate);
+	});
+
 	// User refresh/reload browser
 	Socket.on('user-action--reload-browser', function()
 	{
@@ -798,7 +924,7 @@ io.on('connection', function(Socket)
 });
 
 // =============================================
-// Web App Starts
+// Web App Start and Routing
 app.get('/', function(req, res)
 {
 	res.sendFile(__dirname + '/app-initial.html');
@@ -809,9 +935,19 @@ app.get('/config', function(req, res)
 	res.sendFile(__dirname + '/app-config.html');
 });
 
+app.get('/view', function(req, res)
+{
+	res.sendFile(__dirname + '/app-viewinfo.html');
+});
+
 app.get('/view/clock', function(req, res)
 {
 	res.sendFile(__dirname + '/views/viewClock.html');
+});
+
+app.get('/view/info', function(req, res)
+{
+	res.sendFile(__dirname + '/views/viewInfoScreen.html');
 });
 
 app.get('/view/tab', function(req, res)

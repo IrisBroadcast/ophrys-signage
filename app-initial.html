@@ -59,7 +59,7 @@
             font-weight: normal;
         }
 
-        form input {
+        form input, form textarea {
             margin: 0;
             padding: 10px;
             font-size: 16px;
@@ -71,12 +71,16 @@
             border: 2px solid #636363;
         }
 
-        form input:hover, form input:focus {
+        form textarea {
+            min-height: 25vh;
+        }
+
+        form input:hover, form input:focus, form textarea:hover, form textarea:focus {
             background: #f1f1f1;
             color:#000000;
         }
 
-        form input:disabled {
+        form input:disabled, form textarea:disabled {
             color: #a0a0a0;
             cursor: default;
             background-color: #cecece;
@@ -608,53 +612,6 @@
             transform: translate(-50%, -50%);
         }
 
-        /*.overlay-feedback--clock {
-            position: absolute;
-            top: 47vh;
-            transform: translateY(-50%);
-            right: 0;
-            left: 0;
-            z-index: 0;
-            white-space: nowrap;
-            text-align: center;
-            color: rgba(130, 130, 130, 0.14);
-            font-weight: 600;
-            height: 47vh;
-        }
-
-        .overlay-feedback--clock svg#clock-box {
-            display: block;
-            margin: 0 auto;
-        }
-
-        .overlay-feedback--clock #clock-face {
-            fill: rgba(31, 31, 31, 0.5);
-            stroke-width: 2px;
-            stroke: #000;
-        }
-
-        .overlay-feedback--clock #hand-sec-ball {
-            stroke: #ff0000;
-            stroke-width: 2;
-        }
-
-        .overlay-feedback--clock .secondMark {
-            will-change: opacity;
-        }
-
-        .overlay-feedback--clock #marks-five use {
-            stroke: #2b2b2b;
-            stroke-width: 1;
-        }
-
-        .overlay-feedback--clock #marks-five use:first-child {
-            stroke: #b62121;
-        }
-
-        .status-call--clock {
-            font-size: 7vmin;
-            color: #a71e1e;
-        }*/
     </style>
 </head>
 <body>

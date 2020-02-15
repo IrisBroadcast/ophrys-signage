@@ -374,7 +374,7 @@ socket.on('disconnect', function()
     utils.getElem('logo-image').classList.add('status-socket-disconnected')
 });
 
-// Save items to configfile
+// Save items to configuration file
 utils.addEvent(utils.getElem("save-config-btn"), "click", function(event)
 {
     event.preventDefault();
@@ -409,6 +409,19 @@ utils.addEvent(utils.getElem("save-config-btn"), "click", function(event)
 
     console.log("Sent:",formdata)
     socket.emit('save config-options', formdata)
+    return false
+});
+
+// Save items to view-data file
+utils.addEvent(utils.getElem("save-view-data-btn"), "click", function(event)
+{
+    event.preventDefault();
+    var formdata = {}
+    formdata.view = utils.getProperty("input-view", "value");
+    formdata.html = utils.getProperty("input-html", "value");
+
+    console.log("Sent:",formdata)
+    socket.emit('save config-view-data', formdata)
     return false
 });
 
@@ -592,14 +605,40 @@ socket.on('config-options--state', function(msg)
         }
 
         // Set hardware model
-        if(msg.hasOwnProperty('hardwaremodel')) {
+        if(msg.hasOwnProperty('hardwaremodel'))
+        {
             utils.domChange("infoHardware", "innerText", msg.hardwaremodel);
         }
 
         // Set hostname
-        if(msg.hasOwnProperty('hostname')) {
+        if(msg.hasOwnProperty('hostname'))
+        {
             utils.domChange("infoHostName", "innerText", msg.hostname);
         }
+    }
+});
+
+// Get local statefile from server
+socket.on('config-options--view-data', function(msg)
+{
+    console.log("Recieved config-options--view-data:")
+    console.table(msg);
+    if(msg != null)
+    {
+        // View
+        if(msg.hasOwnProperty('view'))
+        {
+            utils.domChange("input-view", "value", msg.view);
+            utils.domChange("popupLocalInformation2", "innerText", msg.view);
+        }
+
+        // Html
+        if(msg.hasOwnProperty('html'))
+        {
+            utils.domChange("input-html", "value", msg.html);
+            utils.domChange("popupLocalInformation", "innerHTML", msg.html);
+        }
+
     }
 });
 
