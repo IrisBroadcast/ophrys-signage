@@ -68,7 +68,7 @@ function menuMain()
             else
                 # Check if ntp is running = if not try to set time
                 if (! pgrep ntp);then
-                    apt get install ntpdate
+                    apt-get install ntpdate
                     if [ $? == 0 ];then
                         ntpdate 0.pool.ntp.org 1.pool.ntp.org
                     fi
