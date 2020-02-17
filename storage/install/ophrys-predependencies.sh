@@ -84,7 +84,7 @@ function installNodeJsAndNpm
     DIR_VERSION="node-$NODEVERSION-linux-armv7l"
     CURRENTVERSION=$(node --version)
 
-    if [ $NODEVERSION == $CURRENTVERSION ];then
+    if [ "$NODEVERSION" == "$CURRENTVERSION" ];then
 		echo "Correct version installed, no need to update node"
         return 0
 	fi
