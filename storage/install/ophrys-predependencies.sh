@@ -37,9 +37,7 @@ function setUpLogDirectory
 function createFolders
 {
     # Create needed folders
-    mkdir -p $HOST_BASEFOLDER/scripts
-    mkdir -p $HOST_BASEFOLDER/conf
-    mkdir -p $HOST_BASEFOLDER/graphics
+    mkdir -p {$HOST_BASEFOLDER/scripts,$HOST_BASEFOLDER/conf,$HOST_BASEFOLDER/graphics}
 }
 
 function copyPrimaryFilesToHostFolders
@@ -84,10 +82,15 @@ function installNodeJsAndNpm
     DIR_VERSION="node-$NODEVERSION-linux-armv7l"
     CURRENTVERSION=$(node --version)
 
-    if [ "$NODEVERSION" == "$CURRENTVERSION" ];then
-		echo "Correct version installed, no need to update node"
-        return 0
-	fi
+    # Check if node is installed
+    if (which node > /dev/null 2>&1);then
+
+        # Check if correct version is installed
+        if [ "$NODEVERSION" == "$CURRENTVERSION" ];then
+            echo "Correct version installed, no need to update node"
+            return 0
+        fi
+    fi
 
     if [ -z "$USER_HTTP_PROXY" ];then
         wget -O $DIR_TEMP/nodenpm.tar.xz https://nodejs.org/dist/$NODEVERSION/node-$NODEVERSION-linux-armv7l.tar.xz &>> $INSTALL_LOG
