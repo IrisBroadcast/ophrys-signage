@@ -1,6 +1,6 @@
 #!/bin/bash
 
-COMMONFILE=/usr/local/aloe/scripts/common.sh
+COMMONFILE="/usr/local/aloe/scripts/common.sh"
 . $COMMONFILE
 
 COMP_NAME="$0"
@@ -58,11 +58,11 @@ function calculateTimeForInstall
 		# Use expr to do the math, let's say TIME1 was the start and TIME2 was the finish
 		DIFFSEC=`expr ${SEC2} - ${SEC1}`
 
-		# And use date to convert the seconds back to something more meaningful
+		# Use date to convert the seconds back to something more meaningful
 		echo "TOTAL INSTALL TIME:" `date +%M:%S -ud @${DIFFSEC}` "(min:ss)"|& tee -a $INSTALL_LOG
 		echo "#####################" >> $INSTALL_LOG
 
-		# remove the temporary file used for timing the install
+		# Remove the temporary file used for timing the install
 		if [ -f $TIMINGFILE ];then
 			rm $TIMINGFILE
 		fi

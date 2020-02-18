@@ -1,0 +1,60 @@
+#!/bin/bash
+
+HOST_BASEFOLDER="/usr/local/aloe"
+STORAGEFOLDER="/usr/local/aloe/nodewebb/OphrysSignage/storage"
+INSTALL_LOG="/var/log/ophrys-full-install.log"
+
+function startTimingTheInstall
+{
+    # Start timing the install
+    TIME=$(date +"%H:%M")
+    echo "START="$TIME > /tmp/timing
+}
+
+function setUpLogDirectory
+{
+    # Set up log directory
+    echo "FULL INSTALL INITIATED $(date)" > $INSTALL_LOG
+    echo "#####################" >> $INSTALL_LOG
+    echo "" >> $INSTALL_LOG
+    echo "*** INIT PROCESS START ***" >> $INSTALL_LOG
+    echo "--------------------" >> $INSTALL_LOG
+}
+
+function createFolders
+{
+    # Create needed folders
+    mkdir -p {$HOST_BASEFOLDER/scripts,$HOST_BASEFOLDER/conf,$HOST_BASEFOLDER/graphics}
+}
+
+function copyPrimaryFilesToHostFolders
+{
+    # Copying primary files to host - needed for component install
+    cp $STORAGEFOLDER/scripts/common.sh $HOST_BASEFOLDER/scripts/common.sh
+    cp $STORAGEFOLDER/scripts/dpkg-helpscript.sh $HOST_BASEFOLDER/scripts/dpkg-helpscript.sh
+    cp $STORAGEFOLDER/conf/configuration $HOST_BASEFOLDER/conf/configuration
+    cp $STORAGEFOLDER/conf/device.txt $HOST_BASEFOLDER/conf/device.txt
+}
+
+function finalizePreInstall
+{
+    # Finalizing preinstall (removing obsolete files and directories)
+    DIR_PI="/home/pi"
+    if [ -d $DIR_PI ];then
+        rm -r $DIR_PI/Desktop &>> $INSTALL_LOG
+        rm -r $DIR_PI/Documents &>> $INSTALL_LOG
+        rm -r $DIR_PI/Downloads &>> $INSTALL_LOG
+        rm -r $DIR_PI/MagPi &>> $INSTALL_LOG
+        rm -r $DIR_PI/Music &>> $INSTALL_LOG
+        rm -r $DIR_PI/Pictures &>> $INSTALL_LOG
+        rm -r $DIR_PI/Templates &>> $INSTALL_LOG
+        rm -r $DIR_PI/Videos &>> $INSTALL_LOG
+        rm -r $DIR_PI/Public &>> $INSTALL_LOG
+    fi
+}
+
+startTimingTheInstall
+setUpLogDirectory
+createFolders
+copyPrimaryFilesToHostFolders
+finalizePreInstall

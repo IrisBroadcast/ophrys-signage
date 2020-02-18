@@ -1,13 +1,13 @@
 #!/bin/bash
 
-COMMONFILE=/usr/local/aloe/scripts/common.sh
+COMMONFILE="/usr/local/aloe/scripts/common.sh"
 . $COMMONFILE
 
 COMP_NAME="$0"
 COMP_MESSAGE="Configuring NodeJS and NPM"
 
 ### CHANGE THIS WHEN UPDATING VERSION
-NODEVERSION="v12.14.1"
+NODEVERSION="v12.16.0"
 ###
 
 DIR_TEMP="/tmp"

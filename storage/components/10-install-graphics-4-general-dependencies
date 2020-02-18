@@ -1,26 +1,10 @@
 #!/bin/bash
 
-COMMONFILE=/usr/local/aloe/scripts/common.sh
+COMMONFILE="/usr/local/aloe/scripts/common.sh"
 . $COMMONFILE
 
 COMP_NAME="$0"
 COMP_MESSAGE=""
-
-function chromiumInstall
-{
-    FUNC_NAME="${FUNCNAME[0]}"
-
-    if !(apt-get -y install chromium-browser &>> $INSTALL_LOG);then
-
-        safeApt $FUNC_NAME
-
-        if !(apt-get -y install chromium-browser &>> $INSTALL_LOG);then
-            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
-            functionInfo
-            return 1
-        fi
-    fi
-}
 
 function fehInstall
 {
@@ -58,7 +42,7 @@ function jqInstall
 
 function imagemagickInstall
 {
-    # JQ is a json parser for bash
+    # ImageMagick is used to embed IP-address in background
     FUNC_NAME="${FUNCNAME[0]}"
 
     if !(apt-get -y install imagemagick &>> $INSTALL_LOG);then
@@ -79,8 +63,8 @@ function getBackgroundImages
         mkdir -p $GRAPHICSFOLDER
     fi
 
-    # First get the splash images, that is, the normal background images
-    # Use normal as default, thereby these two instances
+    # First get the splash images and normal background images
+    # Use normal as default, others when rotate to portrait mode
     COMPONENT=splash_normal_inverted.png
     DEST1="$GRAPHICSFOLDER/$COMPONENT"
     DEST2="$GRAPHICSFOLDER/splash.png"
@@ -392,19 +376,13 @@ EOT
 }
 
 updateApt
-COMP_MESSAGE="Installing Chromium"
-componentInfo
-chromiumInstall || COMP_SUCCESS=false
-#################
 COMP_MESSAGE="Installing Feh - enables custom splash screen"
 componentInfo
 fehInstall || COMP_SUCCESS=false
 #################
 COMP_MESSAGE="Installing JQ - enables json handling for bash"
 componentInfo
-if [ ! -f $NEWINSTALL ];then
 jqInstall || COMP_SUCCESS=false
-fi
 #################
 COMP_MESSAGE="Installing Imagemagick - embed text in images"
 componentInfo

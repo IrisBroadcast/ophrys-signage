@@ -184,7 +184,7 @@ function restartServices
 function writeToStatusFileBash
 {
     STATEFILEBASH="$SCRIPTFOLDER/ophrys_state_bash.json"
-    ## Make sure ophrys_state_bash.json exists, if not create
+    ## Make sure ophrys_state_bash.json exists, if not create the file
     if [ ! -e $STATEFILEBASH ];then
         cat <<EOT >> $STATEFILEBASH
 {

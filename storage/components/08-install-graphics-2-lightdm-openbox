@@ -1,0 +1,61 @@
+#!/bin/bash
+
+COMMONFILE="/usr/local/aloe/scripts/common.sh"
+. $COMMONFILE
+
+COMP_NAME="$0"
+COMP_MESSAGE=""
+
+function lightdmInstall
+{
+    FUNC_NAME="${FUNCNAME[0]}"
+
+    if !(apt-get -y install lightdm &>> $INSTALL_LOG);then
+
+        safeApt $FUNC_NAME
+
+        if !(apt-get -y install lightdm &>> $INSTALL_LOG);then
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function openboxInstall
+{
+    FUNC_NAME="${FUNCNAME[0]}"
+
+    if !(apt-get -y install openbox &>> $INSTALL_LOG);then
+
+        safeApt $FUNC_NAME
+
+        if !(apt-get -y install openbox &>> $INSTALL_LOG);then
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+function enableOpenBox
+{
+    # Enabling OpenBox
+	FILE=/etc/lightdm/lightdm.conf
+
+    grep -q "user-session=default" $FILE
+    if [ $? -eq 0 ];then
+        sed -i '/user-session=default/c\user-session=openbox' $FILE
+    fi
+}
+
+updateApt
+COMP_MESSAGE="Installing LightDM"
+componentInfo
+lightdmInstall || COMP_SUCCESS=false
+#################
+COMP_MESSAGE="Installing Openbox"
+componentInfo
+openboxInstall || COMP_SUCCESS=false
+enableOpenBox || COMP_SUCCESS=false
+reportResult

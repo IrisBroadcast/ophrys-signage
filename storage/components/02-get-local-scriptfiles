@@ -1,6 +1,6 @@
 #!/bin/bash
 
-COMMONFILE=/usr/local/aloe/scripts/common.sh
+COMMONFILE="/usr/local/aloe/scripts/common.sh"
 . $COMMONFILE
 
 COMP_NAME="$0"
@@ -83,8 +83,8 @@ function getDpkgHelpScript
 
 function getCheckIpScript
 {
-	COMPONENT=checkip
-	DEST="$SCRIPTFOLDER/checkIP.sh"
+	COMPONENT=checkIP.sh
+	DEST="$SCRIPTFOLDER/$COMPONENT"
 	if [ $MQTT_ENABLE == true ];then
 		URLEND="prov/get/update/component?Component=$COMPONENT&Type=$DEVTYPE&Version=1"
 		SRC="$HOSTURL$URLEND"

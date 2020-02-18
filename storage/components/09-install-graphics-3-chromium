@@ -1,0 +1,29 @@
+#!/bin/bash
+
+COMMONFILE="/usr/local/aloe/scripts/common.sh"
+. $COMMONFILE
+
+COMP_NAME="$0"
+COMP_MESSAGE=""
+
+function chromiumInstall
+{
+    FUNC_NAME="${FUNCNAME[0]}"
+
+    if !(apt-get -y install chromium-browser &>> $INSTALL_LOG);then
+
+        safeApt $FUNC_NAME
+
+        if !(apt-get -y install chromium-browser &>> $INSTALL_LOG);then
+            FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            functionInfo
+            return 1
+        fi
+    fi
+}
+
+updateApt
+COMP_MESSAGE="Installing Chromium"
+componentInfo
+chromiumInstall || COMP_SUCCESS=false
+reportResult

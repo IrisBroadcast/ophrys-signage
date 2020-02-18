@@ -1,13 +1,13 @@
 #!/bin/bash
 
-COMMONFILE=/usr/local/aloe/scripts/common.sh
+COMMONFILE="/usr/local/aloe/scripts/common.sh"
 . $COMMONFILE
 
 COMP_NAME="$0"
 COMP_MESSAGE="Setting up housekeeping (crontab updates, log rotation)"
 
 HOSTNAME_FULL=$(hostname)
-DAYOFWEEK="$((1 + RANDOM % 7))" #Random day of the week
+DAYOFWEEK="$((1 + RANDOM % 7))" # Random day of the week
 
 function getCrontabScript {
 
@@ -35,7 +35,7 @@ function getCrontabScript {
 
 function setCrontabJob
 {
-	#echo new cron into temp file,install it & remove tempfile
+	# Echo new cron into temp file,install it and remove tempfile
 	echo "$((1 + RANDOM % 10)) 3 * * $DAYOFWEEK /bin/bash /usr/local/aloe/scripts/crontab-update-os.sh" > mycron &>> $INSTALL_LOG
 	crontab mycron &>> $INSTALL_LOG
 	rm mycron
