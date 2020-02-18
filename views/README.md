@@ -45,12 +45,12 @@ Loads 2 iframes side-by-side or on-top of each other.
 - `http://localhost:82/view/multi?url1=example.com&url2=mysite.com`
 
 ## View/info
-Use /view/info to show your own custom messages on the display
-Information is instantly updated on save and the view itself can be used with the different /view sites
-Edit what is shown on this page by entering the ip address of the display:82/view 
+Use /view/info to show your own custom messages on the display.<br>
+The information is instantly updated on save, and the view itself can be used with the different /view sites.<br><br>
+Edit what is shown on this page by entering the ip-address-of-your-ophrys:82/view 
 
 ### Example - link to the page where the messages are edited
-`YourIPAdress:82/view`
+`192.168.10.5:82/view`
 
 ### Example - page to display to view the messages
 - `http://localhost:82/view/info`
