@@ -5,6 +5,14 @@ COMMONFILE=/usr/local/aloe/scripts/common.sh
 
 STATEFILENODE="/usr/local/aloe/scripts/ophrys_state_node.json"
 
+function cleanChromium
+{
+	PREFERENCES="/home/pi/.config/chromium/Default/Preferences"
+    if [ -f $PREFERENCES ];then
+	    sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/g' $PREFERENCES
+    fi
+}
+
 function openUrl
 {
 	DYNAMIC_URL=$(cat $STATEFILENODE | jq -r '.url')
@@ -38,6 +46,8 @@ function openUrl
 		DYNAMIC_URL="http://localhost:82"
 	fi
 	export DISPLAY=:0.0
-	chromium-browser $BROWSERPARAMETER --noerrdialogs --incognito --kiosk --disable-pinch --overscroll-history-navigation=0 --proxy-auto-detect $DYNAMIC_URL
+	chromium-browser $BROWSERPARAMETER --noerrdialogs --check-for-update-interval=1209600 --disable-session-crashed-bubble --disable-infobars --disable-restore-session-state --disable-features=TranslateUI --kiosk --disable-pinch --overscroll-history-navigation=0 --proxy-auto-detect $DYNAMIC_URL
 }
+
+cleanChromium
 openUrl
