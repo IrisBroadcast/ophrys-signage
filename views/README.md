@@ -50,7 +50,7 @@ The information is instantly updated on save, and the view itself can be used wi
 Edit what is shown on this page by entering the ip-address-of-your-ophrys:82/view 
 
 ### Example - link to the page where the messages are edited
-`192.168.10.5:82/view`
+- `192.168.10.5:82/view`
 
 ### Example - page to display to view the messages
 - `http://localhost:82/view/info`
