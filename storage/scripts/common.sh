@@ -139,7 +139,29 @@ function verifyDownloadedFile()
 
 function updateApt
 {
-    echo "Not in use at the moment"
+    if [ -f $TMP_UPDATEFILE ];then
+        # apt-get update run recently, no need to do it again
+        return 0
+    else
+        COMP_MESSAGE="Updating apt-get packages list (Linux Debian)"
+        componentInfo
+
+        FUNC_NAME="updateApt"
+
+        if (apt-get update);then
+            touch $TMP_UPDATEFILE
+            return 0
+        else
+            safeApt $FUNC_NAME
+            if (apt-get update);then
+                touch $TMP_UPDATEFILE
+            else
+                FUNC_SUCCESS=false
+                FUNC_MESSAGE="$FUNC_NAME - Unreparable error - failed"
+            fi
+            functionInfo
+        fi
+    fi
 }
 
 function reportResult()

@@ -43,4 +43,3 @@ ALLOW_FROM=""
 NPM_HTTP_PROXY=""
 NPM_HTTPS_PROXY=""
 NPM_REGISTRY="http://registry.npmjs.org/"
-
