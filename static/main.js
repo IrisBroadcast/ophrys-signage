@@ -619,13 +619,14 @@ socket.on('config-options--state', function(msg)
 });
 
 // Get local statefile from server
+var LOCAL_INFO = "";
 socket.on('config-options--view-data', function(msg)
 {
     console.log("Recieved config-options--view-data:")
     console.table(msg);
     if(msg != null)
     {
-        // View
+        // View Id
         if(msg.hasOwnProperty('view'))
         {
             utils.domChange("input-view", "value", msg.view);
@@ -636,9 +637,30 @@ socket.on('config-options--view-data', function(msg)
         if(msg.hasOwnProperty('html'))
         {
             utils.domChange("input-html", "value", msg.html);
-            utils.domChange("popupLocalInformation", "innerHTML", msg.html);
+            if(LOCAL_INFO !== msg.html)
+            {
+                utils.domChange("popupLocalInformation", "innerHTML", msg.html);
+                LOCAL_INFO = msg.html;
+            }
         }
 
+        // URL1
+        if(msg.hasOwnProperty('url1'))
+        {
+            utils.domChange("input-url1", "value", msg.url1);
+        }
+
+        // URL2
+        if(msg.hasOwnProperty('url2'))
+        {
+            utils.domChange("input-url2", "value", msg.url2);
+        }
+
+        // URL3
+        if(msg.hasOwnProperty('url3'))
+        {
+            utils.domChange("input-url3", "value", msg.url3);
+        }
     }
 });
 
