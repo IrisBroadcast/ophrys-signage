@@ -88,7 +88,7 @@ tail -f /var/log/aloe/main.log
 
 ## Start using your Ophrys Signage
 When the installation is finished, remote control your Ophrys Signage device via the following url:
-```device-ip-adress:82```<br>
+```device-ip-address:82```<br>
 Example: ```192.168.10.13:82```
 
 - [Find all usage examples here](https://github.com/IrisBroadcast/OphrysSignage/blob/master/views/README.md)
