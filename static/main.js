@@ -393,23 +393,23 @@ utils.addEvent(utils.getElem("save-config-btn"), "click", function(event)
     }
     else if(utils.getProperty("input-screen_rotation--left", "checked"))
     {
-        console.log("left")
+        console.log("left");
         formdata.rotation = "left";
     }
     else if(utils.getProperty("input-screen_rotation--right", "checked"))
     {
-        console.log("right")
+        console.log("right");
         formdata.rotation = "right";
     }
     else if(utils.getProperty("input-screen_rotation--inverted", "checked"))
     {
-        console.log("inverted")
+        console.log("inverted");
         formdata.rotation = "inverted";
     }
 
-    console.log("Sent:",formdata)
-    socket.emit('save config-options', formdata)
-    return false
+    console.log("Sent:", formdata);
+    socket.emit('save config-options', formdata);
+    return false;
 });
 
 // Save items to view-data file
@@ -419,10 +419,13 @@ utils.addEvent(utils.getElem("save-view-data-btn"), "click", function(event)
     var formdata = {}
     formdata.view = utils.getProperty("input-view", "value");
     formdata.html = utils.getProperty("input-html", "value");
+    formdata.url1 = utils.getProperty("input-url1", "value");
+    formdata.url2 = utils.getProperty("input-url2", "value");
+    formdata.url3 = utils.getProperty("input-url3", "value");
 
-    console.log("Sent:",formdata)
-    socket.emit('save config-view-data', formdata)
-    return false
+    console.log("Sent:", formdata);
+    socket.emit('save config-view-data', formdata);
+    return false;
 });
 
 // Refresh webpage
@@ -470,7 +473,7 @@ socket.on('system-status', function(msg)
     console.dir(msg);
     if(msg.hasOwnProperty('ip')) {
         utils.domChange("infoIpAddress", "innerText", msg.ip[0]);
-        console.log(msg.ip[0])
+        console.log(msg.ip[0]);
     }
     /*data.cpus = os.cpus()
     data.memoryfree = os.freemem()

@@ -5,8 +5,8 @@
   "homepage": "https://irisbroadcast.org/ophrys",
   "main": "app.js",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/irisbroadcast/ophryssignage"
+    "type": "git",
+    "url": "https://github.com/irisbroadcast/ophryssignage"
   },
   "scripts": {
     "debug": "node app.js --debug --port 83"

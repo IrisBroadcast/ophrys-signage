@@ -140,23 +140,53 @@ var doGetUrls = function()
         utils.getElem("frame-widget-2").style.padding = utils.getUrlParameters("bodypadding");
     }
 
-    if(utils.getUrlParameters("url1"))
-    {
-        tabBlocks+=1;
-        utils.getElem("frame-widget-1").src = "http://" + utils.getUrlParameters("url1");
-        utils.getElem("frame-widget-2").src = "http://" + utils.getUrlParameters("url1");
-    }
 
-    if (tabBlocks == 0)
+    if(utils.getUrlParameters("viewid"))
     {
-        utils.domChange("frame-widget-feedback", "innerText", "No URL parameters found");
-        return;
-    }
-    else {
-        utils.getElem("frame-widget-0").style.display = "none";
-    }
+        fetch('/view/getconfig')
+            .then((response) => {
+                return response.json();
+            })
+            .then((config) => {
+                if(config.hasOwnProperty("url1"))
+                {
+                    tabBlocks+=1;
+                    utils.getElem("frame-widget-1").src = config.url1;
+                    utils.getElem("frame-widget-2").src = config.url1;
+                }
 
-    doActionStartTabTimer();
+                if (tabBlocks == 0)
+                {
+                    utils.domChange("frame-widget-feedback", "innerText", "No URL view configuration parameters found");
+                    return;
+                }
+                else {
+                    utils.getElem("frame-widget-0").style.display = "none";
+                }
+
+                doActionStartTabTimer();
+            });
+    }
+    else
+    {
+        if(utils.getUrlParameters("url1"))
+        {
+            tabBlocks+=1;
+            utils.getElem("frame-widget-1").src = "http://" + utils.getUrlParameters("url1");
+            utils.getElem("frame-widget-2").src = "http://" + utils.getUrlParameters("url1");
+        }
+
+        if (tabBlocks == 0)
+        {
+            utils.domChange("frame-widget-feedback", "innerText", "No URL parameters found");
+            return;
+        }
+        else {
+            utils.getElem("frame-widget-0").style.display = "none";
+        }
+
+        doActionStartTabTimer();
+    }
 }
 
 doGetUrls();

@@ -72,7 +72,6 @@ var doActionStartTabTimer = async function()
             return;
         }
 
-
         if (tabBlocks == 1)
         {
             utils.getElem("frame-widget-1").scrollIntoView({
@@ -150,35 +149,76 @@ var doGetUrls = function()
         tabReload = utils.getUrlParameters("reload");
     }
 
-    if(utils.getUrlParameters("url1"))
+    if(utils.getUrlParameters("viewid"))
     {
-        tabBlocks+=1;
-        utils.getElem("frame-widget-1").src = "http://" + utils.getUrlParameters("url1");
-        utils.getElem("block-widget-1").src = "http://" + utils.getUrlParameters("url1");
-    }
-    if(utils.getUrlParameters("url2"))
-    {
-        tabBlocks+=1;
-        utils.getElem("frame-widget-2").src = "http://" + utils.getUrlParameters("url2");
-        utils.getElem("block-widget-2").src = "http://" + utils.getUrlParameters("url2");
-    }
-    if(utils.getUrlParameters("url3"))
-    {
-        tabBlocks+=1;
-        utils.getElem("frame-widget-3").src = "http://" + utils.getUrlParameters("url3");
-    }
+        fetch('/view/getconfig')
+            .then((response) => {
+                return response.json();
+            })
+            .then((config) => {
+                if(config.hasOwnProperty("url1"))
+                {
+                    tabBlocks+=1;
+                    utils.getElem("frame-widget-1").src = config.url1;
+                    utils.getElem("block-widget-1").src = config.url1;
+                }
+                if(config.hasOwnProperty("url2"))
+                {
+                    tabBlocks+=1;
+                    utils.getElem("frame-widget-2").src = config.url2;
+                    utils.getElem("block-widget-2").src = config.url2;
+                }
+                if(config.hasOwnProperty("url3"))
+                {
+                    tabBlocks+=1;
+                    utils.getElem("frame-widget-3").src = config.url3;
+                }
 
-    if (tabBlocks == 0)
-    {
-        utils.domChange("frame-widget-feedback", "innerText", "No URL parameters found");
-        utils.domChange("block-widget-feedback", "innerText", "No URL parameters found");
-        return;
-    }
-    else {
-        utils.getElem("block-widget-0").style.display = "none";
-    }
+                if (tabBlocks == 0)
+                {
+                    utils.domChange("frame-widget-feedback", "innerText", "No URL view configuration parameters found");
+                    utils.domChange("block-widget-feedback", "innerText", "No URL view configuration parameters found");
+                    return;
+                }
+                else {
+                    utils.getElem("block-widget-0").style.display = "none";
+                }
 
-    doActionStartTabTimer();
+                doActionStartTabTimer();
+            });
+    }
+    else
+    {
+        if(utils.getUrlParameters("url1"))
+        {
+            tabBlocks+=1;
+            utils.getElem("frame-widget-1").src = "http://" + utils.getUrlParameters("url1");
+            utils.getElem("block-widget-1").src = "http://" + utils.getUrlParameters("url1");
+        }
+        if(utils.getUrlParameters("url2"))
+        {
+            tabBlocks+=1;
+            utils.getElem("frame-widget-2").src = "http://" + utils.getUrlParameters("url2");
+            utils.getElem("block-widget-2").src = "http://" + utils.getUrlParameters("url2");
+        }
+        if(utils.getUrlParameters("url3"))
+        {
+            tabBlocks+=1;
+            utils.getElem("frame-widget-3").src = "http://" + utils.getUrlParameters("url3");
+        }
+
+        if (tabBlocks == 0)
+        {
+            utils.domChange("frame-widget-feedback", "innerText", "No URL parameters found");
+            utils.domChange("block-widget-feedback", "innerText", "No URL parameters found");
+            return;
+        }
+        else {
+            utils.getElem("block-widget-0").style.display = "none";
+        }
+
+        doActionStartTabTimer();
+    }
 }
 
 doGetUrls();

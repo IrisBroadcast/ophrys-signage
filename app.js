@@ -57,7 +57,10 @@ var signageConfigPath = '/usr/local/aloe/scripts/ophrys_state_node.json',
 	},
 	signageViewDataFile = {
 		"view": "none",
-		"html": ""
+		"html": "",
+		"url1": "",
+		"url2": "",
+		"url3": ""
 	},
 	signageUrlUpdateScript = '/usr/local/aloe/scripts/setdisplayconfig.sh',
 	signageUrlRefreshScript = '/usr/local/aloe/scripts/setdisplayconfig.sh',
@@ -334,7 +337,7 @@ var initConfig = function()
 	{
 		if (err)
 		{
-			// file doesn't exist
+			// File doesn't exist
 			console.log("File doesn't exist:" + signageConfigPath);
 			console.log(signageConfigFile);
 			writeJsonToFile(signageConfigPath, signageConfigFile);
@@ -342,7 +345,7 @@ var initConfig = function()
 		}
 		else
 		{
-			// file exists
+			// File exists
 			console.log("File exist:" + signageConfigPath);
 			initState();
 		}
@@ -562,7 +565,10 @@ var parseViewDataOptions = function(data)
 	var configUpdate = {};
 	var tmp = {
 		"view": "none",
-		"html": ""
+		"html": "",
+		"url1": "",
+		"url2": "",
+		"url3": ""
 	};
 
 	try {
@@ -580,6 +586,21 @@ var parseViewDataOptions = function(data)
 	// Html
 	if(configUpdate.hasOwnProperty('html')) {
 		tmp.html = configUpdate.html;
+	}
+
+	// URL 1
+	if(configUpdate.hasOwnProperty('url1')) {
+		tmp.url1 = configUpdate.url1;
+	}
+
+	// URL 2
+	if(configUpdate.hasOwnProperty('url2')) {
+		tmp.url2 = configUpdate.url2;
+	}
+
+	// URL 3
+	if(configUpdate.hasOwnProperty('url3')) {
+		tmp.url3 = configUpdate.url3;
 	}
 
 	// Store the read in configuration
@@ -756,8 +777,34 @@ var doTranslateViewDataFromForm = function(configUpdate)
 		tmp.html = "";
 	}
 
-	console.log("Writing down view data file content:");
-	console.log(tmp);
+	// Get URL 1 data
+	if(configUpdate.hasOwnProperty('url1')) {
+		tmp.url1 = configUpdate.url1;
+	} else if(signageConfigFile.hasOwnProperty('url1')) {
+		tmp.url1 = signageConfigFile.url1;
+	} else {
+		tmp.url1 = "";
+	}
+
+	// Get URL 2 data
+	if(configUpdate.hasOwnProperty('url2')) {
+		tmp.url2 = configUpdate.url2;
+	} else if(signageConfigFile.hasOwnProperty('url2')) {
+		tmp.url2 = signageConfigFile.url2;
+	} else {
+		tmp.url2 = "";
+	}
+
+	// Get URL 3 data
+	if(configUpdate.hasOwnProperty('url3')) {
+		tmp.url3 = configUpdate.url3;
+	} else if(signageConfigFile.hasOwnProperty('url3')) {
+		tmp.url3 = signageConfigFile.url3;
+	} else {
+		tmp.url3 = "";
+	}
+
+	console.log("Writing down view data file content");
 
 	// Write down a JSON view-data file
 	writeJsonToFile(signageViewDataPath, tmp);
@@ -940,6 +987,15 @@ app.get('/view', function(req, res)
 	res.sendFile(__dirname + '/app-viewinfo.html');
 });
 
+app.get('/view/getconfig', function(req, res)
+{
+	// Returns a view config if view is used with:
+	// ?viewid=true
+	let content = signageViewDataFile;
+	res.writeHead(200, { 'Content-Type': 'application/json' });
+	res.end(JSON.stringify(content), 'utf-8');
+});
+
 app.get('/view/clock', function(req, res)
 {
 	res.sendFile(__dirname + '/views/viewClock.html');
@@ -952,7 +1008,7 @@ app.get('/view/info', function(req, res)
 
 app.get('/view/tab', function(req, res)
 {
-	res.sendFile(__dirname + '/views/viewFrame.html');
+	res.sendFile(__dirname + '/views/viewTab.html');
 });
 
 app.get('/view/site', function(req, res)
@@ -962,7 +1018,7 @@ app.get('/view/site', function(req, res)
 
 app.get('/view/multi', function(req, res)
 {
-	res.sendFile(__dirname + '/views/viewBlocks.html');
+	res.sendFile(__dirname + '/views/viewMulti.html');
 });
 
 app.get('/refresh', function(req, res)

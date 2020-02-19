@@ -1,1 +1,1 @@
-{"view":"View","html":"<div style=\"font-size: 4em\">\n <p>Opening hours:</p>\n <ul>\n  <li><span style=\"color: red;\">Sunday closed</span></li>\n  <li>Monday-Saturday 12:00-20:00</li>\n </ul>\n</div>"}
+{"view":"ViewId","html":"<div style=\"font-size: 4em\">\n <p>Opening hours:</p>\n <ul>\n  <li><span style=\"color: red;\">Sunday closed</span></li>\n  <li>Monday-Saturday 12:00-20:00</li>\n </ul>\n</div>","url1":"http://example.com","url2":"http://example.com","url3":""}
