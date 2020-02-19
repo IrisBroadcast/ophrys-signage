@@ -106,6 +106,7 @@
             font-size: 16px;
             text-decoration: none;
             font-weight: 400;
+            color: #ffffff;
             color: lighten(#3369ff, 50%);
             margin: 4px 0 6px 0;
             padding: 11px 18px;
@@ -119,6 +120,12 @@
 
         .button--action {
             background: #ff6b33;
+        }
+
+        .button--nav {
+            background: #33ffa3;
+            color: #000;
+            width: 100%;
         }
 
         .button span {
@@ -664,17 +671,23 @@
                     <input id="input-url1" autocomplete="off" />
                 </label>
                 <label class="feature--field-info">
-                    <i>Leave blank to not load an URL.</i>
+                    <i>Leave blank to not load an URL. If loading local "view" just use "/view/clock"</i>
                 </label>
 
                 <label for="input-url2">
                     URL 2
                     <input id="input-url2" autocomplete="off" />
                 </label>
+                <label class="feature--field-info">
+                    <i>Leave blank to not load an URL. If loading local "view" just use "/view/clock"</i>
+                </label>
 
                 <label for="input-url3">
                     URL 3
                     <input id="input-url3" autocomplete="off" />
+                </label>
+                <label class="feature--field-info">
+                    <i>Leave blank to not load an URL. If loading local "view" just use "/view/clock"</i>
                 </label>
 
                 <label for="input-html">
@@ -687,6 +700,25 @@
 
                 <label>
                     <button id="save-view-data-btn" class="button">Save</button>
+                </label>
+            </form>
+        </div>
+
+        <div class="content">
+            <h2>
+                Control
+            </h2>
+            <form>
+                <label>
+                    <button id="reload-url-btn" class="button button--action">Reload webpage</button>
+                </label>
+            </form>
+            <h2>
+                Navigation
+            </h2>
+            <form>
+                <label>
+                    <a href="/config" class="button button--nav">Configure signage</a>
                 </label>
             </form>
         </div>

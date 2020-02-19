@@ -57,7 +57,7 @@ var signageConfigPath = '/usr/local/aloe/scripts/ophrys_state_node.json',
 	},
 	signageViewDataFile = {
 		"view": "none",
-		"html": "",
+		"html": "<div style=\"font-size: 4em\">\n <p>Opening hours:</p>\n <ul>\n  <li><span style=\"color: red;\">Sunday closed</span></li>\n  <li>Monday-Saturday 12:00-20:00</li>\n </ul>\n</div>",
 		"url1": "",
 		"url2": "",
 		"url3": ""
