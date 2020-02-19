@@ -95,6 +95,9 @@ The views above can be combined. In the following example we will create a view/
 - In the Custom HTML-field, paste the html snippet found at [View/info](#View-info).
 - Save and reload you webpage to see the result.
 
+<img src="/static/readmeViewCombine_01.PNG" width="60%">
+<img src="/static/readmeViewCombine_02.PNG" width="60%">
+
 ## Advanced browser start-up parameters <a name="Advanced-browser-start-up-parameters"></a><br>
 All views can be used with one or multiple Chromium start-up parameters.
 
