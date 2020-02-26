@@ -60,7 +60,8 @@ var signageConfigPath = '/usr/local/aloe/scripts/ophrys_state_node.json',
 		"html": "<div style=\"font-size: 4em\">\n <p>Opening hours:</p>\n <ul>\n  <li><span style=\"color: red;\">Sunday closed</span></li>\n  <li>Monday-Saturday 12:00-20:00</li>\n </ul>\n</div>",
 		"url1": "",
 		"url2": "",
-		"url3": ""
+		"url3": "",
+		"url4": ""
 	},
 	signageUrlUpdateScript = '/usr/local/aloe/scripts/setdisplayconfig.sh',
 	signageUrlRefreshScript = '/usr/local/aloe/scripts/setdisplayconfig.sh',
@@ -568,7 +569,8 @@ var parseViewDataOptions = function(data)
 		"html": "",
 		"url1": "",
 		"url2": "",
-		"url3": ""
+		"url3": "",
+		"url4": ""
 	};
 
 	try {
@@ -601,6 +603,11 @@ var parseViewDataOptions = function(data)
 	// URL 3
 	if(configUpdate.hasOwnProperty('url3')) {
 		tmp.url3 = configUpdate.url3;
+	}
+
+	// URL 4
+	if(configUpdate.hasOwnProperty('url4')) {
+		tmp.url4 = configUpdate.url4;
 	}
 
 	// Store the read in configuration
@@ -802,6 +809,15 @@ var doTranslateViewDataFromForm = function(configUpdate)
 		tmp.url3 = signageConfigFile.url3;
 	} else {
 		tmp.url3 = "";
+	}
+
+	// Get URL 4 data
+	if(configUpdate.hasOwnProperty('url4')) {
+		tmp.url4 = configUpdate.url4;
+	} else if(signageConfigFile.hasOwnProperty('url4')) {
+		tmp.url4 = signageConfigFile.url4;
+	} else {
+		tmp.url4 = "";
 	}
 
 	console.log("Writing down view data file content");

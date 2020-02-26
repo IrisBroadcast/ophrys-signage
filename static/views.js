@@ -173,6 +173,11 @@ var doGetUrls = function()
                     tabBlocks+=1;
                     utils.getElem("frame-widget-3").src = config.url3;
                 }
+                if(config.hasOwnProperty("url4"))
+                {
+                    tabBlocks+=1;
+                    utils.getElem("frame-widget-4").src = config.url4;
+                }
 
                 if (tabBlocks == 0)
                 {
@@ -205,6 +210,11 @@ var doGetUrls = function()
         {
             tabBlocks+=1;
             utils.getElem("frame-widget-3").src = "http://" + utils.getUrlParameters("url3");
+        }
+        if(utils.getUrlParameters("url4"))
+        {
+            tabBlocks+=1;
+            utils.getElem("frame-widget-4").src = "http://" + utils.getUrlParameters("url4");
         }
 
         if (tabBlocks == 0)

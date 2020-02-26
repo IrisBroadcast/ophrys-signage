@@ -422,6 +422,7 @@ utils.addEvent(utils.getElem("save-view-data-btn"), "click", function(event)
     formdata.url1 = utils.getProperty("input-url1", "value");
     formdata.url2 = utils.getProperty("input-url2", "value");
     formdata.url3 = utils.getProperty("input-url3", "value");
+    formdata.url4 = utils.getProperty("input-url4", "value");
 
     console.log("Sent:", formdata);
     socket.emit('save config-view-data', formdata);
@@ -663,6 +664,12 @@ socket.on('config-options--view-data', function(msg)
         if(msg.hasOwnProperty('url3'))
         {
             utils.domChange("input-url3", "value", msg.url3);
+        }
+
+        // URL4
+        if(msg.hasOwnProperty('url4'))
+        {
+            utils.domChange("input-url4", "value", msg.url4);
         }
     }
 });
