@@ -35,41 +35,15 @@ function checkOut
         git tag -l | xargs git tag -d &>> $INSTALL_LOG## Will delete all local tags
         git checkout master &>> $INSTALL_LOG
         git pull &>> $INSTALL_LOG
-        git checkout $GITVERSION &>> $INSTALL_LOG
+
+        # Checkout the latest tag
+        LATESTTAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+        git checkout $LATESTTAG &>> $INSTALL_LOG
 
         if [ $? -eq 0 ];then
-            echo "Updated repository - version" $GITVERSION
-        else
-            echo "Error on git pull, will re-try in 10sec, will try to Clone if still not working"
-            sleep 10
-            git clean -df
-            git reset --hard
-            git tag -l | xargs git tag -d &>> $INSTALL_LOG## Will delete all local tags
-            git checkout master &>> $INSTALL_LOG
-            git pull &>> $INSTALL_LOG
-            git checkout $GITVERSION
-            if [ $? -eq 0 ];then
-                echo "Updated repository on 2nd try- version" $GITVERSION
-            else
-                cd $HOMEDIR
-                rm -r $GITREPO_LOCAL
-                git clone $GITREPO_REMOTE
-
-                if [ $? -eq 0 ];then
-                    cd $GITREPO_LOCAL
-                    git checkout &>> $INSTALL_LOG
-                    git checkout $GITVERSION &>> $INSTALL_LOG
-                    echo "Cloned repository - version" $GITVERSION
-                else
-                    cp -r $DIR_BACKUP/$REPO_NAME $HOMEDIR
-                    FUNC_NAME="install signage"
-                    FUNC_SUCCESS=false
-                    FUNC_MESSAGE="Made a rollback as update of repository was unsuccessful - ${FUNC_NAME}"
-                    functionInfo
-                    exit 64 ##
-                fi
-            fi
+            echo "Updated repository - version/tag: " $LATESTTAG
         fi
+
     else
         echo "Directory didn't exist"
         mkdir -p $HOMEDIR
@@ -78,17 +52,15 @@ function checkOut
 
         if [ $? -eq 0 ];then
             cd $GITREPO_LOCAL
-            git checkout &>> $INSTALL_LOG
-            git checkout $GITVERSION &>> $INSTALL_LOG
-            echo "Cloned repository - version" $GITVERSION
-            else
-                FUNC_NAME="${FUNCNAME[0]}"
-                FUNC_SUCCESS=false
-                FUNC_MESSAGE="Couldn't clone repository was unreachable - no fallback available- ${FUNC_NAME}"
-                functionInfo
-                exit 64 ##
+
+            # Checkout the latest tag
+            LATESTTAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+            git checkout $LATESTTAG &>> $INSTALL_LOG
+
+            if [ $? -eq 0 ];then
+                echo "Updated repository - version/tag: " $LATESTTAG
             fi
-   fi
+    fi
 }
 
 function npmInstall

@@ -295,7 +295,7 @@ function installGit
 {
     # Install pre-dependencies: GIT
     MSG="Install pre-dependencies: GIT"
-    INSTALLPROGRESS=10
+    INSTALLPROGRESS=7
 
     apt-get install git -y &>> $INSTALL_LOG
 }
@@ -304,7 +304,7 @@ function setGitProxy
 {
     # Checking git proxy settings
     MSG="Checking git proxy settings"
-    INSTALLPROGRESS=15
+    INSTALLPROGRESS=10
 
     if [ -n "$USER_HTTP_PROXY" ];then
         git config --global http.proxy $USER_HTTP_PROXY
@@ -323,7 +323,7 @@ function getOphrysSignageApplication
 {
     # Get Ophrys signage
     MSG="Downloading Ophrys signage application"
-    INSTALLPROGRESS=20
+    INSTALLPROGRESS=15
 
     if [ -d $HOMEFOLDER ];then
         rm -r $HOMEFOLDER
@@ -332,6 +332,14 @@ function getOphrysSignageApplication
     mkdir -p $HOMEFOLDER
     cd $HOMEFOLDER
     git clone $GITREPO_REMOTE &>> $INSTALL_LOG
+
+    # Checkout the latest tag
+    cd $GITREPO_LOCAL
+    git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+    if [ $? -ne 0 ];then
+        # Check out master if no tag exists
+        git checkout master
+    fi
 }
 
 function gaugeMeterShowingInstallProgress()
