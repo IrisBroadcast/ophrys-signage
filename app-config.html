@@ -229,7 +229,31 @@
             }
         }
 
-        .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock, .status--link {
+        .navigation {
+            padding: 0.2vh 1vw;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            border-top: 1px solid #e1e1e1;
+        }
+
+        .navigation a.current {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .navigation a {
+            padding: 1vh 0 0 0;
+            color: #625d84;
+            text-decoration: underline;
+        }
+
+        .navigation a:hover {
+            text-decoration: underline;
+            color: #1e00f8;
+        }
+
+        .status--general, .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock, .status--link {
             font-family: 'Roboto', Arial, Helvetica, sans-serif;
             font-size: 3vmin;
             font-weight: 400;
@@ -641,6 +665,15 @@
             <div class="status--hardware">
                 <span id="infoHardware">&nbsp;</span>
             </div>
+
+            <div class="navigation">
+                <a href="/config" class="navigation--link current">
+                    Configure signage
+                </a>
+                <a href="/view" class="navigation--link">
+                    Configure views
+                </a>
+            </div>
         </div>
 
         <div class="content--no-padding">
@@ -750,14 +783,6 @@
             <form>
                 <label>
                     <button id="reload-url-btn" class="button button--action">Reload webpage</button>
-                </label>
-            </form>
-            <h2>
-                Navigation
-            </h2>
-            <form>
-                <label>
-                    <a href="/view" class="button button--nav">Configure views</a>
                 </label>
             </form>
         </div>
