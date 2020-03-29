@@ -1,134 +1,134 @@
 <!doctype html>
 <html>
 <head>
-    <title>Ophrys Signage - Clock</title>
-    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1.0, minimum-scale=0.5">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
-    <link href="/style.css" rel="stylesheet">
-    <style type="text/css">
-        body {
-            background: #000000;
-            color: #ffffff;
-            overflow-y: hidden;
-        }
+  <title>Ophrys Signage - Clock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1.0, minimum-scale=0.5">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
+  <link href="/style.css" rel="stylesheet">
+  <style type="text/css">
+    body {
+      background: #000000;
+      color: #ffffff;
+      overflow-y: hidden;
+    }
 
-        * {
-            max-width: unset !important;
-        }
+    * {
+      max-width: unset !important;
+    }
 
-        .status--general, .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock {
-            font-family: 'Roboto', Arial, Helvetica, sans-serif;
-            font-size: 3vmin;
-            font-weight: 400;
-            border-top: unset;
-            color: #3e3e3e;
-            display: block;
-        }
+    .status--general, .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock {
+      font-family: 'Roboto', Arial, Helvetica, sans-serif;
+      font-size: 3vmin;
+      font-weight: 400;
+      border-top: unset;
+      color: #3e3e3e;
+      display: block;
+    }
 
-        .vertical-align {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+    .vertical-align {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
-        .frame-container {
-            white-space: nowrap;
-            text-align: center;
-            color: rgba(130, 130, 130, 0.14);
-            font-weight: 600;
-            margin: 0 auto;
-        }
+    .frame-container {
+      white-space: nowrap;
+      text-align: center;
+      color: rgba(130, 130, 130, 0.14);
+      font-weight: 600;
+      margin: 0 auto;
+    }
 
-        .tab-iframe {
-            height: 100%;
-            width: 100%;
-            margin: 0 auto;
-            padding: 1vh 1vh;
-        }
+    .tab-iframe {
+      height: 100%;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1vh 1vh;
+    }
 
-        @media (orientation: landscape) {
-            .frame-container {
-                white-space: nowrap;
-                text-align: center;
-                color: rgba(130, 130, 130, 0.14);
-                font-weight: 600;
-                margin: 0 auto;
-                display: flex;
-                flex-direction: row;
-                height: 100%;
-            }
+    @media (orientation: landscape) {
+      .frame-container {
+        white-space: nowrap;
+        text-align: center;
+        color: rgba(130, 130, 130, 0.14);
+        font-weight: 600;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+      }
 
-            .tab-iframe {
-                height: 100%;
-                width: 100%;
-                margin: 0 auto;
-                padding: 1vh 1vh 1vh 1vh;
-            }
+      .tab-iframe {
+        height: 100%;
+        width: 100%;
+        margin: 0 auto;
+        padding: 1vh 1vh 1vh 1vh;
+      }
 
-            .tab-iframe:last-child {
-                padding: 1vh 1vh 1vh 0;
-            }
-        }
+      .tab-iframe:last-child {
+        padding: 1vh 1vh 1vh 0;
+      }
+    }
 
-        @media (orientation: portrait) {
-            .frame-container {
-                white-space: nowrap;
-                text-align: center;
-                color: rgba(130, 130, 130, 0.14);
-                font-weight: 600;
-                margin: 0 auto;
-                display: flex;
-                flex-direction: column;
-                height: 100%;
-            }
+    @media (orientation: portrait) {
+      .frame-container {
+        white-space: nowrap;
+        text-align: center;
+        color: rgba(130, 130, 130, 0.14);
+        font-weight: 600;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
 
-            .tab-iframe {
-                height: 100%;
-                width: 100%;
-                margin: 0 auto;
-                padding: 1vw 1vw 1vw 1vw;
-            }
+      .tab-iframe {
+        height: 100%;
+        width: 100%;
+        margin: 0 auto;
+        padding: 1vw 1vw 1vw 1vw;
+      }
 
-            .tab-iframe:last-child {
-                padding: 0 1vw 1vw 1vw;
-            }
-        }
+      .tab-iframe:last-child {
+        padding: 0 1vw 1vw 1vw;
+      }
+    }
 
-        .tab-iframe--feedback h3 {
-            color: white;
-        }
-    </style>
+    .tab-iframe--feedback h3 {
+      color: white;
+    }
+  </style>
 </head>
 <body>
 
-    <svg id="pagefader"></svg>
+  <svg id="pagefader"></svg>
 
-    <div class="frame-container">
-        <div id="block-widget-0"
-            class="tab-iframe tab-iframe--feedback">
-            <h3 id="block-widget-feedback" class="vertical-align"></h3>
-        </div>
-
-        <iframe id="block-widget-1"
-            scrolling="no"
-            frameborder="0"
-            allowtransparency="true"
-            allowfullscreen="true"
-            src=""
-            class="tab-iframe tab-iframe--first"></iframe>
-
-        <iframe id="block-widget-2"
-            scrolling="no"
-            frameborder="0"
-            allowtransparency="true"
-            allowfullscreen="true"
-            src=""
-            class="tab-iframe tab-iframe--second"></iframe>
+  <div class="frame-container">
+    <div id="block-widget-0"
+      class="tab-iframe tab-iframe--feedback">
+      <h3 id="block-widget-feedback" class="vertical-align"></h3>
     </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/main.js"></script>
-    <script src="/views.js"></script>
+    <iframe id="block-widget-1"
+      scrolling="no"
+      frameborder="0"
+      allowtransparency="true"
+      allowfullscreen="true"
+      src=""
+      class="tab-iframe tab-iframe--first"></iframe>
+
+    <iframe id="block-widget-2"
+      scrolling="no"
+      frameborder="0"
+      allowtransparency="true"
+      allowfullscreen="true"
+      src=""
+      class="tab-iframe tab-iframe--second"></iframe>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/main.js"></script>
+  <script src="/views.js"></script>
 </body>
 </html>

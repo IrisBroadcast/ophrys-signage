@@ -1,124 +1,124 @@
 <!doctype html>
 <html>
 <head>
-    <title>Ophrys Signage - Frame</title>
-    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1.0, minimum-scale=0.5">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
-    <link href="/style.css" rel="stylesheet">
-    <style type="text/css">
-        body {
-            background: #000000;
-            color: #ffffff;
-            overflow-y: hidden;
-        }
+  <title>Ophrys Signage - Frame</title>
+  <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1.0, minimum-scale=0.5">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
+  <link href="/style.css" rel="stylesheet">
+  <style type="text/css">
+    body {
+      background: #000000;
+      color: #ffffff;
+      overflow-y: hidden;
+    }
 
-        * {
-            max-width: unset !important;
-        }
+    * {
+      max-width: unset !important;
+    }
 
-        .status--general, .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock {
-            font-family: 'Roboto', Arial, Helvetica, sans-serif;
-            font-size: 3vmin;
-            font-weight: 400;
-            border-top: unset;
-            color: #3e3e3e;
-            display: block;
-        }
+    .status--general, .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock {
+      font-family: 'Roboto', Arial, Helvetica, sans-serif;
+      font-size: 3vmin;
+      font-weight: 400;
+      border-top: unset;
+      color: #3e3e3e;
+      display: block;
+    }
 
-        .vertical-align {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+    .vertical-align {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
-        .frame-container {
-            white-space: nowrap;
-            text-align: center;
-            color: rgba(130, 130, 130, 0.14);
-            font-weight: 600;
-            margin: 0 auto;
-        }
+    .frame-container {
+      white-space: nowrap;
+      text-align: center;
+      color: rgba(130, 130, 130, 0.14);
+      font-weight: 600;
+      margin: 0 auto;
+    }
 
-        .tab-iframe {
-            height: 100vh;
-            width: 100vw;
-            display: block;
-            margin: 0 auto;
-            padding: 1vh 1vw;
-            position: absolute;
-        }
+    .tab-iframe {
+      height: 100vh;
+      width: 100vw;
+      display: block;
+      margin: 0 auto;
+      padding: 1vh 1vw;
+      position: absolute;
+    }
 
-        @media (orientation: landscape) {
-            .frame-container {
-                white-space: nowrap;
-                text-align: center;
-                color: rgba(130, 130, 130, 0.14);
-                font-weight: 600;
-                margin: 0 auto;
-            }
-        }
+    @media (orientation: landscape) {
+      .frame-container {
+        white-space: nowrap;
+        text-align: center;
+        color: rgba(130, 130, 130, 0.14);
+        font-weight: 600;
+        margin: 0 auto;
+      }
+    }
 
-        @media (orientation: portrait) {
-            .frame-container {
-                white-space: nowrap;
-                text-align: center;
-                color: rgba(130, 130, 130, 0.14);
-                font-weight: 600;
-                margin: 0 auto;
-            }
-        }
+    @media (orientation: portrait) {
+      .frame-container {
+        white-space: nowrap;
+        text-align: center;
+        color: rgba(130, 130, 130, 0.14);
+        font-weight: 600;
+        margin: 0 auto;
+      }
+    }
 
-        .tab-iframe--feedback h3 {
-            color: white;
-        }
+    .tab-iframe--feedback h3 {
+      color: white;
+    }
 
-        .frame-clock {
-            display: none;
-            color: #4c4c4c;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 30;
-            margin: 0 auto;
-            font-size: 22pt;
-        }
-    </style>
+    .frame-clock {
+      display: none;
+      color: #4c4c4c;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 30;
+      margin: 0 auto;
+      font-size: 22pt;
+    }
+  </style>
 </head>
 <body>
 
-    <svg id="pagefader"></svg>
+  <svg id="pagefader"></svg>
 
-    <div class="frame-container">
-        <div id="frame-widget-0"
-            class="tab-iframe tab-iframe--feedback">
-            <h3 id="frame-widget-feedback" class="vertical-align"></h3>
-        </div>
-
-        <iframe id="frame-widget-1"
-            scrolling="no"
-            frameborder="0"
-            allowtransparency="true"
-            allowfullscreen="true"
-            src=""
-            class="tab-iframe tab-iframe--first"></iframe>
-
-        <iframe id="frame-widget-2"
-            scrolling="no"
-            frameborder="0"
-            allowtransparency="true"
-            allowfullscreen="true"
-            src=""
-            class="tab-iframe tab-iframe--first"></iframe>
-
-        <div class="frame-clock" id="frame-clock">
-            <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
-        </div>
+  <div class="frame-container">
+    <div id="frame-widget-0"
+      class="tab-iframe tab-iframe--feedback">
+      <h3 id="frame-widget-feedback" class="vertical-align"></h3>
     </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/main.js"></script>
-    <script src="/views-site.js"></script>
+    <iframe id="frame-widget-1"
+      scrolling="no"
+      frameborder="0"
+      allowtransparency="true"
+      allowfullscreen="true"
+      src=""
+      class="tab-iframe tab-iframe--first"></iframe>
+
+    <iframe id="frame-widget-2"
+      scrolling="no"
+      frameborder="0"
+      allowtransparency="true"
+      allowfullscreen="true"
+      src=""
+      class="tab-iframe tab-iframe--first"></iframe>
+
+    <div class="frame-clock" id="frame-clock">
+      <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/main.js"></script>
+  <script src="/views-site.js"></script>
 </body>
 </html>
