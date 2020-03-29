@@ -231,17 +231,23 @@ svg.logo-icon {
 .navigation a.current {
     color: #000000;
     text-decoration: none;
+    background: unset;
 }
 
 .navigation a {
-    padding: 1vh 0 0 0;
-    color: #625d84;
+    padding: 1vh 0 1vh 0;
+    color: #200f96;
     text-decoration: underline;
+    flex: 1 1 auto;
+    text-align: center;
+    background: #d8deff;
+    border-radius: 6px 6px 0 0;
 }
 
 .navigation a:hover {
     text-decoration: underline;
     color: #1e00f8;
+    background: unset;
 }
 
 .status--current-url {

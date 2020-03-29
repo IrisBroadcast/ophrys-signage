@@ -656,11 +656,19 @@ socket.on('config-options--view-data', function(msg)
             if (LOCAL_SCRIPT !== msg.script && utils.elementExists("customPage"))
             {
                 LOCAL_SCRIPT = msg.script;
+                setTimeout(function() {
+                    if (utils.elementExists("customScriptTag"))
+                    {
+                        var oldScriptElement = utils.getElem(customScriptTag);
+                        utils.removeAllChildren(oldScriptElement);
+                    }
 
-                var scriptElem = document.createElement("script");
-                scriptElem.type = "text/javascript";
-                scriptElem.innerHTML = msg.script;
-                document.head.appendChild(scriptElem);
+                    var scriptElement = document.createElement("script");
+                    scriptElement.id = "customScriptTag";
+                    scriptElement.type = "text/javascript";
+                    scriptElement.innerHTML = msg.script;
+                    document.body.appendChild(scriptElement);
+                }, 5000)
             }
         }
 
@@ -703,8 +711,8 @@ socket.on('config-options--custom-variables', function(msg)
             setTimeout(function() {
                 for (var i = 0; i < keys.length; i++)
                 {
-                    console.log(msg[keys[i]]);
-                    utils.domChange("ref-"+"675", "innerHTML", msg[keys[i]]);
+                    console.log("Keys:",keys[i], "Value:",msg[keys[i]]);
+                    utils.domChange(keys[i], "innerHTML", msg[keys[i]]);
                 }
             }, 2000);
         }
