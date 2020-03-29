@@ -16,5 +16,9 @@
   "dependencies": {
     "express": "^4.14.0",
     "socket.io": "^2.3.0"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "trailingComma": "all"
   }
 }

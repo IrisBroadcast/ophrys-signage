@@ -419,6 +419,7 @@ utils.addEvent(utils.getElem("save-view-data-btn"), "click", function(event)
     var formdata = {}
     formdata.view = utils.getProperty("input-view", "value");
     formdata.html = utils.getProperty("input-html", "value");
+    formdata.script = utils.getProperty("input-script", "value");
     formdata.url1 = utils.getProperty("input-url1", "value");
     formdata.url2 = utils.getProperty("input-url2", "value");
     formdata.url3 = utils.getProperty("input-url3", "value");
@@ -621,48 +622,91 @@ socket.on('config-options--state', function(msg)
     }
 });
 
-// Get local statefile from server
+// Get local view-data from server
 var LOCAL_INFO = "";
+var LOCAL_SCRIPT = "";
+var LOCAL_STORE = "";
 socket.on('config-options--view-data', function(msg)
 {
     console.log("Recieved config-options--view-data:")
     console.table(msg);
-    if(msg != null)
+    if (msg != null)
     {
         // View Id
-        if(msg.hasOwnProperty('view'))
+        if (msg.hasOwnProperty('view'))
         {
             utils.domChange("input-view", "value", msg.view);
-            utils.domChange("popupLocalInformation2", "innerText", msg.view);
         }
 
         // Html
-        if(msg.hasOwnProperty('html'))
+        if (msg.hasOwnProperty('html'))
         {
             utils.domChange("input-html", "value", msg.html);
-            if(LOCAL_INFO !== msg.html)
+            if (LOCAL_INFO !== msg.html)
             {
                 utils.domChange("popupLocalInformation", "innerHTML", msg.html);
                 LOCAL_INFO = msg.html;
             }
         }
 
+        // Javascript
+        if (msg.hasOwnProperty('script'))
+        {
+            utils.domChange("input-script", "value", msg.script);
+            if (LOCAL_SCRIPT !== msg.script && utils.elementExists("customPage"))
+            {
+                LOCAL_SCRIPT = msg.script;
+
+                var scriptElem = document.createElement("script");
+                scriptElem.type = "text/javascript";
+                scriptElem.innerHTML = msg.script;
+                document.head.appendChild(scriptElem);
+            }
+        }
+
         // URL1
-        if(msg.hasOwnProperty('url1'))
+        if (msg.hasOwnProperty('url1'))
         {
             utils.domChange("input-url1", "value", msg.url1);
         }
 
         // URL2
-        if(msg.hasOwnProperty('url2'))
+        if (msg.hasOwnProperty('url2'))
         {
             utils.domChange("input-url2", "value", msg.url2);
         }
 
         // URL3
-        if(msg.hasOwnProperty('url3'))
+        if (msg.hasOwnProperty('url3'))
         {
             utils.domChange("input-url3", "value", msg.url3);
+        }
+    }
+});
+
+// Get local custom variables for view/info
+socket.on('config-options--custom-variables', function(msg)
+{
+    console.log("Recieved config-options--custom-variables:")
+    console.table(msg);
+
+    if (msg != null && utils.elementExists("customPage"))
+    {
+        if (LOCAL_SCRIPT !== msg.script)
+        {
+            // Store a copy
+            LOCAL_STORE = msg;
+
+            // Get all keys and find mathing DOM-partner
+            var keys = Object.keys(msg);
+
+            setTimeout(function() {
+                for (var i = 0; i < keys.length; i++)
+                {
+                    console.log(msg[keys[i]]);
+                    utils.domChange("ref-"+"675", "innerHTML", msg[keys[i]]);
+                }
+            }, 2000);
         }
     }
 });
@@ -715,7 +759,8 @@ if(utils.elementExists("hand-sec-ball") || utils.elementExists("hours"))
             else return "" + number;
         }
 
-        function rot(el, deg) {
+        function rot(el, deg)
+        {
             //el.setAttribute('transform', 'rotate(' + deg + ' 0 0)');
 
             if(el.id == "hand-sec-ball")

@@ -1,4 +1,6 @@
 /*
+ * Ophrys Signage
+ *
  * Copyright (c) 2019 Roger Sandholm & Jim Eld, Stockholm, Sweden
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* Ophrys Signage */
 const app = require("express")();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
@@ -39,6 +40,7 @@ const express = require("express");
 var signageConfigPath = "/usr/local/aloe/scripts/ophrys_state_node.json",
 	signageStatePath = "/usr/local/aloe/scripts/ophrys_state_bash.json",
 	signageViewDataPath = "/usr/local/aloe/scripts/ophrys_state_view.json",
+	signageCustomVarDataPath = "/usr/local/aloe/scripts/ophrys_state_vars.json",
 	signageConfigFile = {
 		"title": "Ophrys Signage",
 		"description": "",
@@ -58,9 +60,14 @@ var signageConfigPath = "/usr/local/aloe/scripts/ophrys_state_node.json",
 	signageViewDataFile = {
 		"view": "none",
 		"html": "<div style=\"font-size: 4em\">\n <p>Opening hours:</p>\n <ul>\n  <li><span style=\"color: red;\">Sunday closed</span></li>\n  <li>Monday-Saturday 12:00-20:00</li>\n </ul>\n</div>",
+		"script": "",
 		"url1": "",
 		"url2": "",
 		"url3": ""
+	},
+	signageCustomVarDataFile = {
+		"ref-56": "hej",
+		"me": "ok"
 	},
 	signageUrlUpdateScript = "/usr/local/aloe/scripts/setdisplayconfig.sh",
 	signageUrlRefreshScript = "/usr/local/aloe/scripts/setdisplayconfig.sh",
@@ -82,6 +89,7 @@ process.argv.forEach((val, index, array) =>
 		signageConfigPath = './ophrys_state_node.json';
 		signageStatePath = './ophrys_state_bash.json';
 		signageViewDataPath = './ophrys_state_view.json',
+		signageCustomVarDataPath = './ophrys_state_vars.json',
 		signageUrlUpdateScript = './debugscript.sh';
 		signageUrlRefreshScript = './debugscript.sh';
 		signageScreenScript = './debugscript.sh';
@@ -332,6 +340,18 @@ var initListeners = () =>
 			readViewDataFile();
 		}
 	});
+
+	// Signage custom variables state
+	readCustomVariablesFile();
+
+	fs.watch(signageCustomVarDataPath, { encoding: "buffer" }, (eventType, filename) =>
+	{
+		if (filename)
+		{
+			console.log("Change detected: " + eventType.toString() + " file: " + filename.toString());
+			readCustomVariablesFile();
+		}
+	});
 }
 
 var initConfig = () =>
@@ -432,6 +452,19 @@ var readViewDataFile = () =>
 		.then((data) =>
 		{
 			parseViewDataOptions(data);
+		})
+		.catch((err) =>
+		{
+			console.log(err);
+		});
+}
+
+var readCustomVariablesFile = () =>
+{
+	xReadFile(signageCustomVarDataPath)
+		.then((data) =>
+		{
+			parseCustomVariablesOptions(data);
 		})
 		.catch((err) =>
 		{
@@ -574,6 +607,7 @@ var parseViewDataOptions = (data) =>
 	var tmp = {
 		"view": "none",
 		"html": "",
+		"script": "",
 		"url1": "",
 		"url2": "",
 		"url3": ""
@@ -593,6 +627,11 @@ var parseViewDataOptions = (data) =>
 	// Html
 	if (configUpdate.hasOwnProperty("html")) {
 		tmp.html = configUpdate.html;
+	}
+
+	// Javascript
+	if (configUpdate.hasOwnProperty("script")) {
+		tmp.script = configUpdate.script;
 	}
 
 	// URL 1
@@ -615,6 +654,27 @@ var parseViewDataOptions = (data) =>
 
 	// Emit to clients
 	io.emit("config-options--view-data", signageViewDataFile);
+}
+
+// Read local custom variables and emit
+var parseCustomVariablesOptions = (data) =>
+{
+	console.log("parseCustomVariablesOptions:");
+	console.log(data);
+
+	var configUpdate = {};
+
+	try {
+		configUpdate = JSON.parse(data);
+	} catch (err) {
+		configUpdate = data;
+	}
+
+	// Store the read in configuration
+	signageCustomVarDataFile = configUpdate;
+
+	// Emit to clients
+	io.emit("config-options--custom-variables", signageCustomVarDataFile);
 }
 
 // =============================================
@@ -803,6 +863,15 @@ var doTranslateViewDataFromForm = (configUpdate) =>
 		tmp.html = "";
 	}
 
+	// Get Javascipt data
+	if (configUpdate.hasOwnProperty("script")) {
+		tmp.script = configUpdate.script;
+	} else if (signageConfigFile.hasOwnProperty("script")) {
+		tmp.script = signageConfigFile.script;
+	} else {
+		tmp.script = "";
+	}
+
 	// Get URL 1 data
 	if (configUpdate.hasOwnProperty("url1")) {
 		tmp.url1 = configUpdate.url1;
@@ -973,14 +1042,15 @@ io.on("connection", (Socket) =>
 	// Emit remote fetching config timer info
 	io.emit("config-external-timer", externalConfigCheck);
 
+	// Emit view data & custom variables configuration
+	io.emit("config-options--view-data", signageViewDataFile);
+	io.emit("config-options--custom-variables", signageCustomVarDataFile);
+
 	// User saves config from website
 	Socket.on("save config-options", (configUpdate) =>
 	{
 		doTranslateConfigFromForm(configUpdate);
 	});
-
-	// Emit view data configuration
-	io.emit("config-options--view-data", signageViewDataFile);
 
 	// User saves view data
 	Socket.on("save config-view-data", (configUpdate) =>
