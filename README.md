@@ -97,3 +97,4 @@ Example: ```192.168.10.13:82```
 ## Responsible Maintainers
 - [Jim Eld](https://github.com/djhenley)
 - [Roger Sandholm](https://github.com/Roog)
+- [Christoffer Björnram](https://github.com/cbjornram)
