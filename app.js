@@ -81,6 +81,8 @@ var signageConfigPath = "/usr/local/aloe/scripts/ophrys_state_node.json",
   applicationEnvironment = "Production",
   applicationWebPort = 82;
 
+const isWin = process.platform === "win32";
+
 process.argv.forEach((val, index, array) => {
   var n = val.search(/--debug/gi);
   if (n === 0) {
@@ -928,7 +930,8 @@ var runBashScriptAsync = (scriptPath, scriptArg) => {
   return new Promise((resolve, reject) => {
     try {
       // child_process.spawn(command[, args][, options])
-      const action = spawn("sudo", args);
+      
+      const action = isWin ? spawn(args) : spawn("sudo", args);
 
       action.stdout.on("data", data => {
         if (data.toString() !== "") {
