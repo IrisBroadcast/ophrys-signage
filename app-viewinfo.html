@@ -599,6 +599,12 @@
       display: block;
     }
 
+    .feature--url-example {
+      background-color: #eeeeee;
+      font-size: 18px;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
     /* TV test bar */
     .tv-bar {
       display:flex;
@@ -698,8 +704,17 @@
     <div class="content">
       <div class="status--general">
         Configure your custom views here. Use the "viewId" when connecting to these configured variables.
-        Access it by using "{your-device-ip-or-hostname}/view/{tab|site|multi}?viewId={viewid}".
-        Leave the URL fields blank for not loading any url. To reference a local view like "/view/{info|clock}".
+        Access it by using: <br/>
+        <label class="feature--url-example">
+          {your-device-ip-or-hostname}/view/{tab|site|multi}?viewId={viewid}
+        </label>
+        <br/>
+        Leave the URL fields blank for not loading any url. To reference a local view, use: <br/>
+        <label class="feature--url-example">
+          /view/{info|clock}
+        </label>
+        <br/>
+        For more information, check out the <a href="https://github.com/IrisBroadcast/OphrysSignage/tree/master/views" target="_blank">documentation</a>.
       </div>
     </div>
 
@@ -732,8 +747,10 @@
 
     <div class="content">
       <div class="status--general">
-        Configure your custom info view here. Use the 'viewId' when connecting to these configured variables.
-        Access it by using "{your-device-ip-or-hostname}/view/info?viewId={viewid}".
+        Configure your custom info view here. Access it by using: <br/>
+        <label class="feature--url-example">
+          {your-device-ip-or-hostname}/view/info?viewId={viewid}
+        </label>
       </div>
     </div>
 
