@@ -10,7 +10,7 @@
 [Advanced browser start-up parameters](#Advanced-browser-start-up-parameters)<br>
 
 # Breif introduction <a name="Breif-introduction"></a><br>
-To configure your Ophrys Signage you have three configuration sites to help you. The first one you will find at `yourhostname:82` and this site simply shows information about your Ophrys. From here you can get to `yourhostname:82/config`. Here you will find the main settings and choose your Ophrys appearance and what it will show. From the config-site you can get to `yourhostname:80/view`. This is where you find different view options that you can use together with what you configure on the main config-site.
+To configure your Ophrys Signage you have three configuration sites to help you. The first one you will find at `yourhostname:82` and this site simply shows information about your Ophrys. From here you can get to `yourhostname:82/config`. Here you will find the main settings and choose your Ophrys appearance and what it will show. From the config-site you can get to `yourhostname:82/view`. This is where you find different view options that you can use together with what you configure on the main config-site.
 
 # Views and how to use them
 
