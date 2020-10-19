@@ -33,11 +33,11 @@ Shows one site embeded in an iframe. The variables bellow are available.
 
  ### Example
  - `http://localhost:82/view/site?url1=example.com&reload=true&delay=10&bodypadding=20px&bodybg=white&clock=true`
- - `http://localhost:82/view/site?viewid=myview` Use this option to use the URL 1-field in View Options instead and replace `myview` with the ViewID configured in View Options. It can be used with variables in the same way as in the first example:
+ - `http://localhost:82/view/site?viewid={viewid}` Use this option to use the URL 1-field in View Options instead and replace `{viewid}` with the ViewID configured in View Options. It can be used with variables in the same way as in the first example:
  - `http://localhost:82/view/site?viewid={viewid}&reload=true&delay=15&bodypadding=10px&bodybg=black&clock=false`
 
 ## View/tab <a name="View-tab"></a><br>
-An (iframe) webpage slideshow that can switch between up to three sites. Be careful with adding site that takes a long time to load or with a lot of moving elements. This might not be suitable for all types of webpages since they don't like to be embedded by other sites.
+A webpage (iframe) slideshow that can switch between up to three sites. Be careful with adding site that takes a long time to load or with a lot of moving elements. This might not be suitable for all types of webpages since they don't like to be embedded by other sites.
 
 ### Variables:
 - Url1 { "url without http" }
@@ -48,7 +48,7 @@ An (iframe) webpage slideshow that can switch between up to three sites. Be care
 
 ### Example
 - `http://localhost:82/view/tab?url1=example.com&url2=mysite.com&delay=15&reload=false`
-- `http://localhost:82/view/tab?viewid=myview&delay=15&reload=false` Use this option to use the URL 1-3-fields in View Options instead and replace `myview` with the ViewID configured in View Options. 
+- `http://localhost:82/view/tab?viewid={viewid}&delay=15&reload=false` Use this option to use the URL 1-3-fields in View Options instead and replace `{viewid}` with the ViewID configured in View Options. 
 
 ## View/multi <a name="View-multi"></a><br>
 Loads 2 iframes side-by-side or on-top of each other.
@@ -59,7 +59,7 @@ Loads 2 iframes side-by-side or on-top of each other.
 
 ### Example
 - `http://localhost:82/view/multi?url1=example.com&url2=mysite.com`
-- `http://localhost:82/view/multi?viewid=myview` Use this option to use the URL 1-2-fields in View Options instead and replace `myview` with the ViewID configured in View Options. 
+- `http://localhost:82/view/multi?viewid={viewid}` Use this option to use the URL 1-2-fields in View Options instead and replace `{viewid}` with the ViewID configured in View Options. 
 
 ## View/info <a name="View-info"></a><br>
 Use /view/info to show your own custom html site. The information is instantly updated on save, and the view itself can be used with the different /view sites. To edit your custom html site, go to the view options and write it directly in the Custom HTML-field.
@@ -90,7 +90,7 @@ Displays a studio like clock. It shows the local "browser" clock, so make sure t
 The views above can be combined. In the following example we will create a view/multi that shows a view/clock and a view/info:
 
 ### Example
-- The "URL to display" will be `http://localhost:82/view/multi?viewid=myview`
+- The "URL to display" will be `http://localhost:82/view/multi?viewid={viewid}`
 - In the view configuration, write `/view/clock` in the URL 1-field and `/view/info` in the URL 2-field. Note that when presenting local views in these URL-fields you do not need to type http or localhost.
 - In the Custom HTML-field, paste the html snippet found at [View/info](#View-info).
 - Save and reload you webpage to see the result.
