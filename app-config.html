@@ -101,7 +101,7 @@
 
     .button {
       position: relative;
-      background: #3369ff;
+      background: #03899c;
       border: 0;
       font-size: 16px;
       text-decoration: none;
@@ -119,7 +119,7 @@
     }
 
     .button--action {
-      background: #ff6b33;
+      background: #ff9000;
     }
 
     .button--nav {
@@ -137,8 +137,8 @@
     .button::before {
       content: '';
       position: absolute;
-      background: darken(#3369ff, 40%);
-      border: 50vh solid darken(#3369ff, 20%);
+      background: darken(#026a79, 40%);
+      border: 50vh solid darken(#026a79, 20%);
       width: 30vh;
       height: 30vh;
       border-radius: 50%;
@@ -151,12 +151,12 @@
     }
 
     .button:hover {
-      background-color: #2450cc;
+      background-color: #026a79;
       box-shadow: inset 0 -0.6em 0 -0.35em rgba(255, 255, 255, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     }
 
     .button--action:hover {
-      background-color: #e66230;
+      background-color: #c56f00;
       box-shadow: inset 0 -0.6em 0 -0.35em rgba(255, 255, 255, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
     }
 
@@ -241,21 +241,19 @@
       color: #000000;
       text-decoration: none;
       background: unset;
+      border-right: 1px solid #e1e1e1
     }
 
     .navigation a {
       padding: 1vh 0 1vh 0;
-      color: #200f96;
+      color: #1e00f8;
       text-decoration: underline;
       flex: 1 1 auto;
-      text-align: center;
-      background: #d8deff;
-      border-radius: 6px 6px 0 0;
+      text-align: center
+
     }
 
     .navigation a:hover {
-      text-decoration: underline;
-      color: #1e00f8;
       background: unset;
     }
 
@@ -391,8 +389,8 @@
     }
 
     input:checked + .slider {
-      background-color: #3369ff;
-      border-color: #2a57d5;
+      background-color: #03899c;
+      border-color: #026a79;
     }
 
     input:checked + .slider:before {
@@ -523,8 +521,8 @@
     }
 
     .radiobtn-box input:checked ~ .radiobtn-check {
-      background-color: #3369ff;
-      border-color: #2a57d5;
+      background-color: #03899c;
+      border-color: #026a79;
       animation: unset;
     }
 
@@ -611,28 +609,16 @@
       flex: 1 1 auto;
     }
     .tv-bar-color-1 {
-      background-color: #f8f800;
+      background-color: #03899c;
     }
     .tv-bar-color-2 {
-      background-color: #00f8f8;
+      background-color: #ff9000;
     }
     .tv-bar-color-3 {
-      background-color: #00f800;
+      background-color: #00b74a;
     }
     .tv-bar-color-4 {
-      background-color: #f800f8;
-    }
-    .tv-bar-color-5 {
-      background-color: #f80000;
-    }
-    .tv-bar-color-6 {
-      background-color: #0000f8;
-    }
-    .tv-bar-color-7 {
-      background-color: #bababa;
-    }
-    .tv-bar-color-8 {
-      background-color: #000000;
+      background-color: #b90091;
     }
   </style>
 </head>
@@ -688,11 +674,7 @@
         <div class="tv-bar-item tv-bar-color-2"></div>
         <div class="tv-bar-item tv-bar-color-3"></div>
         <div class="tv-bar-item tv-bar-color-4"></div>
-        <div class="tv-bar-item tv-bar-color-5"></div>
-        <div class="tv-bar-item tv-bar-color-6"></div>
-        <div class="tv-bar-item tv-bar-color-7"></div>
-        <div class="tv-bar-item tv-bar-color-8"></div>
-      </div>
+       </div>
     </div>
 
     <div class="content">
@@ -736,37 +718,38 @@
           Rotate screen
         </label>
 
-        <label class="ui-form--label feature--local-config-info">
-          <label class="radiobtn-box" id="input-screen_rotation--normal-rlbl">
-            <input type="radio" name="selection-screen-rotation" value="normal" id="input-screen_rotation--normal" class="feature--local-config">
-            <span class="radiobtn-check"></span>
-          </label>
-          <label for="input-screen_rotation--normal" id="input-screen_rotation--normal-label" class="radio-label">Normal</label>
-        </label>
+        <div>
+          <p style="padding-right: 2.5em">
+            <label class="ui-form--label feature--local-config-info">
+            <label class="radiobtn-box" id="input-screen_rotation--normal-rlbl">
+              <input type="radio" name="selection-screen-rotation" value="normal" id="input-screen_rotation--normal" class="feature--local-config">
+              <span class="radiobtn-check"></span>
+            </label>
+            <label for="input-screen_rotation--normal" id="input-screen_rotation--normal-label" class="radio-label">Normal</label>
+          
 
-        <label class="ui-form--label feature--local-config-info">
-          <label class="radiobtn-box" id="input-screen_rotation--left-rlbl">
-            <input type="radio" name="selection-screen-rotation" value="left" id="input-screen_rotation--left" class="feature--local-config">
-            <span class="radiobtn-check"></span>
-          </label>
-          <label for="input-screen_rotation--left" id="input-screen_rotation--left-label" class="radio-label">Left</label>
-        </label>
+            <label class="ui-form--label feature--local-config-info">
+            <label class="radiobtn-box" id="input-screen_rotation--left-rlbl">
+              <input type="radio" name="selection-screen-rotation" value="left" id="input-screen_rotation--left" class="feature--local-config">
+              <span class="radiobtn-check"></span>
+            </label>
+            <label for="input-screen_rotation--left" id="input-screen_rotation--left-label" class="radio-label">Left</label>
 
-        <label class="ui-form--label feature--local-config-info">
-          <label class="radiobtn-box" id="input-screen_rotation--right-rlbl">
-            <input type="radio" name="selection-screen-rotation" value="right" id="input-screen_rotation--right" class="feature--local-config">
-            <span class="radiobtn-check"></span>
-          </label>
-          <label for="input-screen_rotation--right" id="input-screen_rotation--right-label" class="radio-label">Right</label>
-        </label>
+          <label class="ui-form--label feature--local-config-info">
+            <label class="radiobtn-box" id="input-screen_rotation--right-rlbl">
+              <input type="radio" name="selection-screen-rotation" value="right" id="input-screen_rotation--right" class="feature--local-config">
+              <span class="radiobtn-check"></span>
+            </label>
+            <label for="input-screen_rotation--right" id="input-screen_rotation--right-label" class="radio-label">Right</label>
 
-        <label class="ui-form--label feature--local-config-info">
-          <label class="radiobtn-box" id="input-screen_rotation--inverted-rlbl">
-            <input type="radio" name="selection-screen-rotation" value="inverted" id="input-screen_rotation--inverted" class="feature--local-config">
-            <span class="radiobtn-check"></span>
-          </label>
-          <label for="input-screen_rotation--inverted" id="input-screen_rotation--inverted-label" class="radio-label">Inverted</label>
-        </label>
+          <label class="ui-form--label feature--local-config-info">
+            <label class="radiobtn-box" id="input-screen_rotation--inverted-rlbl">
+              <input type="radio" name="selection-screen-rotation" value="inverted" id="input-screen_rotation--inverted" class="feature--local-config">
+              <span class="radiobtn-check"></span>
+            </label>
+            <label for="input-screen_rotation--inverted" id="input-screen_rotation--inverted-label" class="radio-label">Inverted</label>
+          </p>
+       </div>
 
         <label for="input-browser_parameter">
           Advanced browser start-up parameters
