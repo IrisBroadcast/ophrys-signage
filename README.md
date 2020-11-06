@@ -31,7 +31,7 @@ We use it to display system monitoring and door-signage for our broadcast studio
 - Automatic and regular security updates (default: once a week)
 - Local firewall included in installation (add your custom rules in the configuration file)
 
-![Signage Screen](static/gfx-screen-2.png)
+![Signage Screen](static/gfx-screen-updated1.png)
 ![Raspberry Pi](static/gfx-pi.png)
 
 License
