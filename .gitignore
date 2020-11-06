@@ -4,3 +4,6 @@ getconfig.sh
 destination
 .DS
 .DS_Store
+ophrys_state_bash.json
+ophrys_state_node.json
+ophrys_state_vars.json
