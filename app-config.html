@@ -425,8 +425,9 @@
       margin: 0;
       padding: 0;
       line-height: 0;
-      display: inline-block;
+      display: block;
       width: unset;
+      background-color: #ffffff;
     }
 
     .ui-form--label label {
@@ -439,9 +440,25 @@
       outline: none;
     }
 
+    .form-box {
+      background-color: #ffffff;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .form-column {
+      display: flex;
+      background-color: #026a79;
+    }
+
     .radio-label {
       padding-left: 10px !important;
+      padding-right: 30px;
+      background-color: #ffffff;
       font-weight: normal;
+      display: inline-block;
     }
 
     .radiobtn-box input {
@@ -466,7 +483,7 @@
       -ms-user-select: none;
       user-select: none;
       border-radius: 50%;
-      box-shadow: 5px 5px 20px 0px #d6d6d6;
+      box-shadow: 5px 5px 5px 0px #d6d6d6;
     }
 
     .radiobtn-check:before {
@@ -490,13 +507,13 @@
 
     @keyframes selected-rotation-animation {
       0% {
-        background-color: #3c99fd;
+        background-color: #026a79;
       }
       50% {
-        background-color: #cbe4ff;
+        background-color: #ffffff;
       }
       100% {
-        background-color: #3c99fd;
+        background-color: #026a79;
       }
     }
 
@@ -718,38 +735,41 @@
           Rotate screen
         </label>
 
-        <div>
-          <p style="padding-right: 2.5em">
-            <label class="ui-form--label feature--local-config-info">
-            <label class="radiobtn-box" id="input-screen_rotation--normal-rlbl">
-              <input type="radio" name="selection-screen-rotation" value="normal" id="input-screen_rotation--normal" class="feature--local-config">
-              <span class="radiobtn-check"></span>
-            </label>
-            <label for="input-screen_rotation--normal" id="input-screen_rotation--normal-label" class="radio-label">Normal</label>
-          
+        <div class="feature--local-config-info">
+          <div class="form-box">
+            <div class="form-column">
+              <label class="radiobtn-box" id="input-screen_rotation--normal-rlbl">
+                <input type="radio" name="selection-screen-rotation" value="normal" id="input-screen_rotation--normal" class="feature--local-config">
+                <span class="radiobtn-check"></span>
+              </label>
+              <label for="input-screen_rotation--normal" id="input-screen_rotation--normal-label" class="radio-label">Normal</label>
+            </div>
 
-            <label class="ui-form--label feature--local-config-info">
-            <label class="radiobtn-box" id="input-screen_rotation--left-rlbl">
-              <input type="radio" name="selection-screen-rotation" value="left" id="input-screen_rotation--left" class="feature--local-config">
-              <span class="radiobtn-check"></span>
-            </label>
-            <label for="input-screen_rotation--left" id="input-screen_rotation--left-label" class="radio-label">Left</label>
+            <div class="form-column">
+              <label class="radiobtn-box" id="input-screen_rotation--left-rlbl">
+                <input type="radio" name="selection-screen-rotation" value="left" id="input-screen_rotation--left" class="feature--local-config">
+                <span class="radiobtn-check"></span>
+              </label>
+              <label for="input-screen_rotation--left" id="input-screen_rotation--left-label" class="radio-label">Left</label>
+            </div> 
 
-          <label class="ui-form--label feature--local-config-info">
-            <label class="radiobtn-box" id="input-screen_rotation--right-rlbl">
-              <input type="radio" name="selection-screen-rotation" value="right" id="input-screen_rotation--right" class="feature--local-config">
-              <span class="radiobtn-check"></span>
-            </label>
-            <label for="input-screen_rotation--right" id="input-screen_rotation--right-label" class="radio-label">Right</label>
+            <div class="form-column">
+              <label class="radiobtn-box" id="input-screen_rotation--right-rlbl">
+                <input type="radio" name="selection-screen-rotation" value="right" id="input-screen_rotation--right" class="feature--local-config">
+                <span class="radiobtn-check"></span>
+              </label>
+              <label for="input-screen_rotation--right" id="input-screen_rotation--right-label" class="radio-label">Right</label>
+            </div>
 
-          <label class="ui-form--label feature--local-config-info">
-            <label class="radiobtn-box" id="input-screen_rotation--inverted-rlbl">
-              <input type="radio" name="selection-screen-rotation" value="inverted" id="input-screen_rotation--inverted" class="feature--local-config">
-              <span class="radiobtn-check"></span>
-            </label>
-            <label for="input-screen_rotation--inverted" id="input-screen_rotation--inverted-label" class="radio-label">Inverted</label>
-          </p>
-       </div>
+            <div class="form-column">
+              <label class="radiobtn-box" id="input-screen_rotation--inverted-rlbl">
+                <input type="radio" name="selection-screen-rotation" value="inverted" id="input-screen_rotation--inverted" class="feature--local-config">
+                <span class="radiobtn-check"></span>
+              </label>
+              <label for="input-screen_rotation--inverted" id="input-screen_rotation--inverted-label" class="radio-label">Inverted</label>
+            </div>
+          </div>
+        </div>
 
         <label for="input-browser_parameter">
           Advanced browser start-up parameters
