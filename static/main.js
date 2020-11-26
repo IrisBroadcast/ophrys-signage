@@ -50,6 +50,34 @@ var util = function() {
                 this.domChange(x[i], key, value);
             }
         },
+        domChangeByAttr: (key, value, html) => {
+            // Updates every element with the 'data-key' attribute
+            html = html || false;
+            try {
+                let languageTemplate = document.querySelectorAll("[data-key]");
+                if (html) {
+                    languageTemplate.forEach(function(item) {
+                        if (item.dataset.key === key) {
+                            window.requestAnimationFrame(function() {
+                                item.innerHTML = value;
+                            });
+                        }
+                    });
+                } else {
+                    languageTemplate.forEach(function(item) {
+                        if (item.dataset.key === key) {
+                            window.requestAnimationFrame(function() {
+                                item.textContent = value;
+                            });
+                        }
+                    });
+                }
+                return true;
+            } catch(e) {
+                console.error(e);
+                return false;
+            }
+        },
         getProperty: function(el, key)
         {
             if(typeof el !== 'object')
@@ -442,7 +470,7 @@ utils.addEvent(utils.getElem("reload-url-btn"), "click", function(event)
 // Toggle configuration form elements visibility
 utils.addEvent(utils.getElem("input-fetch_config_from_url"), "click", function()
 {
-    if(utils.getProperty("input-fetch_config_from_url", "checked"))
+    if (utils.getProperty("input-fetch_config_from_url", "checked"))
     {
         setFeatureRemoteConfig(true);
     }
@@ -457,7 +485,7 @@ function setFeatureRemoteConfig(value)
     utils.domChangeClass("feature--remote-config", "disabled", !value);
     utils.domChangeClass("feature--local-config", "disabled", value);
 
-    if(value)
+    if (value)
     {
         utils.addClassFromClass("feature--remote-config-info", "feature--remote-config-info--show");
         utils.removeClassFromClass("feature--local-config-info", "feature--local-config-info--show");
@@ -470,11 +498,13 @@ function setFeatureRemoteConfig(value)
 }
 
 // Get system info from server
-socket.on('system-status', function(msg)
+socket.on("system-status", function(msg)
 {
-    console.dir(msg);
-    if(msg.hasOwnProperty('ip')) {
-        utils.domChange("infoIpAddress", "innerText", msg.ip[0]);
+    console.log("system-status");
+    console.table(msg);
+    if (msg.hasOwnProperty("ip")) {
+        utils.domChange("infoIpAddress", "innerText", msg.ip[0] + ":" + msg.sitePort);
+        utils.domChangeByAttr("info-device-ip", msg.ip[0] + ":" + msg.sitePort);
         console.log(msg.ip[0]);
     }
     /*data.cpus = os.cpus()
@@ -485,7 +515,7 @@ socket.on('system-status', function(msg)
 });
 
 // Get information about the remote fetch loop
-socket.on('config-external-timer', function(msg)
+socket.on("config-external-timer", function(msg)
 {
     console.log("Recieved config-external-timer:");
     console.table(msg);
@@ -494,44 +524,44 @@ socket.on('config-external-timer', function(msg)
     {
         feedback = "Remote config check is running (" + msg['loop-count'] + ")";
     }
-    utils.getElem('infoRemoteConfigTimer').innerText = feedback;
-    utils.getElem('infoRemoteConfigError').innerText = msg.error;
+    utils.getElem("infoRemoteConfigTimer").innerText = feedback;
+    utils.getElem("infoRemoteConfigError").innerText = msg.error;
 });
 
 // Get local configfile from server
-socket.on('config-options', function(msg)
+socket.on("config-options", function(msg)
 {
     console.log("Recieved config-options:");
     console.table(msg);
     if(msg != null)
     {
         // Set title
-        if(msg.hasOwnProperty('title'))
+        if(msg.hasOwnProperty("title"))
         {
             utils.domChange("input-title", "value", msg.title);
             utils.domChange("infoCurrentUrl", "innerText", (msg.title || "Ophrys Signage"));
         }
 
         // Set description
-        if(msg.hasOwnProperty('description'))
+        if(msg.hasOwnProperty("description"))
         {
             utils.domChange("input-description", "value", msg.description);
         }
 
         // Set current url to form and info fields
-        if(msg.hasOwnProperty('url'))
+        if(msg.hasOwnProperty("url"))
         {
             utils.domChange("input-current_url", "value", msg.url);
         }
 
         // Set up browser startup parameters
-        if(msg.hasOwnProperty('browserparameter'))
+        if(msg.hasOwnProperty("browserparameter"))
         {
             utils.domChange("input-browser_parameter", "value", msg.browserparameter);
         }
 
         // Auto get configuration from url
-        if(msg.hasOwnProperty('fetchconfig'))
+        if(msg.hasOwnProperty("fetchconfig"))
         {
             utils.domChange("input-fetch_config_from_url", "checked", msg.fetchconfig);
             setFeatureRemoteConfig(msg.fetchconfig);
@@ -542,13 +572,13 @@ socket.on('config-options', function(msg)
         }
 
         // Fetch configuration from this url
-        if(msg.hasOwnProperty('remoteurl'))
+        if(msg.hasOwnProperty("remoteurl"))
         {
             utils.domChange("input-remote_config_url", "value", msg.remoteurl);
         }
 
         // Set screen_rotation
-        if(msg.hasOwnProperty('rotation'))
+        if(msg.hasOwnProperty("rotation"))
         {
             if(msg.rotation == "normal")
             {
@@ -571,20 +601,20 @@ socket.on('config-options', function(msg)
 });
 
 // Get local statefile from server
-socket.on('config-options--state', function(msg)
+socket.on("config-options--state", function(msg)
 {
     console.log("Recieved config-options--state:")
     console.table(msg);
     if(msg != null)
     {
         // Set current url to form and info fields
-        if(msg.hasOwnProperty('url'))
+        if(msg.hasOwnProperty("url"))
         {
             utils.domChange("infoCurrentUrl", "innerText", msg.url);
         }
 
         // Set screen_rotation
-        if(msg.hasOwnProperty('rotation'))
+        if(msg.hasOwnProperty("rotation"))
         {
             utils.removeClass("input-screen_rotation--normal-rlbl", "radiobtn-box--confirmed");
             utils.removeClass("input-screen_rotation--left-rlbl", "radiobtn-box--confirmed");
@@ -610,13 +640,13 @@ socket.on('config-options--state', function(msg)
         }
 
         // Set hardware model
-        if(msg.hasOwnProperty('hardwaremodel'))
+        if(msg.hasOwnProperty("hardwaremodel"))
         {
             utils.domChange("infoHardware", "innerText", msg.hardwaremodel);
         }
 
         // Set hostname
-        if(msg.hasOwnProperty('hostname'))
+        if(msg.hasOwnProperty("hostname"))
         {
             utils.domChange("infoHostName", "innerText", msg.hostname);
         }
@@ -627,20 +657,21 @@ socket.on('config-options--state', function(msg)
 var LOCAL_INFO = "";
 var LOCAL_SCRIPT = "";
 var LOCAL_STORE = "";
-socket.on('config-options--view-data', function(msg)
+socket.on("config-options--view-data", function(msg)
 {
     console.log("Recieved config-options--view-data:")
     console.table(msg);
     if (msg != null)
     {
         // View Id
-        if (msg.hasOwnProperty('view'))
+        if (msg.hasOwnProperty("view"))
         {
             utils.domChange("input-view", "value", msg.view);
+            utils.domChangeByAttr("info-conf-viewid", msg.view);
         }
 
         // Html
-        if (msg.hasOwnProperty('html'))
+        if (msg.hasOwnProperty("html"))
         {
             utils.domChange("input-html", "value", msg.html);
             if (LOCAL_INFO !== msg.html)
@@ -651,7 +682,7 @@ socket.on('config-options--view-data', function(msg)
         }
 
         // Javascript
-        if (msg.hasOwnProperty('script'))
+        if (msg.hasOwnProperty("script"))
         {
             utils.domChange("input-script", "value", msg.script);
             if (LOCAL_SCRIPT !== msg.script && utils.elementExists("customPage"))
@@ -674,27 +705,33 @@ socket.on('config-options--view-data', function(msg)
         }
 
         // URL1
-        if (msg.hasOwnProperty('url1'))
+        if (msg.hasOwnProperty("url1"))
         {
             utils.domChange("input-url1", "value", msg.url1);
         }
 
         // URL2
-        if (msg.hasOwnProperty('url2'))
+        if (msg.hasOwnProperty("url2"))
         {
             utils.domChange("input-url2", "value", msg.url2);
         }
 
         // URL3
-        if (msg.hasOwnProperty('url3'))
+        if (msg.hasOwnProperty("url3"))
         {
             utils.domChange("input-url3", "value", msg.url3);
         }
+
+        // Setup listeners for change in form effects
+        utils.addEvent("input-view", "input", (el) => {
+            console.log("input-view on change: ", el.target.value);
+            utils.domChangeByAttr("info-conf-viewid", el.target.value);
+        });
     }
 });
 
 // Get local custom variables for view/info
-socket.on('config-options--custom-variables', function(msg)
+socket.on("config-options--custom-variables", function(msg)
 {
     console.log("Recieved config-options--custom-variables:")
     console.table(msg);
@@ -728,8 +765,8 @@ if(utils.elementExists("hand-sec-ball") || utils.elementExists("hours"))
 {
     (function() {
         // Initial
-        var secondBall = utils.getElem('hand-sec-ball');
-        var marksSeconds = utils.getElem('marks-seconds');
+        var secondBall = utils.getElem("hand-sec-ball");
+        var marksSeconds = utils.getElem("marks-seconds");
 
         var time_hours = utils.getElem("hours");
         var time_minutes = utils.getElem("minutes");
@@ -814,6 +851,6 @@ utils.addEvent(window, "resize", windowResized);
 
 function windowResized()
 {
-    utils.getElem('window-width').innerText = document.documentElement.clientWidth;
-    utils.getElem('window-height').innerText = document.documentElement.clientHeight;
+    utils.getElem("window-width").innerText = document.documentElement.clientWidth;
+    utils.getElem("window-height").innerText = document.documentElement.clientHeight;
 }

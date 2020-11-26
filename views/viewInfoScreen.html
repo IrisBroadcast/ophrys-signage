@@ -4,7 +4,6 @@
   <title>Ophrys Signage - Info Screen</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=1.0, minimum-scale=0.5">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
-  <!--<link href="/style.css" rel="stylesheet">-->
   <style type="text/css">
     * {
       margin: 0;
@@ -40,7 +39,13 @@
       max-width: unset !important;
     }
 
-    .status--general, .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock {
+    p {
+      padding: 6px 1vw;
+      margin: 0;
+      line-height: 2;
+    }
+
+    .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock {
       font-family: 'Roboto', Arial, Helvetica, sans-serif;
       font-size: 1.3em;
       font-weight: 400;
@@ -72,13 +77,11 @@
 
     @media (orientation: landscape) {
       .custom-view-container {
-        
       }
     }
 
     @media (orientation: portrait) {
       .custom-view-container {
-        
       }
     }
 

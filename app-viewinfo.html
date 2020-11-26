@@ -258,7 +258,13 @@
       background: unset;
     }
 
-    .status--general, .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock, .status--link {
+    p {
+      padding: 6px 1vw;
+      margin: 0;
+      line-height: 2;
+    }
+
+    .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock, .status--link {
       font-family: 'Roboto', Arial, Helvetica, sans-serif;
       font-size: 1.3em;
       font-weight: 400;
@@ -600,8 +606,12 @@
 
     .feature--url-example {
       background-color: #eeeeee;
-      font-size: 18px;
+      font-size: 1rem;
       font-family: 'Courier New', Courier, monospace;
+      display: block;
+      padding: 0 4px 0 4px;
+      margin: 4px;
+      border-radius: 3px;
     }
 
     /* TV test bar */
@@ -653,7 +663,7 @@
   <div class="container">
     <div class="content">
       <div class="status--current-url">
-        <span id="infoCurrentUrl">&nbsp;</span>
+        Current URL: <span id="infoCurrentUrl">&nbsp;</span>
       </div>
       <div class="status--identification">
         <span id="infoIpAddress">&nbsp;</span>
@@ -685,20 +695,23 @@
     </div>
 
     <div class="content">
-      <div class="status--general">
-        Configure your custom views here. Use the "viewId" when connecting to these configured variables.
+      <p>
+        Configure your custom views here, that is not just one external URL.
+        Use the "viewId" when connecting to these configured variables.
         Access it by using: <br/>
-        <label class="feature--url-example">
-          {your-device-ip-or-hostname}/view/{tab|site|multi}?viewId={viewid}
-        </label>
+        <code class="feature--url-example">
+          http://<abbr data-key="info-device-ip" title="{your-device-ip-or-hostname}"></abbr>/view/{tab|site|multi|info}?viewId=<abbr title="{viewid}" data-key="info-conf-viewid"></abbr>
+        </code>
         <br/>
-        Leave the URL fields blank for not loading any url. To reference a local view, use: <br/>
-        <label class="feature--url-example">
+        Leave the URL fields blank for not loading any url.
+        <br>
+        To reference a local custom view, use: <br/>
+        <code class="feature--url-example">
           /view/{info|clock}
-        </label>
+        </code>
         <br/>
         For more information, check out the <a href="https://github.com/IrisBroadcast/OphrysSignage/tree/master/views" target="_blank">documentation</a>.
-      </div>
+      </p>
     </div>
 
     <div class="content">
@@ -708,7 +721,7 @@
           <input id="input-view" autocomplete="off" />
         </label>
         <label class="feature--field-info">
-          <i>Use this view ID to get this configuration for all the "view" sites.</i>
+          <i>Use this view ID to get this configuration for all the custom "view" sites. For now there is only one configuration.</i>
         </label>
 
         <label for="input-url1">
@@ -729,12 +742,12 @@
     </div>
 
     <div class="content">
-      <div class="status--general">
-        Configure your custom info view here. Access it by using: <br/>
-        <label class="feature--url-example">
-          {your-device-ip-or-hostname}/view/info?viewId={viewid}
-        </label>
-      </div>
+      <p>
+        Configure your custom "info" view here. Access it by using: <br/>
+        <code class="feature--url-example">
+          http://<abbr data-key="info-device-ip" title="{your-device-ip-or-hostname}"></abbr>/view/info?viewId=<abbr title="{viewid}" data-key="info-conf-viewid"></abbr>
+        </code>
+      </p>
     </div>
 
     <div class="content">

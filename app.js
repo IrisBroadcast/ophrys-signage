@@ -37,6 +37,14 @@ const fs = require("fs");
 const os = require("os");
 const express = require("express");
 
+class ApplicationState {
+  constructor() {
+    this.ip = [];
+    this.sitePort = 82;
+    this.sys = {};
+  }
+}
+
 var signageConfigPath = "/usr/local/aloe/scripts/ophrys_state_node.json",
   signageStatePath = "/usr/local/aloe/scripts/ophrys_state_bash.json",
   signageViewDataPath = "/usr/local/aloe/scripts/ophrys_state_view.json",
@@ -73,10 +81,7 @@ var signageConfigPath = "/usr/local/aloe/scripts/ophrys_state_node.json",
   signageUrlUpdateScript = "/usr/local/aloe/scripts/setdisplayconfig.sh",
   signageUrlRefreshScript = "/usr/local/aloe/scripts/setdisplayconfig.sh",
   signageScreenScript = "/usr/local/aloe/scripts/setdisplayconfig.sh",
-  appState = {
-    ip: [],
-    sys: {},
-  },
+  appState = new ApplicationState(),
   applicationStartTime = Date.now(),
   applicationEnvironment = "Production",
   applicationWebPort = 82;
@@ -101,6 +106,7 @@ process.argv.forEach((val, index, array) => {
   if (p === 0) {
     console.log("# Application Web Port: " + array[index + 1]);
     applicationWebPort = Number(array[index + 1]);
+    appState.sitePort = applicationWebPort;
     signageConfigFile.url = "http://localhost:" + array[index + 1];
     signageStateFile.url = "http://localhost:" + array[index + 1];
   }

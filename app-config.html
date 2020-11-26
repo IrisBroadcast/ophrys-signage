@@ -257,7 +257,13 @@
       background: unset;
     }
 
-    .status--general, .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock, .status--link {
+    p {
+      padding: 6px 1vw;
+      margin: 0;
+      line-height: 2;
+    }
+
+    .status--current-url, .status--identification, .status--hardware, .status--window, .status--clock, .status--link {
       font-family: 'Roboto', Arial, Helvetica, sans-serif;
       font-size: 1.3em;
       font-weight: 400;
@@ -663,7 +669,7 @@
   <div class="container">
     <div class="content">
       <div class="status--current-url">
-        <span id="infoCurrentUrl">&nbsp;</span>
+        Current URL: <span id="infoCurrentUrl">&nbsp;</span>
       </div>
       <div class="status--identification">
         <span id="infoIpAddress">&nbsp;</span>
