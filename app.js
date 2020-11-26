@@ -89,9 +89,9 @@ process.argv.forEach((val, index, array) => {
     console.log("# Entering DEBUG Mode");
     signageConfigPath = "./ophrys_state_node.json";
     signageStatePath = "./ophrys_state_bash.json";
-    (signageViewDataPath = "./ophrys_state_view.json"),
-      (signageCustomVarDataPath = "./ophrys_state_vars.json"),
-      (signageUrlUpdateScript = "./debugscript.sh");
+    signageViewDataPath = "./ophrys_state_view.json";
+    signageCustomVarDataPath = "./ophrys_state_vars.json";
+    signageUrlUpdateScript = "./debugscript.sh";
     signageUrlRefreshScript = "./debugscript.sh";
     signageScreenScript = "./debugscript.sh";
     applicationEnvironment = "Development";
@@ -321,40 +321,32 @@ var initListeners = () => {
   // Signage view data state
   readViewDataFile();
 
-  fs.watch(
-    signageViewDataPath,
-    { encoding: "buffer" },
-    (eventType, filename) => {
-      if (filename) {
-        console.log(
-          "Change detected: " +
-            eventType.toString() +
-            " file: " +
-            filename.toString(),
-        );
-        readViewDataFile();
-      }
-    },
-  );
+  fs.watch(signageViewDataPath, { encoding: "buffer" }, (eventType, filename) => {
+    if (filename) {
+      console.log(
+        "Change detected: " +
+          eventType.toString() +
+          " file: " +
+          filename.toString(),
+      );
+      readViewDataFile();
+    }
+  });
 
   // Signage custom variables state
   readCustomVariablesFile();
 
-  fs.watch(
-    signageCustomVarDataPath,
-    { encoding: "buffer" },
-    (eventType, filename) => {
-      if (filename) {
-        console.log(
-          "Change detected: " +
-            eventType.toString() +
-            " file: " +
-            filename.toString(),
-        );
-        readCustomVariablesFile();
-      }
-    },
-  );
+  fs.watch(signageCustomVarDataPath, { encoding: "buffer" }, (eventType, filename) => {
+    if (filename) {
+      console.log(
+        "Change detected: " +
+          eventType.toString() +
+          " file: " +
+          filename.toString(),
+      );
+      readCustomVariablesFile();
+    }
+  });
 };
 
 var initConfig = () => {
@@ -399,10 +391,27 @@ var initViewData = function() {
       console.log("File doesn't exist:" + signageViewDataPath);
       console.log(signageViewDataFile);
       writeJsonToFile(signageViewDataPath, signageViewDataFile);
-      initListeners();
+      initViewCustomData();
     } else {
       // File exists
       console.log("File exist:" + signageViewDataPath);
+      initViewCustomData();
+    }
+  });
+};
+
+var initViewCustomData = function() {
+  console.log("Init: " + signageCustomVarDataPath);
+  fs.access(signageCustomVarDataPath, fs.F_OK, err => {
+    if (err) {
+      // File doesn't exist
+      console.log("File doesn't exist:" + signageCustomVarDataPath);
+      console.log(signageCustomVarDataFile);
+      writeJsonToFile(signageCustomVarDataPath, signageCustomVarDataFile);
+      initListeners();
+    } else {
+      // File exists
+      console.log("File exist:" + signageCustomVarDataPath);
       initListeners();
     }
   });
@@ -577,7 +586,7 @@ var parseViewDataOptions = data => {
   console.log(data);
 
   var configUpdate = {};
-  var tmp = {
+  let tmp = {
     view: "none",
     html: "",
     script: "",
@@ -634,7 +643,7 @@ var parseCustomVariablesOptions = data => {
   console.log("parseCustomVariablesOptions:");
   console.log(data);
 
-  var configUpdate = {};
+  let configUpdate = {};
 
   try {
     configUpdate = JSON.parse(data);
@@ -717,7 +726,7 @@ var doActionStopExternalConfigCheck = async () => {
 // Parse saving form
 var doTranslateConfigFromForm = configUpdate => {
   // Store everything in App config
-  var tmp = {};
+  let tmp = {};
 
   // Get title (for use in health and on the webpage)
   if (configUpdate.hasOwnProperty("title")) {
@@ -804,7 +813,7 @@ var doTranslateConfigFromForm = configUpdate => {
 
 var doTranslateViewDataFromForm = configUpdate => {
   // Store everything in View Data config
-  var tmp = {};
+  let tmp = {};
 
   // Get view selected
   if (configUpdate.hasOwnProperty("view")) {
@@ -930,7 +939,6 @@ var runBashScriptAsync = (scriptPath, scriptArg) => {
   return new Promise((resolve, reject) => {
     try {
       // child_process.spawn(command[, args][, options])
-      
       const action = isWin ? spawn(args) : spawn("sudo", args);
 
       action.stdout.on("data", data => {
