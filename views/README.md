@@ -96,10 +96,10 @@ The views above can be combined. In the following example we will create a view/
 - Save and reload you webpage to see the result.
 
 Main config:<br>
-<img src="/static/readmeViewCombine_01-updated.png" width="60%">
+<img src="/static/readmeViewCombine_01.png" width="60%">
 
 View options:<br>
-<img src="/static/readmeViewCombine_02-updated.png" width="60%">
+<img src="/static/readmeViewCombine_02.png" width="60%">
 
 ## Advanced browser start-up parameters <a name="Advanced-browser-start-up-parameters"></a><br>
 All views can be used with one or multiple Chromium start-up parameters.
