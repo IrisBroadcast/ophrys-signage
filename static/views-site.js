@@ -141,22 +141,20 @@ var doGetUrls = function()
     }
 
 
-    if(utils.getUrlParameters("viewid"))
+    if (utils.getUrlParameters("viewid"))
     {
         fetch('/view/getconfig')
             .then((response) => {
                 return response.json();
             })
             .then((config) => {
-                if(config.hasOwnProperty("url1"))
-                {
+                if(config.hasOwnProperty("url1")) {
                     tabBlocks+=1;
                     utils.getElem("frame-widget-1").src = config.url1;
                     utils.getElem("frame-widget-2").src = config.url1;
                 }
 
-                if (tabBlocks == 0)
-                {
+                if (tabBlocks == 0) {
                     utils.domChange("frame-widget-feedback", "innerText", "No URL view configuration parameters found");
                     return;
                 }
@@ -167,10 +165,8 @@ var doGetUrls = function()
                 doActionStartTabTimer();
             });
     }
-    else
-    {
-        if(utils.getUrlParameters("url1"))
-        {
+    else {
+        if (utils.getUrlParameters("url1")) {
             tabBlocks+=1;
             utils.getElem("frame-widget-1").src = "http://" + utils.getUrlParameters("url1");
             utils.getElem("frame-widget-2").src = "http://" + utils.getUrlParameters("url1");

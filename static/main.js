@@ -169,7 +169,8 @@ var util = function() {
             {
                 url = window.location.href;
             }
-            name = name.replace(/[\[\]]/g, '\\$&');
+            url = url.toLowerCase();
+            name = name.replace(/[\[\]]/g, '\\$&').toLowerCase();
             var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
             var results = regex.exec(url);
             if (!results)
