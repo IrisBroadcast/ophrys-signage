@@ -502,11 +502,17 @@ socket.on("system-status", function(msg)
 {
     console.log("system-status");
     console.table(msg);
+    let deviceAddress = "";
     if (msg.hasOwnProperty("ip")) {
-        utils.domChange("infoIpAddress", "innerText", msg.ip[0] + ":" + msg.sitePort);
-        utils.domChangeByAttr("info-device-ip", msg.ip[0] + ":" + msg.sitePort);
-        console.log(msg.ip[0]);
+        deviceAddress = msg.ip[0];
     }
+
+    if (msg.hasOwnProperty("hostname")) {
+        deviceAddress = msg.hostname;
+    }
+
+    utils.domChangeByAttr("info-device-ip", deviceAddress + ":" + msg.sitePort);
+
     /*data.cpus = os.cpus()
     data.memoryfree = os.freemem()
     data.memorytotal = os.totalmem()

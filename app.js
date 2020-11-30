@@ -36,11 +36,13 @@ const http_lib = require("http");
 const fs = require("fs");
 const os = require("os");
 const express = require("express");
+const { prototype } = require("stream");
 
 class ApplicationState {
   constructor() {
     this.ip = [];
     this.sitePort = 82;
+    this.hostname = "localhost";
     this.sys = {};
   }
 }
@@ -577,6 +579,8 @@ var parseStateOptions = data => {
   // Hostname
   if (configUpdate.hasOwnProperty("hostname")) {
     tmp.hostname = configUpdate.hostname;
+    appState.hostname = configUpdate.hostname;
+    io.emit("system-status", appState);
   }
 
   // Store the read in configuration
