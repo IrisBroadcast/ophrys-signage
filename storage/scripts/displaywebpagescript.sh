@@ -46,7 +46,7 @@ function openUrl
 		DYNAMIC_URL="http://localhost:82"
 	fi
 	export DISPLAY=:0.0
-	chromium-browser $BROWSERPARAMETER --noerrdialogs --check-for-update-interval=1209600 --disable-session-crashed-bubble --disable-infobars --disable-restore-session-state --disable-features=TranslateUI --kiosk --disable-pinch --overscroll-history-navigation=0 --proxy-auto-detect $DYNAMIC_URL
+	chromium-browser $BROWSERPARAMETER --disable-site-isolation-trials --disable-web-security --user-data-dir=/tmp/temp/ --noerrdialogs --check-for-update-interval=1209600 --disable-session-crashed-bubble --disable-infobars --disable-restore-session-state --disable-features=TranslateUI --kiosk --disable-pinch --overscroll-history-navigation=0 --proxy-auto-detect $DYNAMIC_URL
 }
 
 cleanChromium
