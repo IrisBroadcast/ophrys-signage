@@ -15,7 +15,7 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "express": "^4.14.0",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.4.0"
   },
   "prettier": {
     "singleQuote": false,
