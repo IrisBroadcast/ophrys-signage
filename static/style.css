@@ -176,7 +176,7 @@ ul li:nth-child(odd) {
 
 .logo-text {
     display: inline-block;
-    font-size: 5vmin;
+    font-size: 3rem;
     color: #4a4a4a;
     font-weight: 300;
     padding-left: 0.1em;

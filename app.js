@@ -1,7 +1,7 @@
 /*
  * Ophrys Signage
  *
- * Copyright (c) 2019 Roger Sandholm & Jim Eld, Stockholm, Sweden
+ * Copyright (c) 2021 Roger Sandholm & Jim Eld, Stockholm, Sweden
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -32,7 +32,6 @@ const io = require("socket.io")(http);
 
 const { spawn } = require("child_process");
 const http_lib = require("http");
-
 const fs = require("fs");
 const os = require("os");
 const express = require("express");
@@ -47,11 +46,15 @@ class ApplicationState {
   }
 }
 
-var signageConfigPath = "/usr/local/aloe/scripts/ophrys_state_node.json",
-  signageStatePath = "/usr/local/aloe/scripts/ophrys_state_bash.json",
-  signageViewDataPath = "/usr/local/aloe/scripts/ophrys_state_view.json",
-  signageCustomVarDataPath = "/usr/local/aloe/scripts/ophrys_state_vars.json",
-  signageConfigFile = {
+let signageConfigPath = "/usr/local/aloe/scripts/ophrys_state_node.json";
+let signageStatePath = "/usr/local/aloe/scripts/ophrys_state_bash.json";
+let signageViewDataPath = "/usr/local/aloe/scripts/ophrys_state_view.json";
+let signageCustomVarDataPath = "/usr/local/aloe/scripts/ophrys_state_vars.json";
+let signageUrlUpdateScript = "/usr/local/aloe/scripts/setdisplayconfig.sh";
+let signageUrlRefreshScript = "/usr/local/aloe/scripts/setdisplayconfig.sh";
+let signageScreenScript = "/usr/local/aloe/scripts/setdisplayconfig.sh";
+
+let signageConfigFile = {
     title: "Ophrys Signage",
     description: "",
     url: "http://localhost:82",
@@ -59,34 +62,32 @@ var signageConfigPath = "/usr/local/aloe/scripts/ophrys_state_node.json",
     rotation: "normal",
     fetchconfig: false,
     remoteurl: false,
-  },
-  signageStateFile = {
-    url: "http://localhost:82",
-    rotation: "normal",
-    browserparameter: "",
-    hardwaremodel: "",
-    hostname: "",
-  },
-  signageViewDataFile = {
-    view: "none",
-    html:
-      '<div style="font-size: 4em">\n <p>Opening hours:</p>\n <ul>\n  <li><span style="color: red;">Sunday closed</span></li>\n  <li>Monday-Saturday 12:00-20:00</li>\n </ul>\n</div>',
-    script: "",
-    url1: "",
-    url2: "",
-    url3: "",
-  },
-  signageCustomVarDataFile = {
-    "ref-56": "hej",
-    me: "ok",
-  },
-  signageUrlUpdateScript = "/usr/local/aloe/scripts/setdisplayconfig.sh",
-  signageUrlRefreshScript = "/usr/local/aloe/scripts/setdisplayconfig.sh",
-  signageScreenScript = "/usr/local/aloe/scripts/setdisplayconfig.sh",
-  appState = new ApplicationState(),
-  applicationStartTime = Date.now(),
-  applicationEnvironment = "Production",
-  applicationWebPort = 82;
+  };
+let signageStateFile = {
+  url: "http://localhost:82",
+  rotation: "normal",
+  browserparameter: "",
+  hardwaremodel: "",
+  hostname: "",
+};
+let signageViewDataFile = {
+  view: "none",
+  html:
+    '<div style="font-size: 4em">\n <p>Opening hours:</p>\n <ul>\n  <li><span style="color: red;">Sunday closed</span></li>\n  <li>Monday-Saturday 12:00-20:00</li>\n </ul>\n</div>',
+  script: "",
+  url1: "",
+  url2: "",
+  url3: "",
+};
+let signageCustomVarDataFile = {
+  "ref-56": "hej",
+  me: "ok",
+};
+
+const appState = new ApplicationState();
+let applicationStartTime = Date.now();
+let applicationEnvironment = "Production";
+let applicationWebPort = 82;
 
 const isWin = process.platform === "win32";
 
@@ -132,7 +133,7 @@ var writeJsonToFile = (file, fileobj) => {
   }
 };
 
-var xReadFile = file => {
+var xReadFile = (file) => {
   return new Promise((resolve, reject) => {
     fs.readFile(file, { encoding: "utf8", flag: "a+" }, (err, data) => {
       if (err) return reject(err);
@@ -142,7 +143,7 @@ var xReadFile = file => {
   });
 };
 
-var getRemoteConfig = url => {
+var getRemoteConfig = (url) => {
   return new Promise((resolve, reject) => {
     if (!signageConfigFile.hasOwnProperty("remoteurl")) {
       reject({ error: true, message: "No remote URL specified" });
@@ -222,33 +223,24 @@ var formatDateTime = (incoming, onlytime) => {
   var milli = date.getMilliseconds();
 
   if (onlytime) {
-    return hours + ":" + minutes + ":" + seconds;
+    return `${hours}:${minutes}:${seconds}`;
   } else {
-    return (
-      yyyy +
-      "-" +
-      MM +
-      "-" +
-      dd +
-      " " +
-      hours +
-      ":" +
-      minutes +
-      ":" +
-      seconds +
-      ":" +
-      milli
-    );
+    return `${yyyy}-${MM}-${dd} ${hours}:${minutes}:${seconds}:${milli}`;
   }
 };
 
 // =============================================
 // System status
-var checkIP = () => {
+var checkIP = async () => {
   // Get IP Address information
-  var os = require("os");
-  var ifaces = os.networkInterfaces();
-  var ip = [];
+  let ifaces;
+  let ip = [];
+  try {
+    ifaces = await os.networkInterfaces();
+  } catch(err) {
+    console.error(err);
+    return;
+  }
 
   Object.keys(ifaces).forEach(ifname => {
     var alias = 0;
@@ -734,7 +726,7 @@ var doActionStopExternalConfigCheck = async () => {
 
 // =============================================
 // Parse saving form
-var doTranslateConfigFromForm = configUpdate => {
+var doTranslateConfigFromForm = (configUpdate) => {
   // Store everything in App config
   let tmp = {};
 
@@ -907,7 +899,7 @@ var doActionRefreshUrl = async () => {
   readStateFile();
 };
 
-var doActionBrowserParameters = async browserparam => {
+var doActionBrowserParameters = async (browserparam) => {
   // Run script for changing browser parameters
   console.log("Trying to change browser parameters " + browserparam);
   if (browserparam != signageStateFile.browserparameter) {
@@ -919,7 +911,7 @@ var doActionBrowserParameters = async browserparam => {
   readStateFile();
 };
 
-var doActionRotateScreen = async rotate => {
+var doActionRotateScreen = async (rotate) => {
   // Run script for changing screen rotation
   console.log("Trying to rotate screen " + rotate);
   if (rotate != signageStateFile.rotation) {
@@ -936,8 +928,12 @@ var doActionRotateScreen = async rotate => {
 
 var doActionInitiateScript = async () => {
   // Run script for initiating values that script produce
-  var exitCode = await runBashScriptAsync(signageScreenScript);
-  console.log(exitCode);
+  try {
+    var exitCode = await runBashScriptAsync(signageScreenScript);
+    console.log(exitCode);
+  } catch(err) {
+    console.log(`Error in initiating script ${err}`);
+  }
 };
 
 var runBashScriptAsync = (scriptPath, scriptArg) => {
@@ -951,7 +947,7 @@ var runBashScriptAsync = (scriptPath, scriptArg) => {
       // child_process.spawn(command[, args][, options])
       const action = isWin ? spawn(args) : spawn("sudo", args);
 
-      action.stdout.on("data", data => {
+      action.stdout.on("data", (data) => {
         if (data.toString() !== "") {
           try {
             let tmp = data.toString().replace(/[\r\n]+$/, "");
@@ -962,11 +958,11 @@ var runBashScriptAsync = (scriptPath, scriptArg) => {
         }
       });
 
-      action.stderr.on("data", data => {
+      action.stderr.on("data", (data) => {
         console.log(`stderr: ${data}`);
       });
 
-      action.on("close", code => {
+      action.on("close", (code) => {
         console.log(`script ended code: ${code}`);
         resolve(code);
       });
@@ -984,7 +980,7 @@ initConfig();
 
 // =============================================
 // Socket
-io.on("connection", Socket => {
+io.on("connection", (Socket) => {
   console.log("> client connected");
 
   // Emit system info
@@ -1046,6 +1042,10 @@ app.get("/view/getconfig", (req, res) => {
 
 app.get("/view/clock", (req, res) => {
   res.sendFile(__dirname + "/views/viewClock.html");
+});
+
+app.get("/view/clock/utc", (req, res) => {
+  res.sendFile(__dirname + "/views/viewClockAdvanced.html");
 });
 
 app.get("/view/info", (req, res) => {
@@ -1129,10 +1129,6 @@ http.listen(applicationWebPort, () => {
 });
 
 http.on("error", e => {
-  console.error(
-    "* Port " +
-      applicationWebPort +
-      " is occupied, start as sudo or change port",
-  );
+  console.error(`* Port ${applicationWebPort} is occupied, start as sudo or change port`);
   console.error(e);
 });

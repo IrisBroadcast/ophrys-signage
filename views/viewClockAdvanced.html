@@ -122,7 +122,15 @@
       font-size: 12vmin;
       color: #a71e1e;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
+    }
+    .clock-time {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .clock-utc-time {
+        font-size: 50%;
     }
   </style>
 </head>
@@ -130,7 +138,7 @@
 
   <svg id="pagefader"></svg>
 
-  <div class="clock-container" id="overlayFeedbackLocalClock">
+  <div class="clock-container" id="overlayAdvancedClock">
     <!-- Show a big studio clock -->
     <svg id="clock-box" version="1.1" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="-50 -50 100 100">
       <circle id="clock-face" cx="0" cy="0" r="49" />
@@ -175,8 +183,13 @@
 
       </g>
     </svg>
-    <div id="popupLocalClock" class="status-call--clock vertical-align">
-      <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+    <div class="status-call--clock vertical-align">
+        <div class="clock-time clock-local-time">
+            <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+        </div>
+        <div class="clock-time clock-utc-time">
+            <span class="time-type-utc">UTC</span>&nbsp;<span id="hours-utc">00</span>:<span id="minutes-utc">00</span>:<span id="seconds-utc">00</span>
+        </div>
     </div>
   </div>
 
