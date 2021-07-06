@@ -5,7 +5,7 @@
 [View/tab](#View-tab)<br>
 [View/multi](#View-multi)<br>
 [View/info](#View-info)<br>
-[View/clock](#View-clock)<br>
+[View/clock & View/clock/utc](#View-clock)<br>
 [Combine different views](#Combine-different-views)<br>
 [Advanced browser start-up parameters](#Advanced-browser-start-up-parameters)<br>
 
@@ -78,13 +78,16 @@ Ophrys Signage loves you
 </font>
 </center>
 ```
-<br>
 
 ## View/clock <a name="View-clock"></a><br>
-Displays a studio like clock. It shows the local "browser" clock, so make sure the operating system timezone is set. It could also be a good idea to set an NTP endpoint to one of your choice.
+Displays a studio like clock. It shows the local "browser" time, so make sure the operating system timezone is set. It could also be a good idea to set a NTP endpoint to one of your choice.
+
+### View/clock/utc
+You can also choose to show a clock with both local "browser" time as well as UTC time. Please note however that to get proper UTC time the operating system's timezone is still required to be correctly set.
 
 ### Example
 - `http://localhost:82/view/clock`
+- `http://localhost:82/view/clock/utc`
 
 ## Combine different views <a name="Combine-different-views"></a><br>
 The views above can be combined. In the following example we will create a view/multi that shows a view/clock and a view/info:
