@@ -383,31 +383,28 @@ var util = function() {
 
 //////////////////////////////////////////////////////////////////////////////
 // INITIATE
-var utils = new util();
+const utils = new util();
 
 //////////////////////////////////////////////////////////////////////////////
 // CONFIGURATION
-var socket = io()
+const socket = io()
 
-socket.on('connect', function()
-{
+socket.on('connect', function() {
     console.log('* Connected', socket.connected);
     utils.getElem('logo-image').classList.add('status-socket-connected')
     utils.getElem('logo-image').classList.remove('status-socket-disconnected')
 });
 
-socket.on('disconnect', function()
-{
+socket.on('disconnect', function() {
     console.log('* Connected', socket.connected);
     utils.getElem('logo-image').classList.remove('status-socket-connected')
     utils.getElem('logo-image').classList.add('status-socket-disconnected')
 });
 
 // Save items to configuration file
-utils.addEvent(utils.getElem("save-config-btn"), "click", function(event)
-{
+utils.addEvent("save-config-btn", "click", function(event) {
     event.preventDefault();
-    var formdata = {}
+    let formdata = {}
     formdata.title = utils.getProperty("input-title", "value");
     formdata.description = utils.getProperty("input-description", "value");
     formdata.url = utils.getProperty("input-current_url", "value");
@@ -415,24 +412,13 @@ utils.addEvent(utils.getElem("save-config-btn"), "click", function(event)
     formdata.fetchconfig = utils.getProperty("input-fetch_config_from_url", "checked");
     formdata.remoteurl = utils.getProperty("input-remote_config_url", "value");
 
-    if(utils.getProperty("input-screen_rotation--normal", "checked"))
-    {
-        console.log("normal");
+    if (utils.getProperty("input-screen_rotation--normal", "checked")) {
         formdata.rotation = "normal";
-    }
-    else if(utils.getProperty("input-screen_rotation--left", "checked"))
-    {
-        console.log("left");
+    } else if(utils.getProperty("input-screen_rotation--left", "checked")) {
         formdata.rotation = "left";
-    }
-    else if(utils.getProperty("input-screen_rotation--right", "checked"))
-    {
-        console.log("right");
+    } else if(utils.getProperty("input-screen_rotation--right", "checked")) {
         formdata.rotation = "right";
-    }
-    else if(utils.getProperty("input-screen_rotation--inverted", "checked"))
-    {
-        console.log("inverted");
+    } else if(utils.getProperty("input-screen_rotation--inverted", "checked")) {
         formdata.rotation = "inverted";
     }
 
@@ -442,10 +428,9 @@ utils.addEvent(utils.getElem("save-config-btn"), "click", function(event)
 });
 
 // Save items to view-data file
-utils.addEvent(utils.getElem("save-view-data-btn"), "click", function(event)
-{
+utils.addEvent("save-view-data-btn", "click", function(event) {
     event.preventDefault();
-    var formdata = {}
+    const formdata = {}
     formdata.view = utils.getProperty("input-view", "value");
     formdata.html = utils.getProperty("input-html", "value");
     formdata.script = utils.getProperty("input-script", "value");
@@ -459,7 +444,7 @@ utils.addEvent(utils.getElem("save-view-data-btn"), "click", function(event)
 });
 
 // Refresh webpage
-utils.addEvent(utils.getElem("reload-url-btn"), "click", function(event)
+utils.addEvent("reload-url-btn", "click", function(event)
 {
     event.preventDefault();
     socket.emit('user-action--reload-browser');
@@ -468,7 +453,7 @@ utils.addEvent(utils.getElem("reload-url-btn"), "click", function(event)
 });
 
 // Toggle configuration form elements visibility
-utils.addEvent(utils.getElem("input-fetch_config_from_url"), "click", function()
+utils.addEvent("input-fetch_config_from_url", "click", function()
 {
     if (utils.getProperty("input-fetch_config_from_url", "checked"))
     {
@@ -480,26 +465,21 @@ utils.addEvent(utils.getElem("input-fetch_config_from_url"), "click", function()
     }
 });
 
-function setFeatureRemoteConfig(value)
-{
+function setFeatureRemoteConfig(value) {
     utils.domChangeClass("feature--remote-config", "disabled", !value);
     utils.domChangeClass("feature--local-config", "disabled", value);
 
-    if (value)
-    {
+    if (value) {
         utils.addClassFromClass("feature--remote-config-info", "feature--remote-config-info--show");
         utils.removeClassFromClass("feature--local-config-info", "feature--local-config-info--show");
-    }
-    else
-    {
+    } else {
         utils.addClassFromClass("feature--local-config-info", "feature--local-config-info--show");
         utils.removeClassFromClass("feature--remote-config-info", "feature--remote-config-info--show");
     }
 }
 
 // Get system info from server
-socket.on("system-status", function(msg)
-{
+socket.on("system-status", function(msg) {
     console.log("system-status");
     console.table(msg);
     let deviceAddress = "";
@@ -535,71 +515,53 @@ socket.on("config-external-timer", function(msg)
 });
 
 // Get local configfile from server
-socket.on("config-options", function(msg)
-{
-    console.log("Recieved config-options:");
+socket.on("config-options", function(msg) {
+    console.log("Received config-options:");
     console.table(msg);
-    if(msg != null)
-    {
+    if (msg != null) {
         // Set title
-        if(msg.hasOwnProperty("title"))
-        {
+        if (msg.hasOwnProperty("title")) {
             utils.domChange("input-title", "value", msg.title);
             utils.domChange("infoCurrentUrl", "innerText", (msg.title || "Ophrys Signage"));
         }
 
         // Set description
-        if(msg.hasOwnProperty("description"))
-        {
+        if (msg.hasOwnProperty("description")) {
             utils.domChange("input-description", "value", msg.description);
         }
 
         // Set current url to form and info fields
-        if(msg.hasOwnProperty("url"))
-        {
+        if (msg.hasOwnProperty("url")) {
             utils.domChange("input-current_url", "value", msg.url);
         }
 
         // Set up browser startup parameters
-        if(msg.hasOwnProperty("browserparameter"))
-        {
+        if (msg.hasOwnProperty("browserparameter")) {
             utils.domChange("input-browser_parameter", "value", msg.browserparameter);
         }
 
         // Auto get configuration from url
-        if(msg.hasOwnProperty("fetchconfig"))
-        {
+        if (msg.hasOwnProperty("fetchconfig")) {
             utils.domChange("input-fetch_config_from_url", "checked", msg.fetchconfig);
             setFeatureRemoteConfig(msg.fetchconfig);
-        }
-        else
-        {
+        } else {
             setFeatureRemoteConfig(false);
         }
 
         // Fetch configuration from this url
-        if(msg.hasOwnProperty("remoteurl"))
-        {
+        if (msg.hasOwnProperty("remoteurl")) {
             utils.domChange("input-remote_config_url", "value", msg.remoteurl);
         }
 
         // Set screen_rotation
-        if(msg.hasOwnProperty("rotation"))
-        {
-            if(msg.rotation == "normal")
-            {
+        if (msg.hasOwnProperty("rotation")) {
+            if(msg.rotation == "normal") {
                 utils.domChange("input-screen_rotation--normal", "checked", true);
-            }
-            else if(msg.rotation == "left")
-            {
+            } else if(msg.rotation == "left") {
                 utils.domChange("input-screen_rotation--left", "checked", true);
-            }
-            else if(msg.rotation == "right")
-            {
+            } else if(msg.rotation == "right") {
                 utils.domChange("input-screen_rotation--right", "checked", true);
-            }
-            else if(msg.rotation == "inverted")
-            {
+            } else if(msg.rotation == "inverted") {
                 utils.domChange("input-screen_rotation--inverted", "checked", true);
             }
         }
@@ -607,53 +569,40 @@ socket.on("config-options", function(msg)
 });
 
 // Get local statefile from server
-socket.on("config-options--state", function(msg)
-{
+socket.on("config-options--state", function(msg) {
     console.log("Recieved config-options--state:")
     console.table(msg);
-    if(msg != null)
-    {
+    if (msg != null) {
         // Set current url to form and info fields
-        if(msg.hasOwnProperty("url"))
-        {
+        if (msg.hasOwnProperty("url")) {
             utils.domChange("infoCurrentUrl", "innerText", msg.url);
         }
 
         // Set screen_rotation
-        if(msg.hasOwnProperty("rotation"))
-        {
+        if (msg.hasOwnProperty("rotation")) {
             utils.removeClass("input-screen_rotation--normal-rlbl", "radiobtn-box--confirmed");
             utils.removeClass("input-screen_rotation--left-rlbl", "radiobtn-box--confirmed");
             utils.removeClass("input-screen_rotation--right-rlbl", "radiobtn-box--confirmed");
             utils.removeClass("input-screen_rotation--inverted-rlbl", "radiobtn-box--confirmed");
 
-            if(msg.rotation == "normal")
-            {
+            if (msg.rotation == "normal") {
                 utils.addClass("input-screen_rotation--normal-rlbl", "radiobtn-box--confirmed");
-            }
-            else if(msg.rotation == "left")
-            {
+            } else if (msg.rotation == "left") {
                 utils.addClass("input-screen_rotation--left-rlbl", "radiobtn-box--confirmed");
-            }
-            else if(msg.rotation == "right")
-            {
+            } else if (msg.rotation == "right") {
                 utils.addClass("input-screen_rotation--right-rlbl", "radiobtn-box--confirmed");
-            }
-            else if(msg.rotation == "inverted")
-            {
+            } else if (msg.rotation == "inverted") {
                 utils.addClass("input-screen_rotation--inverted-rlbl", "radiobtn-box--confirmed");
             }
         }
 
         // Set hardware model
-        if(msg.hasOwnProperty("hardwaremodel"))
-        {
+        if (msg.hasOwnProperty("hardwaremodel")) {
             utils.domChange("infoHardware", "innerText", msg.hardwaremodel);
         }
 
         // Set hostname
-        if(msg.hasOwnProperty("hostname"))
-        {
+        if (msg.hasOwnProperty("hostname")) {
             utils.domChange("infoHostName", "innerText", msg.hostname);
         }
     }
@@ -663,89 +612,81 @@ socket.on("config-options--state", function(msg)
 var LOCAL_INFO = "";
 var LOCAL_SCRIPT = "";
 var LOCAL_STORE = "";
-socket.on("config-options--view-data", function(msg)
-{
-    console.log("Recieved config-options--view-data:")
+socket.on("config-options--view-data", function(msg) {
+    console.log("Received config-options--view-data:")
     console.table(msg);
-    if (msg != null)
-    {
-        // View Id
-        if (msg.hasOwnProperty("view"))
-        {
-            utils.domChange("input-view", "value", msg.view);
-            utils.domChangeByAttr("info-conf-viewid", msg.view);
+    if (msg != null) {
+
+        if (Array.isArray(msg) === false) {
+            msg = [msg];
         }
 
-        // Html
-        if (msg.hasOwnProperty("html"))
-        {
-            utils.domChange("input-html", "value", msg.html);
-            if (LOCAL_INFO !== msg.html)
-            {
-                utils.domChange("popupLocalInformation", "innerHTML", msg.html);
-                LOCAL_INFO = msg.html;
+        for (let x = 0; x < msg.length; x++) {
+            // View Id
+            if (msg.hasOwnProperty("view")) {
+                utils.domChange("input-view", "value", msg.view);
+                utils.domChangeByAttr("info-conf-viewid", msg.view);
             }
-        }
 
-        // Javascript
-        if (msg.hasOwnProperty("script"))
-        {
-            utils.domChange("input-script", "value", msg.script);
-            if (LOCAL_SCRIPT !== msg.script && utils.elementExists("customPage"))
-            {
-                LOCAL_SCRIPT = msg.script;
-                setTimeout(function() {
-                    if (utils.elementExists("customScriptTag"))
-                    {
-                        var oldScriptElement = utils.getElem(customScriptTag);
-                        utils.removeAllChildren(oldScriptElement);
-                    }
-
-                    var scriptElement = document.createElement("script");
-                    scriptElement.id = "customScriptTag";
-                    scriptElement.type = "text/javascript";
-                    scriptElement.innerHTML = msg.script;
-                    document.body.appendChild(scriptElement);
-                }, 5000)
+            // Html
+            if (msg.hasOwnProperty("html")) {
+                utils.domChange("input-html", "value", msg.html);
+                if (LOCAL_INFO !== msg.html) {
+                    utils.domChange("popupLocalInformation", "innerHTML", msg.html);
+                    LOCAL_INFO = msg.html;
+                }
             }
-        }
 
-        // URL1
-        if (msg.hasOwnProperty("url1"))
-        {
-            utils.domChange("input-url1", "value", msg.url1);
-        }
+            // Javascript
+            if (msg.hasOwnProperty("script")) {
+                utils.domChange("input-script", "value", msg.script);
+                if (LOCAL_SCRIPT !== msg.script && utils.elementExists("customPage")) {
+                    LOCAL_SCRIPT = msg.script;
+                    setTimeout(function() {
+                        if (utils.elementExists("customScriptTag")) {
+                            const oldScriptElement = utils.getElem(customScriptTag);
+                            utils.removeAllChildren(oldScriptElement);
+                        }
+                        let scriptElement = document.createElement("script");
+                        scriptElement.id = "customScriptTag";
+                        scriptElement.type = "text/javascript";
+                        scriptElement.innerHTML = msg.script;
+                        document.body.appendChild(scriptElement);
+                    }, 5000)
+                }
+            }
 
-        // URL2
-        if (msg.hasOwnProperty("url2"))
-        {
-            utils.domChange("input-url2", "value", msg.url2);
-        }
+            // URL1
+            if (msg.hasOwnProperty("url1")) {
+                utils.domChange("input-url1", "value", msg.url1);
+            }
 
-        // URL3
-        if (msg.hasOwnProperty("url3"))
-        {
-            utils.domChange("input-url3", "value", msg.url3);
-        }
+            // URL2
+            if (msg.hasOwnProperty("url2")) {
+                utils.domChange("input-url2", "value", msg.url2);
+            }
 
-        // Setup listeners for change in form effects
-        utils.addEvent("input-view", "input", (el) => {
-            console.log("input-view on change: ", el.target.value);
-            utils.domChangeByAttr("info-conf-viewid", el.target.value);
-        });
+            // URL3
+            if (msg.hasOwnProperty("url3")) {
+                utils.domChange("input-url3", "value", msg.url3);
+            }
+
+            // Setup listeners for change in form effects
+            utils.addEvent("input-view", "input", (el) => {
+                console.log("input-view on change: ", el.target.value);
+                utils.domChangeByAttr("info-conf-viewid", el.target.value);
+            });
+        }
     }
 });
 
 // Get local custom variables for view/info
-socket.on("config-options--custom-variables", function(msg)
-{
-    console.log("Recieved config-options--custom-variables:")
+socket.on("config-options--custom-variables", function(msg) {
+    console.log("Received config-options--custom-variables:")
     console.table(msg);
 
-    if (msg != null && utils.elementExists("customPage"))
-    {
-        if (LOCAL_SCRIPT !== msg.script)
-        {
+    if (msg != null && utils.elementExists("customPage")) {
+        if (LOCAL_SCRIPT !== msg.script) {
             // Store a copy
             LOCAL_STORE = msg;
 
@@ -767,8 +708,7 @@ socket.on("config-options--custom-variables", function(msg)
 // VIEW AND NICE TO HAVE THINGS
 
 // Clock
-if(utils.elementExists("overlayFeedbackLocalClock"))
-{
+if(utils.elementExists("overlayFeedbackLocalClock")) {
     (function() {
         // Initial
         const secondBall = utils.getElem("hand-sec-ball");
@@ -780,8 +720,7 @@ if(utils.elementExists("overlayFeedbackLocalClock"))
         const $time_full = utils.getElem("fulltime");
 
         // Initial
-        for (let ii = 0; ii < 60; ii++)
-        {
+        for (let ii = 0; ii < 60; ii++) {
             var deg = ii*6;
             var lline = document.createElementNS("http://www.w3.org/2000/svg", "line");
             lline.setAttribute("class", "secondMark");
@@ -805,14 +744,12 @@ if(utils.elementExists("overlayFeedbackLocalClock"))
         const now = new Date();
         secondBall.setAttribute('transform', 'rotate(' + 6 * now.getSeconds() + ' 0 0)');
 
-        function pad(number)
-        {
+        function pad(number) {
             if (number < 10) return "0" + number;
             else return "" + number;
         }
 
-        function rot(el, deg)
-        {
+        function rot(el, deg) {
             //el.setAttribute('transform', 'rotate(' + deg + ' 0 0)');
 
             if (el.id == "hand-sec-ball")
@@ -830,8 +767,7 @@ if(utils.elementExists("overlayFeedbackLocalClock"))
             }
         }
 
-        function draw(timestamp)
-        {
+        function draw(timestamp) {
             const now = new Date();
             rot(secondBall, 6 * now.getSeconds());
             const tmpHour = pad(now.getHours());
@@ -853,8 +789,7 @@ if(utils.elementExists("overlayFeedbackLocalClock"))
 }
 
 // Clock
-if(utils.elementExists("overlayAdvancedClock"))
-{
+if(utils.elementExists("overlayAdvancedClock")) {
     (function() {
         // Initial
         const secondBall = utils.getElem("hand-sec-ball");
@@ -870,8 +805,7 @@ if(utils.elementExists("overlayAdvancedClock"))
         const $time_seconds_utc = utils.getElem("seconds-utc");
 
         // Initial
-        for (let ii = 0; ii < 60; ii++)
-        {
+        for (let ii = 0; ii < 60; ii++) {
             var deg = ii*6;
             var lline = document.createElementNS("http://www.w3.org/2000/svg", "line");
             lline.setAttribute("class", "secondMark");
@@ -895,14 +829,12 @@ if(utils.elementExists("overlayAdvancedClock"))
         const now = new Date();
         secondBall.setAttribute('transform', 'rotate(' + 6 * now.getSeconds() + ' 0 0)');
 
-        function pad(number)
-        {
+        function pad(number) {
             if (number < 10) return "0" + number;
             else return "" + number;
         }
 
-        function rot(el, deg)
-        {
+        function rot(el, deg) {
             //el.setAttribute('transform', 'rotate(' + deg + ' 0 0)');
 
             if (el.id == "hand-sec-ball")
@@ -920,8 +852,7 @@ if(utils.elementExists("overlayAdvancedClock"))
             }
         }
 
-        function draw(timestamp)
-        {
+        function draw(timestamp) {
             const now = new Date();
             const utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() , now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
             const utc_date = new Date(utc_timestamp);
@@ -963,8 +894,7 @@ window.onload = function(e)
 
 utils.addEvent(window, "resize", windowResized);
 
-function windowResized()
-{
+function windowResized() {
     utils.getElem("window-width").innerText = document.documentElement.clientWidth;
     utils.getElem("window-height").innerText = document.documentElement.clientHeight;
 }

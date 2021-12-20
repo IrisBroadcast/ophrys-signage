@@ -1,32 +1,27 @@
 //////////////////////////////////////////////////////////////////////////////
 // VIEWS PAGES
 
-function fadeInPage()
-{
+function fadeInPage() {
     if (!window.AnimationEvent) { return; }
     var pagefader = document.getElementById('pagefader');
     pagefader.classList.add('fade-out');
 }
 
-document.addEventListener('DOMContentLoaded', function()
-{
+document.addEventListener('DOMContentLoaded', function() {
     if (!window.AnimationEvent) { return; }
 
     var anchors = document.getElementsByTagName('a');
 
-    for (var idx = 0; idx < anchors.length; idx += 1)
-    {
-        if (anchors[idx].hostname !== window.location.hostname)
-        {
+    for (let idx = 0; idx < anchors.length; idx += 1) {
+        if (anchors[idx].hostname !== window.location.hostname) {
             continue;
         }
 
-        anchors[idx].addEventListener('click', function(event)
-        {
-            var pagefader = document.getElementById('pagefader'),
-                anchor = event.currentTarget;
+        anchors[idx].addEventListener('click', function(event) {
+            const pagefader = document.getElementById('pagefader');
+            const anchor = event.currentTarget;
 
-            var listener = function() {
+            const listener = function() {
                 window.location = anchor.href;
                 pagefader.removeEventListener('animationend', listener);
             };
@@ -39,12 +34,11 @@ document.addEventListener('DOMContentLoaded', function()
 });
 
 // For cache persistent webpages (Safari does it)
-window.addEventListener('pageshow', function (event)
-{
+window.addEventListener('pageshow', function (event) {
     if (!event.persisted) {
         return;
     }
-    var pagefader = document.getElementById('pagefader');
+    const pagefader = document.getElementById('pagefader');
     pagefader.classList.remove('fade-in');
 });
 
@@ -59,22 +53,18 @@ var tabTimerDefaultTime = 15000;
 var tabBlocks = 0;
 var tabReload = false;
 
-var doActionStartTabTimer = async function()
-{
-    if(tabTimer == null)
-    {
+var doActionStartTabTimer = async function() {
+    if (tabTimer == null) {
         console.log("doActionStartTabTimer is starting");
 
         if (utils.elementExists("frame-widget-0") == false &&
-            utils.elementExists("block-widget-0") == false)
-        {
+            utils.elementExists("block-widget-0") == false) {
             doActionStopTabTimer();
             return;
         }
 
         let rem = 1;
-        tabTimer = setTimeout(async function tabRun()
-        {
+        tabTimer = setTimeout(async function tabRun() {
             // Move on to the next iframe
             utils.getElem("frame-widget-" + rem).style.opacity = 1;
 
@@ -83,8 +73,7 @@ var doActionStartTabTimer = async function()
             utils.getElem("frame-widget-" + rem).style.opacity = 0;
 
             // Reload iframe not in focus
-            if(tabReload)
-            {
+            if (tabReload){
                 utils.getElem("frame-widget-" + rem).src = utils.getElem("frame-widget-" + rem).src;
             }
 
@@ -93,9 +82,7 @@ var doActionStartTabTimer = async function()
             tabTimer = setTimeout(tabRun, tabTimerTime);
         },
         tabTimerTime);
-    }
-    else
-    {
+    } else {
         console.log("doActionStartTabTimer already started, restarting");
         doActionStopTabTimer();
         doActionStartTabTimer();

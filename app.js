@@ -55,14 +55,14 @@ let signageUrlRefreshScript = "/usr/local/aloe/scripts/setdisplayconfig.sh";
 let signageScreenScript = "/usr/local/aloe/scripts/setdisplayconfig.sh";
 
 let signageConfigFile = {
-    title: "Ophrys Signage",
-    description: "",
-    url: "http://localhost:82",
-    browserparameter: "",
-    rotation: "normal",
-    fetchconfig: false,
-    remoteurl: false,
-  };
+  title: "Ophrys Signage",
+  description: "",
+  url: "http://localhost:82",
+  browserparameter: "",
+  rotation: "normal",
+  fetchconfig: false,
+  remoteurl: false,
+};
 let signageStateFile = {
   url: "http://localhost:82",
   rotation: "normal",
@@ -1035,9 +1035,17 @@ app.get("/view", (req, res) => {
 app.get("/view/getconfig", (req, res) => {
   // Returns a view config if view is used with:
   // ?viewid=true
-  let content = signageViewDataFile;
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify(content), "utf-8");
+  const view = req.query.viewid || req.query.viewId || req.query.viewID || req.query.view || req.query.id;
+
+  console.log("configuration req:", view);
+  if (view) {
+    let content = signageViewDataFile;
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(content), "utf-8");
+  } else {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(null, "utf-8");
+  }
 });
 
 app.get("/view/clock", (req, res) => {

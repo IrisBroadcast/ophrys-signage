@@ -33,6 +33,10 @@
       font-weight: 400;
     }
 
+    h3 {
+      font-weight: 600;
+    }
+
     pre {
       white-space: nowrap;
     }
@@ -742,15 +746,14 @@
     </div>
 
     <div class="content">
+      <h3>Custom 'info' view configuration</h3>
       <p>
-        Configure your custom "info" view here. Access it by using: <br/>
+        Access it by using: <br/>
         <code class="feature--url-example">
           http://<abbr data-key="info-device-ip" title="{your-device-ip-or-hostname}"></abbr>/view/info?viewId=<abbr title="{viewid}" data-key="info-conf-viewid"></abbr>
         </code>
       </p>
-    </div>
 
-    <div class="content">
       <form action="">
         <label for="input-html">
           Custom HTML<br/>
@@ -768,7 +771,7 @@
           <i>This Javascript is embedded in the above site together with the Custom HTML field data.</i>
         </label>
 
-        <label for="input-view">
+        <!-- <label for="input-view">
           Custom dynamic variables
           <input id="input-variables" autocomplete="off" />
         </label>
@@ -779,7 +782,7 @@
             Reference the same key in your HTML id tags and the content will be replaced on change and page load.
             Enter the keys/variables as following "{variable1}|{variable2}|{variable3}".
           </i>
-        </label>
+        </label> -->
 
         <label>
           <button id="save-view-data-btn" class="button">Save</button>
